@@ -6,7 +6,7 @@ import { SweatyPortalIntro } from './components/arsenal/SweatyPortalIntro'
 import { ZoomPrincessTransition } from './components/arsenal/ZoomPrincessTransition'
 import { StickyPrincessCards } from './components/arsenal/StickyPrincessCards'
 import { ImageFlockPrincesses } from './components/arsenal/ImageFlockPrincesses'
-import { OrbitsPrincessCards } from './components/arsenal/OrbitsPrincessCards'
+import { KineticLetterPlayground } from './components/arsenal/KineticLetterPlayground'
 import { CodropsPaperShimmer } from './components/arsenal/CodropsPaperShimmer'
 import { AppleEditorialLetter } from './components/apple/AppleEditorialLetter'
 import { PhotoUploadModal } from './components/PhotoUploadModal'
@@ -208,10 +208,10 @@ export default function App() {
         <ImageFlockPrincesses />
 
         {/* 
-          5. ORBITS CARDS (Código real do repositório ORBITS-CARDS)
-          Carrossel orbital em arco 3D trigonométrico que gira ao redor do centro
+          5. KINETIC LETTER PLAYGROUND (Inspirado no CodePen yyapzOP por donotfold)
+          Playground interativo de tipografia cinética com pesos variáveis, ondas e piano mágico para Alycia brincar
         */}
-        <OrbitsPrincessCards />
+        <KineticLetterPlayground />
 
         {/* 
           6. CODROPS PAPER (Código real do repositório codrops-paper)
