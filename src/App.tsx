@@ -13,6 +13,9 @@ import { PhotoUploadModal } from './components/PhotoUploadModal'
 import { Footer } from './components/Footer'
 import { SmoothCursor } from './components/21st/smooth-cursor'
 import { InteractiveDock } from './components/21st/interactive-dock'
+import ElasticSleekCursor from './components/cursors/ElasticSleekCursor'
+import FluidSimulationCursor from './components/cursors/FluidSimulationCursor'
+import { CursorType } from './components/cursors/CursorSwitcher'
 
 const DEFAULT_HERO_IMAGE =
   'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1200&auto=format&fit=crop'
@@ -77,6 +80,10 @@ const DEFAULT_MEMORY_CARDS: MemoryCardData[] = [
 
 export default function App() {
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false)
+  const [currentCursor, setCurrentCursor] = useState<CursorType>(() => {
+    return (localStorage.getItem('alycia_active_cursor') as CursorType) || 'fluido'
+  })
+
   const [heroImage, setHeroImage] = useState<string>(() => {
     return localStorage.getItem('alycia_hero_image') || DEFAULT_HERO_IMAGE
   })
@@ -91,6 +98,11 @@ export default function App() {
     }
     return DEFAULT_MEMORY_CARDS
   })
+
+  const handleSelectCursor = (cursor: CursorType) => {
+    setCurrentCursor(cursor)
+    localStorage.setItem('alycia_active_cursor', cursor)
+  }
 
   const updateHeroImage = (url: string) => {
     setHeroImage(url)
@@ -124,14 +136,24 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen bg-[#09071c] text-neutral-100 overflow-x-hidden selection:bg-purple-500/25 selection:text-purple-200">
-      {/* 21st.dev Smooth Cursor */}
-      <SmoothCursor color="#b8a6e8" glowColor="rgba(184, 166, 232, 0.45)" />
+      {/* 
+        DYNAMIC CURSOR ENGINE (User Selectable: Fluido WebGL | Elástico Sleek | Suave 21st | Padrão)
+      */}
+      {currentCursor === 'fluido' && <FluidSimulationCursor />}
+      {currentCursor === 'elastico' && <ElasticSleekCursor />}
+      {currentCursor === 'suave' && (
+        <SmoothCursor color="#b8a6e8" glowColor="rgba(184, 166, 232, 0.45)" />
+      )}
 
       {/* Real Starfield Canvas from Arsenal */}
       <StarfieldCanvas />
 
-      {/* Top Navbar */}
-      <Navbar onOpenPhotoModal={() => setIsPhotoModalOpen(true)} />
+      {/* Top Navbar with Cursor Switcher */}
+      <Navbar
+        onOpenPhotoModal={() => setIsPhotoModalOpen(true)}
+        currentCursor={currentCursor}
+        onSelectCursor={handleSelectCursor}
+      />
 
       {/* Main Experience Track */}
       <main className="relative z-10 pt-16">

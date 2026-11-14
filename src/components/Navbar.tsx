@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { Sparkles, Volume2, VolumeX, ImagePlus, Heart } from 'lucide-react'
 import { celestialAudio } from '../audio/celestialSynth'
+import { CursorSwitcher, CursorType } from './cursors/CursorSwitcher'
 
 interface NavbarProps {
   onOpenPhotoModal: () => void
+  currentCursor: CursorType
+  onSelectCursor: (cursor: CursorType) => void
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenPhotoModal }) => {
+export const Navbar: React.FC<NavbarProps> = ({
+  onOpenPhotoModal,
+  currentCursor,
+  onSelectCursor,
+}) => {
   const [scrolled, setScrolled] = useState(false)
   const [isMuted, setIsMuted] = useState(true)
 
@@ -49,21 +56,24 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenPhotoModal }) => {
         </a>
 
         {/* Navigation items (Apple style) */}
-        <nav className="hidden lg:flex items-center gap-8 text-xs font-medium text-neutral-300">
-          <a href="#hero" className="hover:text-rose-200 transition-colors">
-            Início
+        <nav className="hidden lg:flex items-center gap-7 text-xs font-medium text-neutral-300">
+          <a href="#historia" className="hover:text-rose-200 transition-colors">
+            História
+          </a>
+          <a href="#scrolly-chapter" className="hover:text-rose-200 transition-colors">
+            Capítulos
           </a>
           <a href="#specs" className="hover:text-rose-200 transition-colors">
             Especificações
           </a>
-          <a href="#timeline" className="hover:text-rose-200 transition-colors">
-            Linha do Tempo
+          <a href="#memorias" className="hover:text-rose-200 transition-colors">
+            Cubos 3D
           </a>
-          <a href="#powers" className="hover:text-rose-200 transition-colors">
-            Superpoderes
+          <a href="#interatividade" className="hover:text-rose-200 transition-colors">
+            Interatividade
           </a>
           <a href="#vault" className="hover:text-rose-200 transition-colors">
-            Galeria 3D
+            Memórias
           </a>
           <a href="#letter" className="hover:text-rose-200 transition-colors">
             Carta ao Futuro
@@ -71,7 +81,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenPhotoModal }) => {
         </nav>
 
         {/* Action Controls */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
+          {/* Cursor Selector Pill */}
+          <CursorSwitcher
+            currentCursor={currentCursor}
+            onSelectCursor={onSelectCursor}
+          />
+
           {/* Sound toggle pill */}
           <button
             onClick={handleToggleAudio}
@@ -84,7 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenPhotoModal }) => {
               <Volume2 className="h-3.5 w-3.5 text-amber-300 animate-pulse" />
             )}
             <span className="hidden sm:inline text-[11px] font-medium">
-              {isMuted ? 'Ativar Som' : 'Som Ligado'}
+              {isMuted ? 'Som' : 'Ligado'}
             </span>
           </button>
 
@@ -94,7 +110,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenPhotoModal }) => {
             className="flex items-center gap-2 rounded-full border border-rose-400/30 bg-gradient-to-r from-rose-500/20 to-purple-500/20 px-3.5 py-1.5 text-xs font-medium text-rose-100 hover:border-rose-400/60 hover:from-rose-500/30 hover:to-purple-500/30 transition-all shadow-sm"
           >
             <ImagePlus className="h-3.5 w-3.5 text-rose-300" />
-            <span className="hidden sm:inline text-[11px]">Personalizar Fotos</span>
+            <span className="hidden sm:inline text-[11px]">Fotos</span>
           </button>
         </div>
       </div>
