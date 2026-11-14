@@ -1,21 +1,20 @@
-import React, { useState } from 'react'
-import { Navbar } from './components/Navbar'
-import { StarfieldCanvas } from './components/StarfieldCanvas'
-import { RouletteTemplateBloom } from './components/RouletteTemplateBloom'
-import { ApplePinnedChapter } from './components/ApplePinnedChapter'
-import { SpecsSection } from './components/SpecsSection'
-import { ThreeDimensionalCards } from './components/ThreeDimensionalCards'
-import { BentoGridSection } from './components/BentoGridSection'
-import { InteractiveUiverseGalaxy } from './components/InteractiveUiverseGalaxy'
-import { MemoryVault3D, MemoryCardData } from './components/MemoryVault3D'
-import { LetterSection } from './components/LetterSection'
+import React, { useState, useEffect } from 'react'
+import { AppleGlobalNav } from './components/apple/AppleGlobalNav'
+import { AppleRibbon } from './components/apple/AppleRibbon'
+import { AppleHeroDark } from './components/apple/AppleHeroDark'
+import { AppleHeroLight } from './components/apple/AppleHeroLight'
+import { AppleHeroViolet } from './components/apple/AppleHeroViolet'
+import { ApplePromoGrid } from './components/apple/ApplePromoGrid'
+import { AppleStreamerCarousel } from './components/apple/AppleStreamerCarousel'
+import { AppleEditorialLetter } from './components/apple/AppleEditorialLetter'
+import { AppleFooter } from './components/apple/AppleFooter'
 import { PhotoUploadModal } from './components/PhotoUploadModal'
-import { Footer } from './components/Footer'
-import { SmoothCursor } from './components/21st/smooth-cursor'
-import { InteractiveDock } from './components/21st/interactive-dock'
+import { MemoryCardData } from './components/MemoryVault3D'
 import ElasticSleekCursor from './components/cursors/ElasticSleekCursor'
 import FluidSimulationCursor from './components/cursors/FluidSimulationCursor'
+import { SmoothCursor } from './components/21st/smooth-cursor'
 import { CursorType } from './components/cursors/CursorSwitcher'
+import { celestialAudio } from './audio/celestialSynth'
 
 const DEFAULT_HERO_IMAGE =
   'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1200&auto=format&fit=crop'
@@ -80,13 +79,19 @@ const DEFAULT_MEMORY_CARDS: MemoryCardData[] = [
 
 export default function App() {
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false)
+  const [isMuted, setIsMuted] = useState(false)
+
+  // Cursor selector with persistent memory
   const [currentCursor, setCurrentCursor] = useState<CursorType>(() => {
     return (localStorage.getItem('alycia_active_cursor') as CursorType) || 'fluido'
   })
 
+  // Hero Image customizer
   const [heroImage, setHeroImage] = useState<string>(() => {
     return localStorage.getItem('alycia_hero_image') || DEFAULT_HERO_IMAGE
   })
+
+  // Memory cards customizer
   const [memoryCards, setMemoryCards] = useState<MemoryCardData[]>(() => {
     const saved = localStorage.getItem('alycia_memory_cards')
     if (saved) {
@@ -124,95 +129,80 @@ export default function App() {
     localStorage.removeItem('alycia_memory_cards')
   }
 
-  const handleScrollToExplore = () => {
-    const el = document.getElementById('scrolly-chapter')
-    el?.scrollIntoView({ behavior: 'smooth' })
+  const handleToggleMute = () => {
+    setIsMuted(!isMuted)
   }
 
-  const handleScrollToLetter = () => {
-    const el = document.getElementById('letter')
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id)
     el?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
-    <div className="relative min-h-screen bg-[#09071c] text-neutral-100 overflow-x-hidden selection:bg-purple-500/25 selection:text-purple-200">
+    <div className="relative min-h-screen bg-[#000000] text-[#f5f5f7] overflow-x-hidden font-sf antialiased selection:bg-[#0071e3]/30 selection:text-white">
       {/* 
-        DYNAMIC CURSOR ENGINE (User Selectable: Fluido WebGL | Elástico Sleek | Suave 21st | Padrão)
+        AUTHENTIC INTERACTIVE CURSORS
+        1. FluidSimulationCursor (WebGL Navier-Stokes dynamic fluid smoke simulation)
+        2. ElasticSleekCursor (Framer motion spring velocity angle stretching & rotation)
+        3. SmoothCursor (21st.dev smooth lag ring cursor)
+        4. Standard system cursor
       */}
       {currentCursor === 'fluido' && <FluidSimulationCursor />}
       {currentCursor === 'elastico' && <ElasticSleekCursor />}
       {currentCursor === 'suave' && (
-        <SmoothCursor color="#b8a6e8" glowColor="rgba(184, 166, 232, 0.45)" />
+        <SmoothCursor color="#2997ff" glowColor="rgba(41, 151, 255, 0.45)" />
       )}
 
-      {/* Real Starfield Canvas from Arsenal */}
-      <StarfieldCanvas />
-
-      {/* Top Navbar with Cursor Switcher */}
-      <Navbar
+      {/* Official Apple Global Navigation (44px Frosted Glass) */}
+      <AppleGlobalNav
         onOpenPhotoModal={() => setIsPhotoModalOpen(true)}
         currentCursor={currentCursor}
         onSelectCursor={handleSelectCursor}
+        isMuted={isMuted}
+        onToggleMute={handleToggleMute}
       />
 
-      {/* Main Experience Track */}
-      <main className="relative z-10 pt-16">
-        {/* 
-          1. FLAGSHIP TEMPLATE DA ROLETA (1:1 com 3b5029bb-4864-488e-b71a-1e7288e50fa0.jpg)
-          Onde o Amor Floresce • Flor de Lótus 3D • 3 Cards de Virtudes • Banner Escuro de Métricas • Santuário Clássico
-        */}
-        <div id="historia">
-          <RouletteTemplateBloom
-            onExploreClick={handleScrollToExplore}
-            onCelebrateClick={handleScrollToLetter}
-          />
-        </div>
+      {/* Main Track (Offset for 44px Fixed Global Nav) */}
+      <main className="relative pt-[44px]">
+        {/* Apple Announcement Ribbon */}
+        <AppleRibbon />
 
-        {/* 
-          2. APPLE PINNED SCROLLYTELLING (Inspirado nos repositórios WeroWallet & TrevorNoah)
-          Pinning completo da viewport e desdobramento cinematográfico dos 0 aos 7 anos
-        */}
-        <ApplePinnedChapter />
-
-        {/* 
-          3. ESPECIFICAÇÕES DE UMA GAROTA EXTRAORDINÁRIA (Padrão Apple Tech Specs)
-        */}
-        <SpecsSection />
-
-        {/* 
-          4. CARDS 3D INTERATIVOS COM PARALAXE E GIRO (Código Real do Repositório 3D-CARDS)
-        */}
-        <ThreeDimensionalCards />
-
-        {/* 
-          5. BENTO GRID DE VANGUARDA (Arsenal 21st.dev)
-        */}
-        <BentoGridSection />
-
-        {/* 
-          6. CÁPSULA INTERATIVA DO UIVERSE (20+ Componentes Reais com Isolamento de CSS)
-        */}
-        <InteractiveUiverseGalaxy />
-
-        {/* 
-          7. THE MEMORY VAULT 3D (Pilha Tridimensional de Memórias)
-        */}
-        <MemoryVault3D
-          cards={memoryCards}
+        {/* 1. Monumental Dark Titanium Hero (Alycia Pro • 7 Anos) */}
+        <AppleHeroDark
+          heroImage={heroImage}
+          onExploreClick={() => scrollToSection('sete-anos')}
+          onMemoriesClick={() => scrollToSection('streamer-memorias')}
           onOpenPhotoModal={() => setIsPhotoModalOpen(true)}
         />
 
-        {/* 
-          8. CARTA AO FUTURO & GRAND FINALE
-        */}
-        <LetterSection />
+        {/* 2. Monumental Starlight Light Hero (O Começo de Tudo • 2.556 dias) */}
+        <AppleHeroLight
+          onScrollToCards={() => scrollToSection('promo-grid')}
+          onScrollToMemories={() => scrollToSection('streamer-memorias')}
+        />
+
+        {/* 3. Deep Obsidian Hero (Superpoderes & Virtudes) */}
+        <AppleHeroViolet
+          onScrollTo3D={() => scrollToSection('galeria-3d')}
+          onScrollToPromo={() => scrollToSection('promo-grid')}
+        />
+
+        {/* 4. The Official Apple 2x3 Promo Grid (6 Massive Cards with 3D Cube & Giggle Synthesis) */}
+        <ApplePromoGrid
+          onScrollTo3D={() => scrollToSection('galeria-3d')}
+          onScrollToLetter={() => scrollToSection('carta-pai')}
+          onScrollToStreamer={() => scrollToSection('streamer-memorias')}
+        />
+
+        {/* 5. Apple TV+ Style Horizontal Streamer Carousel */}
+        <AppleStreamerCarousel />
+
+        {/* 6. Apple Executive Editorial Letter (Father's Dedication) */}
+        <AppleEditorialLetter />
       </main>
 
-      {/* 21st.dev Interactive Apple Dock */}
-      <InteractiveDock />
-
-      {/* Footer */}
-      <Footer />
+      {/* 7. Official Apple Brasil 5-Column Directory Footer with Numbered Footnotes */}
+      <AppleFooter />
 
       {/* Photo Customizer Modal */}
       <PhotoUploadModal
