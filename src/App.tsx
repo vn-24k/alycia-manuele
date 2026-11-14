@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { AppleGlobalNav } from './components/apple/AppleGlobalNav'
 import { AppleRibbon } from './components/apple/AppleRibbon'
 import { AppleHeroDark } from './components/apple/AppleHeroDark'
@@ -7,14 +7,12 @@ import { AppleHeroViolet } from './components/apple/AppleHeroViolet'
 import { ApplePromoGrid } from './components/apple/ApplePromoGrid'
 import { AppleStreamerCarousel } from './components/apple/AppleStreamerCarousel'
 import { AppleEditorialLetter } from './components/apple/AppleEditorialLetter'
-import { AppleFooter } from './components/apple/AppleFooter'
 import { PhotoUploadModal } from './components/PhotoUploadModal'
 import { MemoryCardData } from './components/MemoryVault3D'
 import ElasticSleekCursor from './components/cursors/ElasticSleekCursor'
 import FluidSimulationCursor from './components/cursors/FluidSimulationCursor'
 import { SmoothCursor } from './components/21st/smooth-cursor'
 import { CursorType } from './components/cursors/CursorSwitcher'
-import { celestialAudio } from './audio/celestialSynth'
 
 const DEFAULT_HERO_IMAGE =
   'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1200&auto=format&fit=crop'
@@ -139,7 +137,7 @@ export default function App() {
   }
 
   return (
-    <div className="relative min-h-screen bg-[#000000] text-[#f5f5f7] overflow-x-hidden font-sf antialiased selection:bg-[#0071e3]/30 selection:text-white">
+    <div className="relative min-h-screen bg-[#000000] text-[#f5f5f7] overflow-x-hidden font-sf antialiased selection:bg-[#0071e3]/30 selection:text-white pb-12">
       {/* 
         AUTHENTIC INTERACTIVE CURSORS
         1. FluidSimulationCursor (WebGL Navier-Stokes dynamic fluid smoke simulation)
@@ -153,7 +151,7 @@ export default function App() {
         <SmoothCursor color="#2997ff" glowColor="rgba(41, 151, 255, 0.45)" />
       )}
 
-      {/* Official Apple Global Navigation (44px Frosted Glass) */}
+      {/* Global Navigation (44px Frosted Glass — Brand Alycia Manuele) */}
       <AppleGlobalNav
         onOpenPhotoModal={() => setIsPhotoModalOpen(true)}
         currentCursor={currentCursor}
@@ -162,12 +160,12 @@ export default function App() {
         onToggleMute={handleToggleMute}
       />
 
-      {/* Main Track (Offset for 44px Fixed Global Nav) */}
+      {/* Main Track */}
       <main className="relative pt-[44px]">
-        {/* Apple Announcement Ribbon */}
+        {/* Announcement Ribbon */}
         <AppleRibbon />
 
-        {/* 1. Monumental Dark Titanium Hero (Alycia Pro • 7 Anos) */}
+        {/* 1. Monumental Dark Titanium Hero (Alycia • 7 Anos) */}
         <AppleHeroDark
           heroImage={heroImage}
           onExploreClick={() => scrollToSection('sete-anos')}
@@ -187,22 +185,19 @@ export default function App() {
           onScrollToPromo={() => scrollToSection('promo-grid')}
         />
 
-        {/* 4. The Official Apple 2x3 Promo Grid (6 Massive Cards with 3D Cube & Giggle Synthesis) */}
+        {/* 4. The 2x3 Promo Grid (6 Massive Cards with 3D Cube & Giggle Synthesis) */}
         <ApplePromoGrid
           onScrollTo3D={() => scrollToSection('galeria-3d')}
           onScrollToLetter={() => scrollToSection('carta-pai')}
           onScrollToStreamer={() => scrollToSection('streamer-memorias')}
         />
 
-        {/* 5. Apple TV+ Style Horizontal Streamer Carousel */}
+        {/* 5. Streamer Carousel */}
         <AppleStreamerCarousel />
 
-        {/* 6. Apple Executive Editorial Letter (Father's Dedication) */}
+        {/* 6. Editorial Letter (Father's Dedication — Grand Finale) */}
         <AppleEditorialLetter />
       </main>
-
-      {/* 7. Official Apple Brasil 5-Column Directory Footer with Numbered Footnotes */}
-      <AppleFooter />
 
       {/* Photo Customizer Modal */}
       <PhotoUploadModal
