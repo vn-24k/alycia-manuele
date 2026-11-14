@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Navbar } from './components/Navbar'
-import { HeroSection } from './components/HeroSection'
 import { StarfieldCanvas } from './components/StarfieldCanvas'
+import { RouletteTemplateBloom } from './components/RouletteTemplateBloom'
+import { ApplePinnedChapter } from './components/ApplePinnedChapter'
 import { SpecsSection } from './components/SpecsSection'
-import { TimelineSection } from './components/TimelineSection'
+import { ThreeDimensionalCards } from './components/ThreeDimensionalCards'
 import { BentoGridSection } from './components/BentoGridSection'
+import { InteractiveUiverseGalaxy } from './components/InteractiveUiverseGalaxy'
 import { MemoryVault3D, MemoryCardData } from './components/MemoryVault3D'
 import { LetterSection } from './components/LetterSection'
 import { PhotoUploadModal } from './components/PhotoUploadModal'
 import { Footer } from './components/Footer'
+import { SmoothCursor } from './components/21st/smooth-cursor'
+import { InteractiveDock } from './components/21st/interactive-dock'
 
 const DEFAULT_HERO_IMAGE =
   'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1200&auto=format&fit=crop'
@@ -108,34 +112,82 @@ export default function App() {
     localStorage.removeItem('alycia_memory_cards')
   }
 
+  const handleScrollToExplore = () => {
+    const el = document.getElementById('scrolly-chapter')
+    el?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const handleScrollToLetter = () => {
+    const el = document.getElementById('letter')
+    el?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
-    <div className="relative min-h-screen bg-[#07070a] text-neutral-100 overflow-x-hidden selection:bg-rose-500/20 selection:text-rose-200">
+    <div className="relative min-h-screen bg-[#09071c] text-neutral-100 overflow-x-hidden selection:bg-purple-500/25 selection:text-purple-200">
+      {/* 21st.dev Smooth Cursor */}
+      <SmoothCursor color="#b8a6e8" glowColor="rgba(184, 166, 232, 0.45)" />
+
       {/* Real Starfield Canvas from Arsenal */}
       <StarfieldCanvas />
 
-      {/* Global Apple Navbar */}
+      {/* Top Navbar */}
       <Navbar onOpenPhotoModal={() => setIsPhotoModalOpen(true)} />
 
-      {/* Main Experience Flows */}
-      <main className="relative z-10">
-        <HeroSection
-          heroImage={heroImage}
-          onOpenPhotoModal={() => setIsPhotoModalOpen(true)}
-        />
+      {/* Main Experience Track */}
+      <main className="relative z-10 pt-16">
+        {/* 
+          1. FLAGSHIP TEMPLATE DA ROLETA (1:1 com 3b5029bb-4864-488e-b71a-1e7288e50fa0.jpg)
+          Onde o Amor Floresce • Flor de Lótus 3D • 3 Cards de Virtudes • Banner Escuro de Métricas • Santuário Clássico
+        */}
+        <div id="historia">
+          <RouletteTemplateBloom
+            onExploreClick={handleScrollToExplore}
+            onCelebrateClick={handleScrollToLetter}
+          />
+        </div>
 
+        {/* 
+          2. APPLE PINNED SCROLLYTELLING (Inspirado nos repositórios WeroWallet & TrevorNoah)
+          Pinning completo da viewport e desdobramento cinematográfico dos 0 aos 7 anos
+        */}
+        <ApplePinnedChapter />
+
+        {/* 
+          3. ESPECIFICAÇÕES DE UMA GAROTA EXTRAORDINÁRIA (Padrão Apple Tech Specs)
+        */}
         <SpecsSection />
 
-        <TimelineSection />
+        {/* 
+          4. CARDS 3D INTERATIVOS COM PARALAXE E GIRO (Código Real do Repositório 3D-CARDS)
+        */}
+        <ThreeDimensionalCards />
 
+        {/* 
+          5. BENTO GRID DE VANGUARDA (Arsenal 21st.dev)
+        */}
         <BentoGridSection />
 
+        {/* 
+          6. CÁPSULA INTERATIVA DO UIVERSE (20+ Componentes Reais com Isolamento de CSS)
+        */}
+        <InteractiveUiverseGalaxy />
+
+        {/* 
+          7. THE MEMORY VAULT 3D (Pilha Tridimensional de Memórias)
+        */}
         <MemoryVault3D
           cards={memoryCards}
           onOpenPhotoModal={() => setIsPhotoModalOpen(true)}
         />
 
+        {/* 
+          8. CARTA AO FUTURO & GRAND FINALE
+        */}
         <LetterSection />
       </main>
+
+      {/* 21st.dev Interactive Apple Dock */}
+      <InteractiveDock />
 
       {/* Footer */}
       <Footer />
