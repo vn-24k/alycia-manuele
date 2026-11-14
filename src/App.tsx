@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { AppleGlobalNav } from './components/apple/AppleGlobalNav'
 import { AppleRibbon } from './components/apple/AppleRibbon'
 import { AppleHeroDark } from './components/apple/AppleHeroDark'
-import { AppleHeroLight } from './components/apple/AppleHeroLight'
-import { AppleHeroViolet } from './components/apple/AppleHeroViolet'
-import { ApplePromoGrid } from './components/apple/ApplePromoGrid'
-import { AppleStreamerCarousel } from './components/apple/AppleStreamerCarousel'
-import { AppleEditorialLetter } from './components/apple/AppleEditorialLetter'
+// Componentes preparados para as próximas etapas:
+// import { AppleHeroLight } from './components/apple/AppleHeroLight'
+// import { AppleHeroViolet } from './components/apple/AppleHeroViolet'
+// import { ApplePromoGrid } from './components/apple/ApplePromoGrid'
+// import { AppleStreamerCarousel } from './components/apple/AppleStreamerCarousel'
+// import { AppleEditorialLetter } from './components/apple/AppleEditorialLetter'
 import { PhotoUploadModal } from './components/PhotoUploadModal'
 import { MemoryCardData } from './components/MemoryVault3D'
 import ElasticSleekCursor from './components/cursors/ElasticSleekCursor'
@@ -79,17 +80,17 @@ export default function App() {
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false)
   const [isMuted, setIsMuted] = useState(false)
 
-  // Cursor selector with persistent memory
+  // Seletor de Cursores Interativos (Memória no LocalStorage)
   const [currentCursor, setCurrentCursor] = useState<CursorType>(() => {
     return (localStorage.getItem('alycia_active_cursor') as CursorType) || 'fluido'
   })
 
-  // Hero Image customizer
+  // Imagem Principal do Hero
   const [heroImage, setHeroImage] = useState<string>(() => {
     return localStorage.getItem('alycia_hero_image') || DEFAULT_HERO_IMAGE
   })
 
-  // Memory cards customizer
+  // Cartões de Memórias
   const [memoryCards, setMemoryCards] = useState<MemoryCardData[]>(() => {
     const saved = localStorage.getItem('alycia_memory_cards')
     if (saved) {
@@ -131,19 +132,14 @@ export default function App() {
     setIsMuted(!isMuted)
   }
 
-  const scrollToSection = (id: string) => {
-    const el = document.getElementById(id)
-    el?.scrollIntoView({ behavior: 'smooth' })
-  }
-
   return (
-    <div className="relative min-h-screen bg-[#000000] text-[#f5f5f7] overflow-x-hidden font-sf antialiased selection:bg-[#0071e3]/30 selection:text-white pb-12">
+    <div className="relative min-h-screen bg-[#000000] text-[#f5f5f7] overflow-x-hidden font-sf antialiased selection:bg-[#0071e3]/30 selection:text-white pb-16">
       {/* 
-        AUTHENTIC INTERACTIVE CURSORS
-        1. FluidSimulationCursor (WebGL Navier-Stokes dynamic fluid smoke simulation)
-        2. ElasticSleekCursor (Framer motion spring velocity angle stretching & rotation)
-        3. SmoothCursor (21st.dev smooth lag ring cursor)
-        4. Standard system cursor
+        CURSORES INTERATIVOS EM TEMPO REAL
+        1. Fluido WebGL (Simulação física de fumaça colorida Navier-Stokes)
+        2. Elástico Sleek (Mira com física de estiramento e rotação angular)
+        3. Suave 21st (Anel magnético suave)
+        4. Padrão do Sistema
       */}
       {currentCursor === 'fluido' && <FluidSimulationCursor />}
       {currentCursor === 'elastico' && <ElasticSleekCursor />}
@@ -151,7 +147,7 @@ export default function App() {
         <SmoothCursor color="#2997ff" glowColor="rgba(41, 151, 255, 0.45)" />
       )}
 
-      {/* Global Navigation (44px Frosted Glass — Brand Alycia Manuele) */}
+      {/* Navegação Global 44px Frosted Glass (Marca Alycia Manuele) */}
       <AppleGlobalNav
         onOpenPhotoModal={() => setIsPhotoModalOpen(true)}
         currentCursor={currentCursor}
@@ -160,46 +156,33 @@ export default function App() {
         onToggleMute={handleToggleMute}
       />
 
-      {/* Main Track */}
+      {/* Trilha Principal */}
       <main className="relative pt-[44px]">
-        {/* Announcement Ribbon */}
+        {/* Faixa de Destaque */}
         <AppleRibbon />
 
-        {/* 1. Monumental Dark Titanium Hero (Alycia • 7 Anos) */}
+        {/* 
+          ETAPA 1: HERO PRINCIPAL TITÂNIO (Foco Atual)
+          Aqui construímos a manchete de impacto, o subtítulo, a foto oficial e as métricas.
+        */}
         <AppleHeroDark
           heroImage={heroImage}
-          onExploreClick={() => scrollToSection('sete-anos')}
-          onMemoriesClick={() => scrollToSection('streamer-memorias')}
+          onExploreClick={() => {}}
+          onMemoriesClick={() => {}}
           onOpenPhotoModal={() => setIsPhotoModalOpen(true)}
         />
 
-        {/* 2. Monumental Starlight Light Hero (O Começo de Tudo • 2.556 dias) */}
-        <AppleHeroLight
-          onScrollToCards={() => scrollToSection('promo-grid')}
-          onScrollToMemories={() => scrollToSection('streamer-memorias')}
-        />
-
-        {/* 3. Deep Obsidian Hero (Superpoderes & Virtudes) */}
-        <AppleHeroViolet
-          onScrollTo3D={() => scrollToSection('galeria-3d')}
-          onScrollToPromo={() => scrollToSection('promo-grid')}
-        />
-
-        {/* 4. The 2x3 Promo Grid (6 Massive Cards with 3D Cube & Giggle Synthesis) */}
-        <ApplePromoGrid
-          onScrollTo3D={() => scrollToSection('galeria-3d')}
-          onScrollToLetter={() => scrollToSection('carta-pai')}
-          onScrollToStreamer={() => scrollToSection('streamer-memorias')}
-        />
-
-        {/* 5. Streamer Carousel */}
-        <AppleStreamerCarousel />
-
-        {/* 6. Editorial Letter (Father's Dedication — Grand Finale) */}
-        <AppleEditorialLetter />
+        {/* 
+          AS DEMAIS SEÇÕES ESTÃO PRONTAS E SERÃO LIBERADAS UMA A UMA:
+          - Etapa 2: Linha do Tempo Starlight (Os marcos do 1º ao 7º ano)
+          - Etapa 3: Superpoderes & Virtudes (Os 4 dons especiais)
+          - Etapa 4: Grade Promo 2x3 (6 cartões com o Cubo 3D interativo e som)
+          - Etapa 5: Stream de Memórias (Carrossel estilo Apple TV+)
+          - Etapa 6: Carta do Papai (Dedicatória e encerramento oficial)
+        */}
       </main>
 
-      {/* Photo Customizer Modal */}
+      {/* Modal para Troca Rápida de Fotos */}
       <PhotoUploadModal
         isOpen={isPhotoModalOpen}
         onClose={() => setIsPhotoModalOpen(false)}

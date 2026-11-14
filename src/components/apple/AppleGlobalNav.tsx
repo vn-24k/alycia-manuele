@@ -70,7 +70,7 @@ export const AppleGlobalNav: React.FC<AppleGlobalNavProps> = ({
     <>
       <header className="fixed top-0 left-0 right-0 z-50 h-[44px] apple-nav-blur border-b border-white/[0.08] transition-all">
         <div className="max-w-[1024px] mx-auto h-full px-4 flex items-center justify-between text-[12px] font-normal tracking-[-0.01em] text-[#d2d2d7]">
-          {/* Brand Logo / Monogram (No Apple Logo) */}
+          {/* Brand Logo / Monogram */}
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="text-white hover:opacity-80 transition-opacity flex items-center gap-2 group py-1"
@@ -80,55 +80,19 @@ export const AppleGlobalNav: React.FC<AppleGlobalNavProps> = ({
             <span className="font-semibold text-[13px] tracking-tight text-white">Alycia Manuele</span>
           </button>
 
-          {/* Navigation Links */}
-          <nav className="hidden md:flex items-center gap-7">
+          {/* Navigation Links (Foco Atual) */}
+          <nav className="flex items-center gap-6">
             <button
               onClick={() => handleNavClick('alycia-pro')}
-              className="hover:text-white transition-colors"
+              className="text-white hover:opacity-80 transition-opacity font-medium"
             >
               Início
-            </button>
-            <button
-              onClick={() => handleNavClick('sete-anos')}
-              className="hover:text-white transition-colors"
-            >
-              Sete Anos
-            </button>
-            <button
-              onClick={() => handleNavClick('superpoderes')}
-              className="hover:text-white transition-colors"
-            >
-              Superpoderes
-            </button>
-            <button
-              onClick={() => handleNavClick('promo-grid')}
-              className="hover:text-white transition-colors"
-            >
-              Destaques
-            </button>
-            <button
-              onClick={() => handleNavClick('galeria-3d')}
-              className="hover:text-white transition-colors"
-            >
-              Cubo 3D
-            </button>
-            <button
-              onClick={() => handleNavClick('streamer-memorias')}
-              className="hover:text-white transition-colors"
-            >
-              Memórias
-            </button>
-            <button
-              onClick={() => handleNavClick('carta-pai')}
-              className="hover:text-white transition-colors"
-            >
-              Carta do Pai
             </button>
             <button
               onClick={onOpenPhotoModal}
               className="text-[#2997ff] hover:text-[#52a9ff] transition-colors font-medium flex items-center gap-1"
             >
-              Fotos
+              Trocar Foto
             </button>
           </nav>
 
@@ -208,7 +172,7 @@ export const AppleGlobalNav: React.FC<AppleGlobalNavProps> = ({
 
             {/* Heart Icon */}
             <button
-              onClick={() => handleNavClick('carta-pai')}
+              onClick={() => handleNavClick('alycia-pro')}
               className="text-[#d2d2d7] hover:text-[#ff3b30] p-1 transition-colors relative"
               title="Amor do Pai: 100%"
             >
