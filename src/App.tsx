@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import { AppleGlobalNav } from './components/apple/AppleGlobalNav'
 import { AppleRibbon } from './components/apple/AppleRibbon'
 import { AppleHeroDark } from './components/apple/AppleHeroDark'
-// Componentes preparados para as próximas etapas:
-// import { AppleHeroLight } from './components/apple/AppleHeroLight'
-// import { AppleHeroViolet } from './components/apple/AppleHeroViolet'
-// import { ApplePromoGrid } from './components/apple/ApplePromoGrid'
-// import { AppleStreamerCarousel } from './components/apple/AppleStreamerCarousel'
-// import { AppleEditorialLetter } from './components/apple/AppleEditorialLetter'
+import { SweatyPortalIntro } from './components/arsenal/SweatyPortalIntro'
+import { ZoomPrincessTransition } from './components/arsenal/ZoomPrincessTransition'
+import { StickyPrincessCards } from './components/arsenal/StickyPrincessCards'
+import { ImageFlockPrincesses } from './components/arsenal/ImageFlockPrincesses'
+import { OrbitsPrincessCards } from './components/arsenal/OrbitsPrincessCards'
+import { CodropsPaperShimmer } from './components/arsenal/CodropsPaperShimmer'
+import { AppleEditorialLetter } from './components/apple/AppleEditorialLetter'
 import { PhotoUploadModal } from './components/PhotoUploadModal'
 import { MemoryCardData } from './components/MemoryVault3D'
 import ElasticSleekCursor from './components/cursors/ElasticSleekCursor'
@@ -80,17 +81,17 @@ export default function App() {
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false)
   const [isMuted, setIsMuted] = useState(false)
 
-  // Seletor de Cursores Interativos (Memória no LocalStorage)
+  // Cursor selector
   const [currentCursor, setCurrentCursor] = useState<CursorType>(() => {
     return (localStorage.getItem('alycia_active_cursor') as CursorType) || 'fluido'
   })
 
-  // Imagem Principal do Hero
+  // Hero image state
   const [heroImage, setHeroImage] = useState<string>(() => {
     return localStorage.getItem('alycia_hero_image') || DEFAULT_HERO_IMAGE
   })
 
-  // Cartões de Memórias
+  // Memory cards state
   const [memoryCards, setMemoryCards] = useState<MemoryCardData[]>(() => {
     const saved = localStorage.getItem('alycia_memory_cards')
     if (saved) {
@@ -132,14 +133,30 @@ export default function App() {
     setIsMuted(!isMuted)
   }
 
+  const scrollToLetter = () => {
+    const el = document.getElementById('carta-pai')
+    el?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const scrollToGalleries = () => {
+    const el = document.getElementById('galeria-reinos')
+    el?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
     <div className="relative min-h-screen bg-[#000000] text-[#f5f5f7] overflow-x-hidden font-sf antialiased selection:bg-[#0071e3]/30 selection:text-white pb-16">
       {/* 
-        CURSORES INTERATIVOS EM TEMPO REAL
-        1. Fluido WebGL (Simulação física de fumaça colorida Navier-Stokes)
-        2. Elástico Sleek (Mira com física de estiramento e rotação angular)
-        3. Suave 21st (Anel magnético suave)
-        4. Padrão do Sistema
+        1. INTRO EXPANSIVA CIRCULAR DO SWEATY-SHOP-LOADING
+        Portal místico que explode com coroas, flocos de neve e estrelas para revelar o reino
+      */}
+      <SweatyPortalIntro />
+
+      {/* 
+        CURSORES INTERATIVOS
+        - Fluido WebGL (Fumaça e fluidos coloridos Navier-Stokes)
+        - Elástico Sleek (Mira futurista com rotação e estiramento angular)
+        - Suave 21st (Anel magnético)
+        - Padrão do Sistema
       */}
       {currentCursor === 'fluido' && <FluidSimulationCursor />}
       {currentCursor === 'elastico' && <ElasticSleekCursor />}
@@ -147,7 +164,7 @@ export default function App() {
         <SmoothCursor color="#2997ff" glowColor="rgba(41, 151, 255, 0.45)" />
       )}
 
-      {/* Navegação Global 44px Frosted Glass (Marca Alycia Manuele) */}
+      {/* Navegação Global 44px (Marca Alycia Manuele) */}
       <AppleGlobalNav
         onOpenPhotoModal={() => setIsPhotoModalOpen(true)}
         currentCursor={currentCursor}
@@ -156,30 +173,54 @@ export default function App() {
         onToggleMute={handleToggleMute}
       />
 
-      {/* Trilha Principal */}
+      {/* Trilha Principal da Celebração */}
       <main className="relative pt-[44px]">
-        {/* Faixa de Destaque */}
+        {/* Faixa Oficial da Celebração */}
         <AppleRibbon />
 
-        {/* 
-          ETAPA 1: HERO PRINCIPAL TITÂNIO (Foco Atual)
-          Aqui construímos a manchete de impacto, o subtítulo, a foto oficial e as métricas.
-        */}
+        {/* 1. Hero Principal Monumental de Aniversário */}
         <AppleHeroDark
           heroImage={heroImage}
-          onExploreClick={() => {}}
-          onMemoriesClick={() => {}}
+          onExploreClick={scrollToGalleries}
+          onMemoriesClick={scrollToLetter}
           onOpenPhotoModal={() => setIsPhotoModalOpen(true)}
         />
 
         {/* 
-          AS DEMAIS SEÇÕES ESTÃO PRONTAS E SERÃO LIBERADAS UMA A UMA:
-          - Etapa 2: Linha do Tempo Starlight (Os marcos do 1º ao 7º ano)
-          - Etapa 3: Superpoderes & Virtudes (Os 4 dons especiais)
-          - Etapa 4: Grade Promo 2x3 (6 cartões com o Cubo 3D interativo e som)
-          - Etapa 5: Stream de Memórias (Carrossel estilo Apple TV+)
-          - Etapa 6: Carta do Papai (Dedicatória e encerramento oficial)
+          2. ZOOM TRANSITION (Código real do repositório zoom-transition)
+          Galeria de 6 Reinos Encantados (Frozen/Elsa, Branca de Neve, Rapunzel, Cinderela, Luccas Neto, Alycia)
+          com expansão em tela cheia e revelação cinematográfica
         */}
+        <div id="galeria-reinos">
+          <ZoomPrincessTransition />
+        </div>
+
+        {/* 
+          3. STIKY CARDS (Código real do repositório stiky-cards)
+          Livro de Histórias com cartas que voam de lados alternados e empilham em 3D
+        */}
+        <StickyPrincessCards />
+
+        {/* 
+          4. IMAGE FLOCK (Código real do repositório Image-Flock)
+          Revoada interativa de princesas que flutuam na tela e reagem ao cursor
+        */}
+        <ImageFlockPrincesses />
+
+        {/* 
+          5. ORBITS CARDS (Código real do repositório ORBITS-CARDS)
+          Carrossel orbital em arco 3D trigonométrico que gira ao redor do centro
+        */}
+        <OrbitsPrincessCards />
+
+        {/* 
+          6. CODROPS PAPER (Código real do repositório codrops-paper)
+          Manto de seda e ondas de papel iridescente com física matemática
+        */}
+        <CodropsPaperShimmer />
+
+        {/* 7. Clímax Emocional: Carta do Papai para Alycia */}
+        <AppleEditorialLetter />
       </main>
 
       {/* Modal para Troca Rápida de Fotos */}
