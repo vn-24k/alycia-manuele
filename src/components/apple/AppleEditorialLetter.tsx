@@ -1,6 +1,5 @@
 import React from 'react'
-import { Heart, Sparkles, Feather } from 'lucide-react'
-import { celestialAudio } from '../../audio/celestialSynth'
+import { Heart, Feather } from 'lucide-react'
 
 export const AppleEditorialLetter: React.FC = () => {
   return (
@@ -16,40 +15,40 @@ export const AppleEditorialLetter: React.FC = () => {
         <div className="text-center mb-10">
           <span className="text-xs font-semibold tracking-[0.25em] uppercase text-[#ff375f] flex items-center justify-center gap-1.5 mb-3">
             <Feather className="w-3.5 h-3.5" />
-            Carta do Papai • 7 Anos
+            [Carta do Papai • 7 Anos]
           </span>
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white mb-4">
-            Uma promessa para toda a vida.
+            [Título Principal da Carta]
           </h2>
           <div className="w-16 h-1 bg-[#ff375f]/40 mx-auto rounded-full" />
         </div>
 
-        {/* The Letter Body (Apple Executive Memo Style) */}
+        {/* The Letter Body (Clean Placeholders) */}
         <div className="bg-[#141418] rounded-[32px] p-8 sm:p-14 border border-white/[0.09] shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-xl space-y-6 text-base sm:text-lg text-[#d2d2d7] leading-relaxed">
           <p className="font-medium text-white text-xl sm:text-2xl tracking-tight">
             Minha querida Alycia Manuele,
           </p>
 
           <p>
-            Há exatamente 7 anos, minha vida ganhou um significado infinitamente maior. No momento em que você chegou ao mundo, todas as prioridades se reorganizaram e meu coração encontrou sua morada mais bonita.
+            [Parágrafo 01: Suas palavras sobre o nascimento dela e a transformação que ela trouxe para a sua vida...]
           </p>
 
           <p>
-            Ver você crescer dia após dia, descobrindo o significado das palavras, desenhando seus próprios mundos e rindo com aquela gargalhada que cura qualquer cansaço, é o maior presente que a vida poderia me conceder.
+            [Parágrafo 02: Como é acompanhar o dia a dia, os primeiros passos e o sorriso que ilumina a casa...]
           </p>
 
           <p>
-            Você carrega uma inteligência luminosa, uma curiosidade doce e uma sensibilidade rara. Nunca deixe ninguém diminuir a sua imaginação ou a sua coragem. Seja sempre essa garotinha autêntica, generosa e cheia de vida.
+            [Parágrafo 03: As características que você mais admira nela aos 7 anos de idade...]
           </p>
 
           <p>
-            Quero que saiba que, aconteça o que acontecer e para onde quer que seus passos a levem, eu estarei sempre aqui: para segurar a sua mão, aplaudir as suas conquistas, acolher os seus momentos difíceis e lembrar você do quão extraordinária você é.
+            [Parágrafo 04: Sua promessa de apoio, proteção incondicional e amor para o futuro dela...]
           </p>
 
           <div className="pt-8 border-t border-white/[0.1] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <div className="text-xs uppercase tracking-wider text-[#86868b]">
-                Com amor infinito e incondicional,
+                [Com amor eterno,]
               </div>
               <div className="text-2xl sm:text-3xl font-bold text-white tracking-tight mt-1 flex items-center gap-2">
                 Seu Pai
@@ -58,8 +57,8 @@ export const AppleEditorialLetter: React.FC = () => {
             </div>
 
             <div className="text-xs text-[#86868b] sm:text-right">
-              <div>Capítulo Oficial • 7 Anos</div>
-              <div>Para Sempre no Coração</div>
+              <div>[Capítulo Especial • 7 Anos]</div>
+              <div>[Para Sempre no Coração]</div>
             </div>
           </div>
         </div>

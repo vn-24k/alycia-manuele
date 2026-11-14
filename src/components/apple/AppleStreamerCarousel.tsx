@@ -17,53 +17,53 @@ export const AppleStreamerCarousel: React.FC = () => {
   const MEMORY_EPISODES: StreamerItem[] = [
     {
       id: 'ep-1',
-      title: 'O Primeiro Sorriso Espontâneo',
-      category: 'Temporada 01 • O Começo',
-      duration: 'Inesquecível',
+      title: '[Episódio 01 • Título do Momento]',
+      category: '[Temporada 01 • O Começo]',
+      duration: '[Duração]',
       image:
         'https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?q=80&w=900&auto=format&fit=crop',
       description:
-        'Aquele momento em que o mundo parou e uma gargalhada pura iluminou cada canto da nossa história.',
+        '[Descrição e lembrança especial sobre o primeiro episódio da história de Alycia]',
     },
     {
       id: 'ep-2',
-      title: 'Pintando o Próprio Arco-Íris',
-      category: 'Temporada 02 • Artes & Imaginação',
-      duration: 'Pura Magia',
+      title: '[Episódio 02 • Título do Momento]',
+      category: '[Temporada 02 • Descobertas]',
+      duration: '[Duração]',
       image:
         'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?q=80&w=900&auto=format&fit=crop',
       description:
-        'Dedinhos cheios de tinta e um coração livre para inventar as cores mais vibrantes do universo.',
+        '[Descrição e lembrança especial sobre o segundo episódio marcante]',
     },
     {
       id: 'ep-3',
-      title: 'Aventuras no Parque e Balanço nas Nuvens',
-      category: 'Temporada 03 • Descobertas',
-      duration: 'Vento no Rosto',
+      title: '[Episódio 03 • Título do Momento]',
+      category: '[Temporada 03 • Alegria & Brincadeiras]',
+      duration: '[Duração]',
       image:
         'https://images.unsplash.com/photo-1543332164-6e82f355badc?q=80&w=900&auto=format&fit=crop',
       description:
-        'Correndo na grama com a sensação mágica de que o mundo inteiro é um lugar de encanto e brincadeira.',
+        '[Descrição e lembrança especial sobre o terceiro episódio marcante]',
     },
     {
       id: 'ep-4',
-      title: 'O Abraço que Cura Tudo',
-      category: 'Temporada 04 • Amor Infinito',
-      duration: 'Aconchego',
+      title: '[Episódio 04 • Título do Momento]',
+      category: '[Temporada 04 • Amor da Família]',
+      duration: '[Duração]',
       image:
         'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=900&auto=format&fit=crop',
       description:
-        'Não existe lugar mais seguro ou acolhedor no mundo do que o abraço apertado entre pai e filha.',
+        '[Descrição e lembrança especial sobre o quarto episódio marcante]',
     },
     {
       id: 'ep-5',
-      title: 'Sete Anos: A Grande Celebração',
-      category: 'Temporada Especial • O Presente',
-      duration: 'Hoje & Sempre',
+      title: '[Episódio 05 • Sete Anos]',
+      category: '[Temporada Especial • Celebração]',
+      duration: '[Duração]',
       image:
         'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=900&auto=format&fit=crop',
       description:
-        'Comemorando a existência da garotinha mais iluminada, alegre e extraordinária do universo.',
+        '[Descrição e comemoração do marco dos 7 anos de Alycia Manuele]',
     },
   ]
 
@@ -78,19 +78,19 @@ export const AppleStreamerCarousel: React.FC = () => {
       className="bg-[#000000] text-[#f5f5f7] py-16 px-4 overflow-hidden border-b border-white/[0.08]"
     >
       <div className="max-w-[1280px] mx-auto">
-        {/* Apple TV+ Style Header */}
+        {/* Apple TV+ Style Header (Clean Placeholders) */}
         <div className="flex items-end justify-between mb-8 px-2">
           <div>
             <div className="text-xs uppercase font-semibold text-[#86868b] tracking-[0.2em] mb-1.5 flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 text-[#2997ff]" />
-              Stream de Memórias • Episódios Inéditos
+              [Stream de Memórias • Episódios Inéditos]
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#f5f5f7]">
-              Momentos que marcam a vida.
+              [Momentos que Marcam a Vida]
             </h2>
           </div>
           <div className="hidden sm:flex items-center gap-2">
-            <span className="text-xs text-[#86868b]">7 Anos de História</span>
+            <span className="text-xs text-[#86868b]">[7 Anos de História]</span>
           </div>
         </div>
 

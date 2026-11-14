@@ -15,26 +15,26 @@ export const AppleHeroViolet: React.FC<AppleHeroVioletProps> = ({
     {
       icon: Smile,
       color: '#ffd60a',
-      title: 'Sorriso que Ilumina',
-      desc: 'Capaz de transformar qualquer dia cinzento em uma celebração imediata de alegria pura.',
+      title: '[Virtude 1]',
+      desc: '[Descrição da primeira virtude marcante de Alycia]',
     },
     {
       icon: Zap,
       color: '#bf5af2',
-      title: 'Curiosidade Quântica',
-      desc: 'Perguntas geniais sobre como as coisas funcionam, estrelas no céu e segredos da natureza.',
+      title: '[Virtude 2]',
+      desc: '[Descrição da segunda virtude marcante de Alycia]',
     },
     {
       icon: Heart,
       color: '#ff375f',
-      title: 'Coração Nobre & Afeto',
-      desc: 'Uma generosidade espontânea e o cuidado protetor com amigos, animais e a família.',
+      title: '[Virtude 3]',
+      desc: '[Descrição da terceira virtude marcante de Alycia]',
     },
     {
       icon: ShieldCheck,
       color: '#30d158',
-      title: 'Espírito Valente',
-      desc: 'Coragem para experimentar o novo, aprender rápido e encarar cada desafio de cabeça erguida.',
+      title: '[Virtude 4]',
+      desc: '[Descrição da quarta virtude marcante de Alycia]',
     },
   ]
 
@@ -43,25 +43,25 @@ export const AppleHeroViolet: React.FC<AppleHeroVioletProps> = ({
       id="superpoderes"
       className="relative min-h-[90vh] flex flex-col items-center justify-between bg-[#08080c] text-[#f5f5f7] pt-20 pb-16 px-4 overflow-hidden border-b border-white/[0.08]"
     >
-      {/* Background Cosmic Violet Aura */}
+      {/* Background Cosmic Violet Atmosphere */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-b from-[#bf5af2]/15 via-[#5e5ce6]/10 to-transparent blur-[130px] pointer-events-none -z-0" />
 
-      {/* Top Headline Hierarchy */}
+      {/* Top Headline Hierarchy (Clean Placeholders) */}
       <div className="relative z-10 text-center max-w-[960px] mx-auto flex flex-col items-center">
         <span className="text-xs md:text-sm font-semibold tracking-[0.2em] uppercase text-[#bf5af2] mb-3 flex items-center gap-1.5">
           <Sparkles className="w-3.5 h-3.5 text-[#bf5af2]" />
-          Virtudes & Superpoderes
+          [Virtudes & Superpoderes de Alycia]
         </span>
 
         <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-[80px] font-bold tracking-[-0.035em] text-[#f5f5f7] leading-[1.05] mb-4">
-          A imaginação não tem limites.
+          [Manchete Principal de Superpoderes]
         </h2>
 
         <p className="text-lg sm:text-xl md:text-2xl font-normal text-[#86868b] max-w-[680px] mx-auto tracking-[-0.015em] mb-7">
-          Uma mente curiosa combinada com uma doçura natural. Descubra os dons especiais que fazem de Alycia Manuele uma garota única.
+          [Subtítulo sobre os traços mais lindos e marcantes da personalidade de Alycia]
         </p>
 
-        {/* CTAs */}
+        {/* Buttons */}
         <div className="flex items-center gap-5 flex-wrap justify-center text-sm md:text-[15px]">
           <button
             onClick={() => {
@@ -70,7 +70,7 @@ export const AppleHeroViolet: React.FC<AppleHeroVioletProps> = ({
             }}
             className="apple-btn-primary px-5 py-2.5 bg-[#bf5af2] hover:bg-[#a344d6] shadow-lg shadow-[#bf5af2]/20"
           >
-            Ver destaques
+            [Ver destaques]
           </button>
           <button
             onClick={() => {
@@ -79,13 +79,13 @@ export const AppleHeroViolet: React.FC<AppleHeroVioletProps> = ({
             }}
             className="apple-link-chevron group text-base md:text-[17px] text-[#bf5af2]"
           >
-            Interagir no Cubo 3D
+            [Interagir no Cubo 3D]
             <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
           </button>
         </div>
       </div>
 
-      {/* Apple 4-Up Superpower Glass Grid */}
+      {/* 4-Up Virtue Grid */}
       <div className="relative z-10 w-full max-w-[1080px] mx-auto mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {SUPERPOWERS.map((power, idx) => {
           const Icon = power.icon
@@ -111,9 +111,9 @@ export const AppleHeroViolet: React.FC<AppleHeroVioletProps> = ({
               </div>
 
               <div className="mt-6 pt-4 border-t border-white/[0.06] flex items-center justify-between text-[11px] text-[#86868b]">
-                <span>Superpoder #{idx + 1}</span>
+                <span>[Qualidade #{idx + 1}]</span>
                 <span className="text-[#bf5af2] font-medium group-hover:translate-x-1 transition-transform">
-                  Ativo &rarr;
+                  &rarr;
                 </span>
               </div>
             </div>
