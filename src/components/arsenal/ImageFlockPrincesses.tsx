@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react'
-import { Sparkles, Crown, Heart, Compass, Star } from 'lucide-react'
+import { Sparkles, Crown, Star, Compass, Music, Heart } from 'lucide-react'
 import { celestialAudio } from '../../audio/celestialSynth'
 
 export interface PrincessCharacter {
@@ -12,8 +12,8 @@ export interface PrincessCharacter {
   emoji: string
 }
 
-// 32 Personagens Reais: Princesas, Frozen, Desenhos, Heróis Infantis e a Aniversariante
-export const PRINCESS_IMAGES: PrincessCharacter[] = [
+// 32 Personagens Reais Autênticos com arquivos WebP locais otimizados
+export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
   // 1. Frozen
   {
     id: 'elsa',
@@ -191,14 +191,14 @@ export const PRINCESS_IMAGES: PrincessCharacter[] = [
     emoji: '🌺',
   },
 
-  // 4. Desenhos & Ícones Infantis Favoritos
+  // 4. Desenhos & Séries Infantis
   {
     id: 'minnie',
     name: 'Minnie Mouse',
     url: '/characters/minnie.webp',
     color: '#ff375f',
     category: 'Desenhos',
-    tag: 'Laço Vermelho com Poá',
+    tag: 'Laço Vermelho com Bolinhas',
     emoji: '🎀',
   },
   {
@@ -283,7 +283,7 @@ export const PRINCESS_IMAGES: PrincessCharacter[] = [
     emoji: '🦄',
   },
 
-  // 5. Aventureiros & Celebração de 7 Anos
+  // 5. Aventureiros & Aniversariante
   {
     id: 'luccas_neto',
     name: 'Luccas Neto (Aventureiro Azul)',
@@ -313,18 +313,60 @@ export const PRINCESS_IMAGES: PrincessCharacter[] = [
   },
 ]
 
+interface FlockItem {
+  char: PrincessCharacter
+  x: number
+  y: number
+  vx: number
+  vy: number
+  baseSize: number
+  currentScale: number
+  targetScale: number
+  phase: number
+}
+
 export const ImageFlockPrincesses: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [selectedCategory, setSelectedCategory] = useState<string>('Todos')
-  const [activeCharacter, setActiveCharacter] = useState<PrincessCharacter>(PRINCESS_IMAGES[0])
+  const [activeCharacter, setActiveCharacter] = useState<PrincessCharacter>(PRINCESS_CHARACTERS[0])
+  const [imagesReady, setImagesReady] = useState(false)
+
+  // Map of loaded HTMLImageElement
+  const imageMapRef = useRef<Map<string, HTMLImageElement>>(new Map())
+  const flockItemsRef = useRef<FlockItem[]>([])
 
   // Filtered characters list
   const filteredCharacters = useMemo(() => {
-    if (selectedCategory === 'Todos') return PRINCESS_IMAGES
-    return PRINCESS_IMAGES.filter((c) => c.category === selectedCategory)
+    if (selectedCategory === 'Todos') return PRINCESS_CHARACTERS
+    return PRINCESS_CHARACTERS.filter((c) => c.category === selectedCategory)
   }, [selectedCategory])
 
+  // Preload all 32 images once on mount
+  useEffect(() => {
+    let loadedCount = 0
+    const total = PRINCESS_CHARACTERS.length
+
+    PRINCESS_CHARACTERS.forEach((c) => {
+      const img = new Image()
+      img.src = c.url
+      img.onload = () => {
+        imageMapRef.current.set(c.id, img)
+        loadedCount++
+        if (loadedCount >= total) {
+          setImagesReady(true)
+        }
+      }
+      img.onerror = () => {
+        loadedCount++
+        if (loadedCount >= total) {
+          setImagesReady(true)
+        }
+      }
+    })
+  }, [])
+
+  // Canvas engine with real visible character cards and responsive flock physics
   useEffect(() => {
     const container = containerRef.current
     const canvas = canvasRef.current
@@ -332,39 +374,12 @@ export const ImageFlockPrincesses: React.FC = () => {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    // Carregar imagens locais dos 32 personagens
-    const loadedImgs: { img: HTMLImageElement; data: PrincessCharacter }[] = []
-    filteredCharacters.forEach((item) => {
-      const img = new Image()
-      img.src = item.url
-      img.onload = () => {
-        loadedImgs.push({ img, data: item })
-      }
-    })
-
-    // Configurações do motor da Revoada (Image-Flock)
-    const config = {
-      gridSizeDesktop: 0.11,
-      gridSizeMobile: 0.17,
-      gridSpacing: 0.07,
-      cursorReach: 0.44,
-      maxImageScale: 3.2,
-      driftSpeed: 32,
-      followSpeed: 6.5,
-    }
-
     let viewW = container.clientWidth
     let viewH = container.clientHeight
-    let imageBaseSize = viewW * config.gridSizeDesktop
-    let spacing = viewH * config.gridSpacing
-    let gridStep = imageBaseSize + spacing
-    let gridColumns = Math.ceil(viewW / gridStep) + 3
-    let gridRows = Math.ceil(viewH / gridStep) + 3
-    let cursorReach = Math.min(viewW, viewH) * config.cursorReach
+    const dpr = Math.min(window.devicePixelRatio || 1, 2)
 
-    const resizeCanvas = () => {
+    const handleResize = () => {
       if (!container || !canvas) return
-      const dpr = Math.min(window.devicePixelRatio || 1, 2)
       viewW = container.clientWidth
       viewH = container.clientHeight
       canvas.width = viewW * dpr
@@ -372,140 +387,198 @@ export const ImageFlockPrincesses: React.FC = () => {
       canvas.style.width = `${viewW}px`
       canvas.style.height = `${viewH}px`
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-
-      imageBaseSize = viewW < 768 ? viewH * config.gridSizeMobile : viewH * config.gridSizeDesktop
-      spacing = viewH * config.gridSpacing
-      gridStep = imageBaseSize + spacing
-      gridColumns = Math.ceil(viewW / gridStep) + 3
-      gridRows = Math.ceil(viewH / gridStep) + 3
-      cursorReach = Math.min(viewW, viewH) * config.cursorReach
     }
 
-    resizeCanvas()
-    window.addEventListener('resize', resizeCanvas)
+    handleResize()
+    window.addEventListener('resize', handleResize)
 
-    // Coordenadas com aproximação suave (Lerp)
-    const mousePos = { x: viewW / 2, y: viewH / 2 }
-    const focalPoint = { x: mousePos.x, y: mousePos.y }
+    // Build flock items distributed evenly across the canvas
+    const cols = viewW < 640 ? 4 : viewW < 1024 ? 6 : 8
+    const rows = Math.ceil(filteredCharacters.length / cols)
+    const cellW = viewW / cols
+    const cellH = viewH / rows
+    const cardBaseSize = Math.max(56, Math.min(cellW * 0.72, cellH * 0.72, 88))
 
-    const onPointerMove = (e: MouseEvent | TouchEvent) => {
-      const rect = container.getBoundingClientRect()
-      let clientX = 0
-      let clientY = 0
-
-      if ('touches' in e && e.touches.length > 0) {
-        clientX = e.touches[0].clientX
-        clientY = e.touches[0].clientY
-      } else if ('clientX' in e) {
-        clientX = e.clientX
-        clientY = e.clientY
+    flockItemsRef.current = filteredCharacters.map((char, i) => {
+      const col = i % cols
+      const row = Math.floor(i / cols)
+      const posX = col * cellW + cellW / 2 + (Math.random() - 0.5) * 16
+      const posY = row * cellH + cellH / 2 + (Math.random() - 0.5) * 16
+      return {
+        char,
+        x: posX,
+        y: posY,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.35,
+        baseSize: cardBaseSize,
+        currentScale: 1.0,
+        targetScale: 1.0,
+        phase: Math.random() * Math.PI * 2,
       }
+    })
 
-      mousePos.x = clientX - rect.left
-      mousePos.y = clientY - rect.top
+    // Pointer coordinates with smooth following
+    const pointer = { x: viewW / 2, y: viewH / 2, active: false }
+    const focal = { x: viewW / 2, y: viewH / 2 }
+
+    const updatePointer = (clientX: number, clientY: number) => {
+      const rect = container.getBoundingClientRect()
+      pointer.x = clientX - rect.left
+      pointer.y = clientY - rect.top
+      pointer.active = true
     }
 
-    container.addEventListener('mousemove', onPointerMove, { passive: true })
-    container.addEventListener('touchmove', onPointerMove, { passive: true })
-
-    function wrapAround(val: number, min: number, max: number) {
-      const range = max - min
-      return ((((val - min) % range) + range) % range) + min
+    const onMouseMove = (e: MouseEvent) => {
+      updatePointer(e.clientX, e.clientY)
     }
 
-    function cursorInfluence(dist: number, maxDist: number) {
-      if (dist >= maxDist) return 0
-      const norm = dist / maxDist
-      const falloff = 1 - norm * norm
-      return falloff * falloff
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        updatePointer(e.touches[0].clientX, e.touches[0].clientY)
+      }
     }
+
+    const onPointerLeave = () => {
+      pointer.active = false
+    }
+
+    container.addEventListener('mousemove', onMouseMove, { passive: true })
+    container.addEventListener('touchmove', onTouchMove, { passive: true })
+    container.addEventListener('mouseleave', onPointerLeave)
 
     let animId: number
-    let startTime = performance.now()
-    let lastTime = startTime
-    let lastAudioTrigger = 0
+    let time = 0
+    let lastAudioTime = 0
 
-    const render = (currentTime: number) => {
-      const dt = Math.min((currentTime - lastTime) / 1000, 0.1)
-      const elapsed = (currentTime - startTime) / 1000
-      lastTime = currentTime
-
-      focalPoint.x += (mousePos.x - focalPoint.x) * dt * config.followSpeed
-      focalPoint.y += (mousePos.y - focalPoint.y) * dt * config.followSpeed
-
+    const render = () => {
+      time += 0.02
       ctx.clearRect(0, 0, viewW, viewH)
 
-      if (loadedImgs.length > 0) {
-        const driftX = elapsed * config.driftSpeed
-        const driftY = -elapsed * (config.driftSpeed * 0.72)
+      // Smooth Lerp focal point toward cursor or center
+      const targetX = pointer.active ? pointer.x : viewW / 2
+      const targetY = pointer.active ? pointer.y : viewH / 2
+      focal.x += (targetX - focal.x) * 0.1
+      focal.y += (targetY - focal.y) * 0.1
 
-        const wrapMinX = -gridStep
-        const wrapMaxX = viewW + gridStep
-        const wrapMinY = -gridStep
-        const wrapMaxY = viewH + gridStep
+      let closestItem: FlockItem | null = null
+      let minDistance = Infinity
 
-        let closestChar: PrincessCharacter | null = null
-        let minProximity = Infinity
+      const cursorRadius = Math.min(viewW, viewH) * 0.42
 
-        for (let row = -1; row < gridRows; row++) {
-          for (let col = -1; col < gridColumns; col++) {
-            const cellX = wrapAround(col * gridStep + driftX, wrapMinX, wrapMaxX)
-            const cellY = wrapAround(row * gridStep + driftY, wrapMinY, wrapMaxY)
+      // Draw each flock item
+      flockItemsRef.current.forEach((item) => {
+        // Floating gentle sinusoidal wave motion
+        const floatY = Math.sin(time * 1.5 + item.phase) * 6
+        const floatX = Math.cos(time * 1.2 + item.phase) * 5
 
-            const pairIdx = Math.abs((col * 13 + row * 19) % loadedImgs.length)
-            const pair = loadedImgs[pairIdx]
-            if (!pair || !pair.img) continue
+        item.x += item.vx + floatX * 0.08
+        item.y += item.vy + floatY * 0.08
 
-            const cellCenterX = cellX + imageBaseSize / 2
-            const cellCenterY = cellY + imageBaseSize / 2
-            const dx = cellCenterX - focalPoint.x
-            const dy = cellCenterY - focalPoint.y
-            const dist = Math.sqrt(dx * dx + dy * dy)
-
-            if (dist > cursorReach) continue
-
-            const influence = cursorInfluence(dist, cursorReach)
-            const scale = influence * config.maxImageScale
-            if (scale < 0.08) continue
-
-            if (dist < minProximity) {
-              minProximity = dist
-              closestChar = pair.data
-            }
-
-            const imgW = imageBaseSize * scale
-            const imgH = imageBaseSize * scale
-            const drawX = cellX + (imageBaseSize - imgW) / 2
-            const drawY = cellY + (imageBaseSize - imgH) / 2
-
-            // Desenho do card com bordas arredondadas e sombra colorida
-            ctx.save()
-            ctx.shadowColor = pair.data.color
-            ctx.shadowBlur = 18 * influence
-            ctx.beginPath()
-            ctx.roundRect(drawX, drawY, imgW, imgH, 20 * influence)
-            ctx.clip()
-
-            ctx.drawImage(pair.img, drawX, drawY, imgW, imgH)
-            ctx.restore()
-
-            // Moldura brilhante do personagem
-            ctx.save()
-            ctx.strokeStyle = pair.data.color
-            ctx.lineWidth = 2.5 * influence
-            ctx.beginPath()
-            ctx.roundRect(drawX, drawY, imgW, imgH, 20 * influence)
-            ctx.stroke()
-            ctx.restore()
-          }
+        // Soft screen bounce boundaries
+        const pad = item.baseSize * 0.7
+        if (item.x < pad) {
+          item.x = pad
+          item.vx = Math.abs(item.vx)
+        }
+        if (item.x > viewW - pad) {
+          item.x = viewW - pad
+          item.vx = -Math.abs(item.vx)
+        }
+        if (item.y < pad) {
+          item.y = pad
+          item.vy = Math.abs(item.vy)
+        }
+        if (item.y > viewH - pad) {
+          item.y = viewH - pad
+          item.vy = -Math.abs(item.vy)
         }
 
-        if (closestChar && minProximity < 140) {
-          setActiveCharacter(closestChar)
-          if (currentTime - lastAudioTrigger > 600) {
-            celestialAudio.playChime(659.25, 0.08, 0.9)
-            lastAudioTrigger = currentTime
-          }
+        // Distance from focal point
+        const dx = item.x - focal.x
+        const dy = item.y - focal.y
+        const dist = Math.sqrt(dx * dx + dy * dy)
+
+        if (dist < minDistance) {
+          minDistance = dist
+          closestItem = item
+        }
+
+        // Proximity scaling: items near cursor expand smoothly, others remain visibly floating
+        if (pointer.active && dist < cursorRadius) {
+          const proximity = 1 - dist / cursorRadius
+          // Non-linear cubic ease for magnification
+          const ease = Math.pow(proximity, 2)
+          item.targetScale = 1.0 + ease * 1.8 // expands up to 2.8x
+        } else {
+          // Subtle resting breathing wave
+          item.targetScale = 0.95 + Math.sin(time + item.phase) * 0.08
+        }
+
+        // Smooth scale interpolation (Lerp)
+        item.currentScale += (item.targetScale - item.currentScale) * 0.12
+
+        const size = item.baseSize * item.currentScale
+        const drawX = item.x - size / 2
+        const drawY = item.y - size / 2 + floatY
+
+        const img = imageMapRef.current.get(item.char.id)
+        const isFocused = closestItem === item && pointer.active && dist < 120
+
+        ctx.save()
+
+        // Magical Glow Aura
+        const glowAlpha = isFocused ? 0.9 : Math.max(0.2, (item.currentScale - 1.0) * 0.8)
+        ctx.shadowColor = item.char.color
+        ctx.shadowBlur = isFocused ? 28 : 12 * item.currentScale
+
+        // Rounded circular card clipping
+        ctx.beginPath()
+        ctx.arc(item.x, item.y + floatY, size / 2, 0, Math.PI * 2)
+        ctx.fillStyle = '#0f111a'
+        ctx.fill()
+        ctx.clip()
+
+        // Draw character artwork
+        if (img && img.complete) {
+          ctx.drawImage(img, drawX, drawY, size, size)
+        } else {
+          // Fallback colored circle with emoji
+          ctx.fillStyle = item.char.color
+          ctx.fill()
+        }
+
+        ctx.restore()
+
+        // Outer Golden or Themed Halo Ring
+        ctx.save()
+        ctx.beginPath()
+        ctx.arc(item.x, item.y + floatY, size / 2, 0, Math.PI * 2)
+        ctx.strokeStyle = isFocused ? '#ffd60a' : item.char.color
+        ctx.lineWidth = isFocused ? 3.5 : 1.8
+        ctx.stroke()
+        ctx.restore()
+
+        // If zoomed in close, draw character mini-badge
+        if (isFocused || item.currentScale > 1.7) {
+          ctx.save()
+          ctx.font = 'bold 11px system-ui, sans-serif'
+          ctx.fillStyle = '#ffffff'
+          ctx.textAlign = 'center'
+          ctx.shadowColor = 'rgba(0,0,0,0.85)'
+          ctx.shadowBlur = 6
+          ctx.fillText(item.char.name, item.x, drawY + size + 14)
+          ctx.restore()
+        }
+      })
+
+      // Audio trigger and badge update on focal character change
+      if (closestItem && pointer.active && minDistance < 130) {
+        const char = (closestItem as FlockItem).char
+        setActiveCharacter(char)
+        const now = performance.now()
+        if (now - lastAudioTime > 550) {
+          celestialAudio.playChime(659.25, 0.1, 1.1)
+          lastAudioTime = now
         }
       }
 
@@ -516,14 +589,15 @@ export const ImageFlockPrincesses: React.FC = () => {
 
     return () => {
       cancelAnimationFrame(animId)
-      window.removeEventListener('resize', resizeCanvas)
-      container.removeEventListener('mousemove', onPointerMove)
-      container.removeEventListener('touchmove', onPointerMove)
+      window.removeEventListener('resize', handleResize)
+      container.removeEventListener('mousemove', onMouseMove)
+      container.removeEventListener('touchmove', onTouchMove)
+      container.removeEventListener('mouseleave', onPointerLeave)
     }
-  }, [filteredCharacters])
+  }, [filteredCharacters, imagesReady])
 
   return (
-    <section className="bg-gradient-to-b from-[#000000] via-[#080712] to-[#000000] text-white py-24 px-4 sm:px-6 lg:px-8 border-b border-white/[0.08] relative overflow-hidden">
+    <section className="bg-gradient-to-b from-[#000000] via-[#070611] to-[#000000] text-white py-24 px-4 sm:px-6 lg:px-8 border-b border-white/[0.08] relative overflow-hidden">
       {/* Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[400px] bg-sky-500/10 blur-[160px] pointer-events-none" />
 
@@ -540,13 +614,13 @@ export const ImageFlockPrincesses: React.FC = () => {
             Onde a Imaginação Voa Livre
           </h2>
           <p className="text-sm sm:text-base text-zinc-400 leading-relaxed">
-            Passe o cursor ou deslize os dedinhos pela tela para atrair as princesas, heróis e desenhos
-            mais amados pela Alycia em um céu de pura magia.
+            Todas as personagens, heróis e desenhos favoritos da Alycia flutuando juntos no céu encantado.
+            Passe o mouse ou deslize o dedinho para ver cada um se aproximar e brilhar!
           </p>
 
-          {/* Dynamic Active Character Pill Badge */}
-          <div className="mt-5 inline-flex items-center gap-3 px-5 py-2 rounded-full bg-zinc-900/90 border border-white/20 backdrop-blur-xl shadow-xl transition-all duration-200">
-            <span className="text-xl">{activeCharacter.emoji}</span>
+          {/* Focal Character Badge */}
+          <div className="mt-5 inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-zinc-900/90 border border-white/20 backdrop-blur-xl shadow-xl transition-all duration-200">
+            <span className="text-2xl">{activeCharacter.emoji}</span>
             <div className="text-left">
               <span className="block text-xs font-bold text-white tracking-wide">
                 {activeCharacter.name}
@@ -561,7 +635,7 @@ export const ImageFlockPrincesses: React.FC = () => {
           </div>
         </div>
 
-        {/* Category Filter Tabs */}
+        {/* Category Tabs */}
         <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
           {(['Todos', 'Princesas', 'Frozen', 'Desenhos', 'Aventureiros'] as const).map((cat) => {
             const isSelected = selectedCategory === cat
@@ -571,7 +645,7 @@ export const ImageFlockPrincesses: React.FC = () => {
                 type="button"
                 onClick={() => {
                   setSelectedCategory(cat)
-                  celestialAudio.playChime(523.25, 0.12)
+                  celestialAudio.playChime(587.33, 0.12)
                 }}
                 className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer ${
                   isSelected
@@ -589,31 +663,37 @@ export const ImageFlockPrincesses: React.FC = () => {
           })}
         </div>
 
-        {/* Real Canvas Flock Engine (from Image-Flock) */}
+        {/* 
+          ENCHANTED FLOCK CANVAS
+          All 32 characters are ALWAYS visibly floating, rotating, and scaling up on pointer proximity
+        */}
         <div
           ref={containerRef}
-          className="relative w-full h-[460px] sm:h-[540px] rounded-[32px] overflow-hidden bg-[#0a0817]/90 border border-white/15 backdrop-blur-2xl shadow-2xl cursor-crosshair select-none"
+          className="relative w-full h-[480px] sm:h-[580px] rounded-[32px] overflow-hidden bg-[#070814]/95 border border-white/15 backdrop-blur-2xl shadow-2xl cursor-crosshair select-none"
         >
           <canvas ref={canvasRef} className="absolute inset-0 block w-full h-full" />
 
-          {/* Interactive Hint Overlay */}
-          <div className="absolute bottom-4 left-6 pointer-events-none text-xs text-zinc-300 flex items-center gap-2 bg-black/70 px-4 py-2 rounded-full border border-white/15 backdrop-blur-md shadow-lg">
+          {/* Floating Instructions */}
+          <div className="absolute bottom-4 left-6 pointer-events-none text-xs text-zinc-300 flex items-center gap-2 bg-black/75 px-4 py-2 rounded-full border border-white/15 backdrop-blur-md shadow-lg">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-            <span>Deslize o mouse ou o dedinho para expandir as imagens</span>
+            <span>Mova o mouse ou deslize o dedo para aproximar os personagens</span>
           </div>
 
-          <div className="absolute top-4 right-6 pointer-events-none text-xs text-amber-300/80 font-mono flex items-center gap-1.5 bg-black/60 px-3 py-1.5 rounded-full border border-white/10">
+          <div className="absolute top-4 right-6 pointer-events-none text-xs text-amber-300 font-mono flex items-center gap-1.5 bg-black/70 px-3 py-1.5 rounded-full border border-white/15 backdrop-blur-md">
             <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-            <span>{filteredCharacters.length} personagens no céu</span>
+            <span>{filteredCharacters.length} personagens voando</span>
           </div>
         </div>
 
-        {/* Horizontal Mini-Pills Gallery of Characters */}
+        {/* 
+          INTERACTIVE CHARACTER GALLERY
+          Clicking any character focuses them immediately with sound chime
+        */}
         <div className="mt-8">
-          <div className="text-center text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-3">
-            Toque em um personagem para focar
+          <div className="text-center text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-4">
+            Galeria Interativa dos 32 Personagens • Toque para focar
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-2">
+          <div className="flex flex-wrap items-center justify-center gap-2 max-w-5xl mx-auto">
             {filteredCharacters.map((item) => {
               const isFocal = activeCharacter.id === item.id
               return (
@@ -624,16 +704,16 @@ export const ImageFlockPrincesses: React.FC = () => {
                     setActiveCharacter(item)
                     celestialAudio.playChime(783.99, 0.16)
                   }}
-                  className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all duration-200 cursor-pointer flex items-center gap-2 ${
                     isFocal
-                      ? 'bg-white/20 border-white/50 text-white shadow-md scale-105'
+                      ? 'bg-amber-400 text-black border-amber-300 font-bold shadow-lg shadow-amber-400/25 scale-105'
                       : 'bg-white/[0.04] hover:bg-white/10 text-zinc-300 border-white/10 hover:border-white/25'
                   }`}
                 >
                   <img
                     src={item.url}
                     alt={item.name}
-                    className="w-4 h-4 rounded-full object-cover"
+                    className="w-5 h-5 rounded-full object-cover border border-white/30"
                     loading="lazy"
                   />
                   <span>{item.name}</span>
