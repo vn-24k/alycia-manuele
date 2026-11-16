@@ -643,18 +643,6 @@ export const ImageFlockPrincesses: React.FC = () => {
         ctx.lineWidth = isFocal ? 3.5 : 2
         ctx.stroke()
         ctx.restore()
-
-        // 5. Nome em badge flutuante quando focado ou ampliado
-        if (isFocal || item.currentScale > 1.6) {
-          ctx.save()
-          ctx.font = 'bold 11px system-ui, sans-serif'
-          ctx.fillStyle = '#ffffff'
-          ctx.textAlign = 'center'
-          ctx.shadowColor = 'rgba(0,0,0,0.9)'
-          ctx.shadowBlur = 8
-          ctx.fillText(item.char.name, item.x, drawY + size + 14)
-          ctx.restore()
-        }
       })
 
       animId = requestAnimationFrame(render)
@@ -841,14 +829,13 @@ export const ImageFlockPrincesses: React.FC = () => {
         </div>
 
         {/* 
-          INTERACTIVE CHARACTER GALLERY - QUADRADOS INTEIROS PREENCHIDOS
-          Grid responsivo onde cada card é um quadrado 100% preenchido pela foto
+          INTERACTIVE CHARACTER GALLERY - QUADRADOS INTEIROS 100% LIMPOS
         */}
         <div className="mt-12">
-          <div className="text-center text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-6 flex items-center justify-center gap-2">
-            <Sparkles className="w-4 h-4 text-[#ffd60a]" />
-            <span>Galeria de Quadrados Mágicos • Toque em Qualquer Foto Para Trocar</span>
-            <Sparkles className="w-4 h-4 text-[#ffd60a]" />
+          <div className="text-center text-xs font-semibold text-zinc-500 uppercase tracking-widest mb-6 flex items-center justify-center gap-2">
+            <Sparkles className="w-3.5 h-3.5 text-[#ffd60a]" />
+            <span>Toque para Escolher</span>
+            <Sparkles className="w-3.5 h-3.5 text-[#ffd60a]" />
           </div>
 
           <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3 sm:gap-4 max-w-5xl mx-auto">
@@ -866,7 +853,7 @@ export const ImageFlockPrincesses: React.FC = () => {
                   }`}
                   title={item.name}
                 >
-                  {/* FOTO PREENCHENDO O QUADRADO INTEIRO */}
+                  {/* FOTO PREENCHENDO O QUADRADO INTEIRO 100% LIMPA */}
                   <img
                     src={item.url}
                     alt={item.name}
@@ -874,16 +861,9 @@ export const ImageFlockPrincesses: React.FC = () => {
                     loading="lazy"
                   />
 
-                  {/* Gradiente sutil e nome */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent flex flex-col justify-end p-1.5 text-center">
-                    <span className="text-[10px] font-semibold text-white truncate w-full">
-                      {item.name.split(' ')[0]}
-                    </span>
-                  </div>
-
                   {/* Halo Luminoso quando Selecionado */}
                   {isFocal && (
-                    <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#ffd60a] shadow-[0_0_8px_#ffd60a]" />
+                    <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-[#ffd60a] shadow-[0_0_10px_#ffd60a] border border-black" />
                   )}
                 </button>
               )
