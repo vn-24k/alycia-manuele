@@ -313,18 +313,6 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
   },
 ]
 
-interface FlockItem {
-  char: PrincessCharacter
-  x: number
-  y: number
-  vx: number
-  vy: number
-  baseSize: number
-  currentScale: number
-  targetScale: number
-  phase: number
-}
-
 interface Particle {
   id: number
   x: number
@@ -338,47 +326,16 @@ interface Particle {
 }
 
 export const ImageFlockPrincesses: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const canvasRef = useRef<HTMLCanvasElement>(null)
   const [selectedCategory, setSelectedCategory] = useState<string>('Todos')
   const [activeCharacter, setActiveCharacter] = useState<PrincessCharacter>(PRINCESS_CHARACTERS[0])
-  const [imagesReady, setImagesReady] = useState(false)
   const [isAnimatingSwitch, setIsAnimatingSwitch] = useState(false)
   const [switchBurstParticles, setSwitchBurstParticles] = useState<Particle[]>([])
-
-  // Map of loaded HTMLImageElement
-  const imageMapRef = useRef<Map<string, HTMLImageElement>>(new Map())
-  const flockItemsRef = useRef<FlockItem[]>([])
 
   // Filtered characters list
   const filteredCharacters = useMemo(() => {
     if (selectedCategory === 'Todos') return PRINCESS_CHARACTERS
     return PRINCESS_CHARACTERS.filter((c) => c.category === selectedCategory)
   }, [selectedCategory])
-
-  // Preload all 32 images once on mount
-  useEffect(() => {
-    let loadedCount = 0
-    const total = PRINCESS_CHARACTERS.length
-
-    PRINCESS_CHARACTERS.forEach((c) => {
-      const img = new Image()
-      img.src = c.url
-      img.onload = () => {
-        imageMapRef.current.set(c.id, img)
-        loadedCount++
-        if (loadedCount >= total) {
-          setImagesReady(true)
-        }
-      }
-      img.onerror = () => {
-        loadedCount++
-        if (loadedCount >= total) {
-          setImagesReady(true)
-        }
-      }
-    })
-  }, [])
 
   // Trigger jaw-dropping magical switch animation with starlight particle burst
   const triggerMagicSwitch = (char: PrincessCharacter) => {
@@ -411,7 +368,7 @@ export const ImageFlockPrincesses: React.FC = () => {
     setTimeout(() => {
       setIsAnimatingSwitch(false)
       setSwitchBurstParticles([])
-    }, 900)
+    }, 850)
   }
 
   const handleNextCharacter = () => {
@@ -431,237 +388,8 @@ export const ImageFlockPrincesses: React.FC = () => {
     triggerMagicSwitch(filteredCharacters[randomIndex])
   }
 
-  // Canvas engine with real visible character cards and responsive flock physics
-  useEffect(() => {
-    const container = containerRef.current
-    const canvas = canvasRef.current
-    if (!container || !canvas) return
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-
-    let viewW = container.clientWidth
-    let viewH = container.clientHeight
-    const dpr = Math.min(window.devicePixelRatio || 1, 2)
-
-    const handleResize = () => {
-      if (!container || !canvas) return
-      viewW = container.clientWidth
-      viewH = container.clientHeight
-      canvas.width = viewW * dpr
-      canvas.height = viewH * dpr
-      canvas.style.width = `${viewW}px`
-      canvas.style.height = `${viewH}px`
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-    }
-
-    handleResize()
-    window.addEventListener('resize', handleResize)
-
-    // Build flock items distributed evenly across the canvas
-    const cols = viewW < 640 ? 4 : viewW < 1024 ? 6 : 8
-    const rows = Math.ceil(filteredCharacters.length / cols)
-    const cellW = viewW / cols
-    const cellH = viewH / rows
-    const cardBaseSize = Math.max(64, Math.min(cellW * 0.75, cellH * 0.75, 96))
-
-    flockItemsRef.current = filteredCharacters.map((char, i) => {
-      const col = i % cols
-      const row = Math.floor(i / cols)
-      const posX = col * cellW + cellW / 2 + (Math.random() - 0.5) * 16
-      const posY = row * cellH + cellH / 2 + (Math.random() - 0.5) * 16
-      return {
-        char,
-        x: posX,
-        y: posY,
-        vx: (Math.random() - 0.5) * 0.35,
-        vy: (Math.random() - 0.5) * 0.3,
-        baseSize: cardBaseSize,
-        currentScale: 1.0,
-        targetScale: 1.0,
-        phase: Math.random() * Math.PI * 2,
-      }
-    })
-
-    // Pointer coordinates with smooth following
-    const pointer = { x: viewW / 2, y: viewH / 2, active: false }
-    const focal = { x: viewW / 2, y: viewH / 2 }
-
-    const updatePointer = (clientX: number, clientY: number) => {
-      const rect = container.getBoundingClientRect()
-      pointer.x = clientX - rect.left
-      pointer.y = clientY - rect.top
-      pointer.active = true
-    }
-
-    const onMouseMove = (e: MouseEvent) => {
-      updatePointer(e.clientX, e.clientY)
-    }
-
-    const onTouchMove = (e: TouchEvent) => {
-      if (e.touches.length > 0) {
-        updatePointer(e.touches[0].clientX, e.touches[0].clientY)
-      }
-    }
-
-    const onPointerLeave = () => {
-      pointer.active = false
-    }
-
-    // Clique no canvas para focar e acionar animação
-    const onCanvasClick = (e: MouseEvent) => {
-      const rect = container.getBoundingClientRect()
-      const clickX = e.clientX - rect.left
-      const clickY = e.clientY - rect.top
-
-      let hitItem: FlockItem | null = null
-      let minDist = Infinity
-
-      flockItemsRef.current.forEach((item) => {
-        const dx = item.x - clickX
-        const dy = item.y - clickY
-        const dist = Math.sqrt(dx * dx + dy * dy)
-        const hitRadius = (item.baseSize * item.currentScale) / 2
-        if (dist < hitRadius && dist < minDist) {
-          minDist = dist
-          hitItem = item
-        }
-      })
-
-      if (hitItem) {
-        triggerMagicSwitch((hitItem as FlockItem).char)
-      }
-    }
-
-    container.addEventListener('mousemove', onMouseMove, { passive: true })
-    container.addEventListener('touchmove', onTouchMove, { passive: true })
-    container.addEventListener('mouseleave', onPointerLeave)
-    container.addEventListener('click', onCanvasClick)
-
-    let animId: number
-    let time = 0
-
-    const render = () => {
-      time += 0.02
-      ctx.clearRect(0, 0, viewW, viewH)
-
-      // Smooth Lerp focal point toward cursor or center
-      const targetX = pointer.active ? pointer.x : viewW / 2
-      const targetY = pointer.active ? pointer.y : viewH / 2
-      focal.x += (targetX - focal.x) * 0.1
-      focal.y += (targetY - focal.y) * 0.1
-
-      const cursorRadius = Math.min(viewW, viewH) * 0.42
-
-      // Draw each flock item - PREENCHENDO O QUADRADO INTEIRO COM A FOTO
-      flockItemsRef.current.forEach((item) => {
-        // Floating gentle sinusoidal wave motion
-        const floatY = Math.sin(time * 1.5 + item.phase) * 6
-        const floatX = Math.cos(time * 1.2 + item.phase) * 5
-
-        item.x += item.vx + floatX * 0.08
-        item.y += item.vy + floatY * 0.08
-
-        // Soft screen bounce boundaries
-        const pad = item.baseSize * 0.7
-        if (item.x < pad) {
-          item.x = pad
-          item.vx = Math.abs(item.vx)
-        }
-        if (item.x > viewW - pad) {
-          item.x = viewW - pad
-          item.vx = -Math.abs(item.vx)
-        }
-        if (item.y < pad) {
-          item.y = pad
-          item.vy = Math.abs(item.vy)
-        }
-        if (item.y > viewH - pad) {
-          item.y = viewH - pad
-          item.vy = -Math.abs(item.vy)
-        }
-
-        // Distance from focal point
-        const dx = item.x - focal.x
-        const dy = item.y - focal.y
-        const dist = Math.sqrt(dx * dx + dy * dy)
-
-        // Proximity scaling
-        if (pointer.active && dist < cursorRadius) {
-          const proximity = 1 - dist / cursorRadius
-          const ease = Math.pow(proximity, 2)
-          item.targetScale = 1.0 + ease * 1.85
-        } else {
-          item.targetScale = 0.96 + Math.sin(time + item.phase) * 0.06
-        }
-
-        item.currentScale += (item.targetScale - item.currentScale) * 0.12
-
-        const size = item.baseSize * item.currentScale
-        const drawX = item.x - size / 2
-        const drawY = item.y - size / 2 + floatY
-        const cornerRadius = Math.max(10, size * 0.2) // Squircle suave
-        const isFocal = activeCharacter.id === item.char.id
-
-        const img = imageMapRef.current.get(item.char.id)
-
-        ctx.save()
-
-        // 1. Sombra e Glow Dourado/Temático
-        ctx.shadowColor = isFocal ? '#ffd60a' : item.char.color
-        ctx.shadowBlur = isFocal ? 30 : 12 * item.currentScale
-
-        // 2. QUADRADO INTEIRO COM BORDAS ARREDONDADAS
-        ctx.beginPath()
-        if (typeof ctx.roundRect === 'function') {
-          ctx.roundRect(drawX, drawY, size, size, cornerRadius)
-        } else {
-          ctx.rect(drawX, drawY, size, size)
-        }
-        ctx.fillStyle = '#0a0b12'
-        ctx.fill()
-        ctx.clip()
-
-        // 3. FOTO PREENCHENDO O QUADRADO INTEIRO (OBJECT-COVER REAL)
-        if (img && img.complete) {
-          ctx.drawImage(img, drawX, drawY, size, size)
-        } else {
-          ctx.fillStyle = item.char.color
-          ctx.fill()
-        }
-
-        ctx.restore()
-
-        // 4. Borda Chanfrada de Luz ao Redor do Quadrado Inteiro
-        ctx.save()
-        ctx.beginPath()
-        if (typeof ctx.roundRect === 'function') {
-          ctx.roundRect(drawX, drawY, size, size, cornerRadius)
-        } else {
-          ctx.rect(drawX, drawY, size, size)
-        }
-        ctx.strokeStyle = isFocal ? '#ffd60a' : item.char.color
-        ctx.lineWidth = isFocal ? 3.5 : 2
-        ctx.stroke()
-        ctx.restore()
-      })
-
-      animId = requestAnimationFrame(render)
-    }
-
-    animId = requestAnimationFrame(render)
-
-    return () => {
-      cancelAnimationFrame(animId)
-      window.removeEventListener('resize', handleResize)
-      container.removeEventListener('mousemove', onMouseMove)
-      container.removeEventListener('touchmove', onTouchMove)
-      container.removeEventListener('mouseleave', onPointerLeave)
-      container.removeEventListener('click', onCanvasClick)
-    }
-  }, [filteredCharacters, imagesReady, activeCharacter])
-
   return (
-    <section className="bg-gradient-to-b from-[#000000] via-[#080811] to-[#000000] text-white py-24 px-4 sm:px-6 lg:px-8 border-b border-white/[0.08] relative overflow-hidden">
+    <section className="bg-gradient-to-b from-[#000000] via-[#080811] to-[#000000] text-white py-20 sm:py-24 px-4 sm:px-6 lg:px-8 border-b border-white/[0.08] relative overflow-hidden">
       {/* Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] bg-gradient-to-r from-amber-500/10 via-pink-500/10 to-sky-500/10 blur-[160px] pointer-events-none" />
 
@@ -670,16 +398,16 @@ export const ImageFlockPrincesses: React.FC = () => {
         <div className="text-center max-w-2xl mx-auto mb-10">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-[#ffd60a] text-xs font-semibold tracking-wider uppercase mb-3 shadow-lg shadow-black/40">
             <Crown className="w-3.5 h-3.5 text-[#ffd60a]" />
-            <span>Revoada Encantada • 32 Personagens Reais</span>
+            <span>Reino Encantado • 32 Personagens Reais</span>
             <Sparkles className="w-3.5 h-3.5 text-[#ffd60a]" />
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-3">
-            Onde a Imaginação Voa Livre
+            Onde a Imaginação Ganha Vida
           </h2>
           <p className="text-sm sm:text-base text-zinc-400 leading-relaxed">
-            Cada personagem flutua em seu quadrado mágico preenchido de luz.
-            Toque em qualquer um para ver uma explosão mágica e colocá-lo no palco real!
+            Cada personagem em seu quadrado mágico preenchido de arte e luz.
+            Toque em qualquer foto para ver a explosão estelar e colocá-lo no palco real!
           </p>
         </div>
 
@@ -689,7 +417,7 @@ export const ImageFlockPrincesses: React.FC = () => {
         */}
         <div className="mb-12 max-w-md mx-auto">
           <div className="relative p-1 rounded-[36px] bg-gradient-to-b from-white/20 via-[#ffd60a]/30 to-white/5 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)]">
-            <div className="relative rounded-[32px] bg-[#121217] p-6 border border-white/10 backdrop-blur-2xl flex flex-col items-center text-center overflow-hidden">
+            <div className="relative rounded-[32px] bg-[#121217] p-6 sm:p-7 border border-white/10 backdrop-blur-2xl flex flex-col items-center text-center overflow-hidden">
               {/* Efeito de Explosão de Partículas na Troca */}
               {isAnimatingSwitch && (
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
@@ -705,7 +433,7 @@ export const ImageFlockPrincesses: React.FC = () => {
                       {p.emoji || '✨'}
                     </span>
                   ))}
-                  <div className="absolute inset-0 bg-radial from-[#ffd60a]/30 via-transparent to-transparent animate-pulse" />
+                  <div className="absolute inset-0 bg-radial from-[#ffd60a]/35 via-transparent to-transparent animate-pulse" />
                 </div>
               )}
 
@@ -722,12 +450,12 @@ export const ImageFlockPrincesses: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
 
                 {/* Badge de Categoria no Canto */}
-                <span className="absolute top-3 left-3 text-xs font-semibold px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white">
+                <span className="absolute top-3 left-3 text-xs font-semibold px-3 py-1 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-white">
                   {activeCharacter.emoji} {activeCharacter.category}
                 </span>
 
                 {/* Indicador de Foto Inteira 100% */}
-                <span className="absolute bottom-3 right-3 text-[10px] font-mono text-[#ffd60a] bg-black/75 px-2.5 py-0.5 rounded-full border border-white/10 backdrop-blur-sm">
+                <span className="absolute bottom-3 right-3 text-[10px] font-mono text-[#ffd60a] bg-black/80 px-2.5 py-0.5 rounded-full border border-white/15 backdrop-blur-sm">
                   1:1 HD
                 </span>
               </div>
@@ -780,7 +508,7 @@ export const ImageFlockPrincesses: React.FC = () => {
         </div>
 
         {/* Category Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
           {(['Todos', 'Princesas', 'Frozen', 'Desenhos', 'Aventureiros'] as const).map((cat) => {
             const isSelected = selectedCategory === cat
             return (
@@ -808,33 +536,13 @@ export const ImageFlockPrincesses: React.FC = () => {
         </div>
 
         {/* 
-          ENCHANTED FLOCK CANVAS (TODOS OS QUADRADOS PREENCHIDOS COM A FOTO)
-        */}
-        <div
-          ref={containerRef}
-          className="relative w-full h-[480px] sm:h-[580px] rounded-[32px] overflow-hidden bg-[#070814]/95 border border-white/15 backdrop-blur-2xl shadow-2xl cursor-pointer select-none"
-        >
-          <canvas ref={canvasRef} className="absolute inset-0 block w-full h-full" />
-
-          {/* Floating Instructions */}
-          <div className="absolute bottom-4 left-6 pointer-events-none text-xs text-zinc-200 flex items-center gap-2 bg-black/80 px-4 py-2 rounded-full border border-white/15 backdrop-blur-md shadow-lg">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#ffd60a] animate-ping" />
-            <span>Toque em qualquer quadrado para fazer a mágica acontecer!</span>
-          </div>
-
-          <div className="absolute top-4 right-6 pointer-events-none text-xs text-[#ffd60a] font-mono flex items-center gap-1.5 bg-black/75 px-3 py-1.5 rounded-full border border-white/15 backdrop-blur-md">
-            <Star className="w-3.5 h-3.5 text-[#ffd60a] fill-[#ffd60a]" />
-            <span>{filteredCharacters.length} fotos quadradas voando</span>
-          </div>
-        </div>
-
-        {/* 
           INTERACTIVE CHARACTER GALLERY - QUADRADOS INTEIROS 100% LIMPOS
+          Grid responsivo com os quadrados preenchidos pelas fotos
         */}
-        <div className="mt-12">
+        <div>
           <div className="text-center text-xs font-semibold text-zinc-500 uppercase tracking-widest mb-6 flex items-center justify-center gap-2">
             <Sparkles className="w-3.5 h-3.5 text-[#ffd60a]" />
-            <span>Toque para Escolher</span>
+            <span>Toque em Qualquer Foto Para Trocar</span>
             <Sparkles className="w-3.5 h-3.5 text-[#ffd60a]" />
           </div>
 
