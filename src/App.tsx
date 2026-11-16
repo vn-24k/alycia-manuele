@@ -11,7 +11,6 @@ import { CodropsPaperShimmer } from './components/arsenal/CodropsPaperShimmer'
 import { AppleEditorialLetter } from './components/apple/AppleEditorialLetter'
 import { PhotoUploadModal } from './components/PhotoUploadModal'
 import { MemoryCardData } from './components/MemoryVault3D'
-import ElasticSleekCursor from './components/cursors/ElasticSleekCursor'
 import FluidSimulationCursor from './components/cursors/FluidSimulationCursor'
 import { SmoothCursor } from './components/21st/smooth-cursor'
 import { CursorType } from './components/cursors/CursorSwitcher'
@@ -81,9 +80,13 @@ export default function App() {
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false)
   const [isMuted, setIsMuted] = useState(false)
 
-  // Cursor selector
+  // Cursor selector - Fluido Mágico é o principal por padrão
   const [currentCursor, setCurrentCursor] = useState<CursorType>(() => {
-    return (localStorage.getItem('alycia_active_cursor') as CursorType) || 'fluido'
+    const saved = localStorage.getItem('alycia_active_cursor') as CursorType
+    if (saved === 'fluido' || saved === 'suave' || saved === 'padrao') {
+      return saved
+    }
+    return 'fluido'
   })
 
   // Hero image state
@@ -153,13 +156,11 @@ export default function App() {
 
       {/* 
         CURSORES INTERATIVOS
-        - Fluido WebGL (Fumaça e fluidos coloridos Navier-Stokes)
-        - Elástico Sleek (Mira futurista com rotação e estiramento angular)
-        - Suave 21st (Anel magnético)
-        - Padrão do Sistema
+        - Fluido Mágico (Principal - Simulação fluida de cores e fumaça)
+        - Aura Estelar (Anel magnético de luz dourada)
+        - Padrão do Sistema (Nativo do navegador)
       */}
       {currentCursor === 'fluido' && <FluidSimulationCursor />}
-      {currentCursor === 'elastico' && <ElasticSleekCursor />}
       {currentCursor === 'suave' && (
         <SmoothCursor color="#ffd60a" glowColor="rgba(255, 214, 10, 0.55)" />
       )}

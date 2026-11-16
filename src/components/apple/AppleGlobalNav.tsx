@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Heart, Volume2, VolumeX, Sparkles, Droplets, Wand2, MousePointer, Check, ChevronDown, Crown, Feather, Play } from 'lucide-react'
+import { Heart, Volume2, VolumeX, Sparkles, Droplets, MousePointer, Check, ChevronDown, Crown, Feather, Play } from 'lucide-react'
 import { CursorType } from '../cursors/CursorSwitcher'
 import { celestialAudio } from '../../audio/celestialSynth'
 
@@ -24,26 +24,20 @@ export const AppleGlobalNav: React.FC<AppleGlobalNavProps> = ({
   const CURSOR_OPTIONS: { id: CursorType; name: string; tag: string; icon: React.ElementType }[] = [
     {
       id: 'fluido',
-      name: 'Aura Estelar',
-      tag: 'Cores & Pó Mágico',
+      name: 'Fluido Mágico',
+      tag: 'Fumaça & Cores (Principal)',
       icon: Droplets,
     },
     {
-      id: 'elastico',
-      name: 'Varinha de Luz',
-      tag: 'Efeito Real',
-      icon: Wand2,
-    },
-    {
       id: 'suave',
-      name: 'Toque de Seda',
-      tag: 'Brilho Dourado',
+      name: 'Aura Estelar',
+      tag: 'Anel de Luz Dourado',
       icon: Sparkles,
     },
     {
       id: 'padrao',
-      name: 'Padrão',
-      tag: 'Cursor Clássico',
+      name: 'Cursor Padrão',
+      tag: 'Seta Clássica do Sistema',
       icon: MousePointer,
     },
   ]
