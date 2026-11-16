@@ -161,7 +161,7 @@ export default function App() {
       {currentCursor === 'fluido' && <FluidSimulationCursor />}
       {currentCursor === 'elastico' && <ElasticSleekCursor />}
       {currentCursor === 'suave' && (
-        <SmoothCursor color="#2997ff" glowColor="rgba(41, 151, 255, 0.45)" />
+        <SmoothCursor color="#ffd60a" glowColor="rgba(255, 214, 10, 0.55)" />
       )}
 
       {/* Navegação Global 44px (Marca Alycia Manuele) */}
