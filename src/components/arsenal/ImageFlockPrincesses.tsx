@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react'
-import { Sparkles, Crown, Star, Compass, Music, Heart } from 'lucide-react'
+import { Sparkles, Crown, Star, ChevronLeft, ChevronRight, Wand2, Heart, Music, Shuffle } from 'lucide-react'
 import { celestialAudio } from '../../audio/celestialSynth'
 
 export interface PrincessCharacter {
@@ -12,7 +12,7 @@ export interface PrincessCharacter {
   emoji: string
 }
 
-// 32 Personagens Reais Autênticos com arquivos WebP locais otimizados
+// 32 Personagens Reais Autênticos com Luccas Neto substituído por versão Pixar 3D de alta qualidade
 export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
   // 1. Frozen
   {
@@ -21,7 +21,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/elsa.webp',
     color: '#64d2ff',
     category: 'Frozen',
-    tag: 'Rainha do Gelo',
+    tag: 'Rainha do Gelo & Poder do Amor',
     emoji: '❄️',
   },
   {
@@ -30,7 +30,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/anna.webp',
     color: '#ff9f0a',
     category: 'Frozen',
-    tag: 'Princesa de Arendelle',
+    tag: 'Princesa de Arendelle & Coragem',
     emoji: '🌻',
   },
   {
@@ -39,7 +39,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/olaf.webp',
     color: '#b9ecff',
     category: 'Frozen',
-    tag: 'Abraços Quentinhos',
+    tag: 'Abraços Quentinhos & Alegria',
     emoji: '⛄',
   },
 
@@ -50,7 +50,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/branca_de_neve.webp',
     color: '#ff453a',
     category: 'Princesas',
-    tag: 'A Mais Bela de Todas',
+    tag: 'A Mais Bela de Todas & Bondade',
     emoji: '🍎',
   },
   {
@@ -59,7 +59,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/cinderela.webp',
     color: '#70d7ff',
     category: 'Princesas',
-    tag: 'Sapatinho de Cristal',
+    tag: 'Sapatinho de Cristal & Esperança',
     emoji: '👠',
   },
   {
@@ -68,7 +68,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/rapunzel.webp',
     color: '#ffd60a',
     category: 'Princesas',
-    tag: 'Luzes Flutuantes',
+    tag: 'Luzes Flutuantes & Criatividade',
     emoji: '☀️',
   },
   {
@@ -77,7 +77,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/ariel.webp',
     color: '#ff375f',
     category: 'Princesas',
-    tag: 'Coração do Mar',
+    tag: 'Coração do Mar & Curiosidade',
     emoji: '🧜‍♀️',
   },
   {
@@ -86,7 +86,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/bela.webp',
     color: '#ffd60a',
     category: 'Princesas',
-    tag: 'A Rosa Encantada',
+    tag: 'A Rosa Encantada & Sabedoria',
     emoji: '🌹',
   },
   {
@@ -95,7 +95,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/jasmine.webp',
     color: '#30d158',
     category: 'Princesas',
-    tag: 'Um Mundo Ideal',
+    tag: 'Um Mundo Ideal & Liberdade',
     emoji: '🕌',
   },
   {
@@ -113,7 +113,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/tiana.webp',
     color: '#34c759',
     category: 'Princesas',
-    tag: 'Estrela dos Desejos',
+    tag: 'Estrela dos Desejos & Determinação',
     emoji: '🐸',
   },
   {
@@ -122,7 +122,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/aurora.webp',
     color: '#ff6482',
     category: 'Princesas',
-    tag: 'Rosa Encantada',
+    tag: 'Rosa Encantada & Doçura',
     emoji: '👑',
   },
   {
@@ -131,7 +131,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/merida.webp',
     color: '#ff9f0a',
     category: 'Princesas',
-    tag: 'Espírito Livre',
+    tag: 'Espírito Livre & Valentia',
     emoji: '🏹',
   },
   {
@@ -140,7 +140,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/mulan.webp',
     color: '#ff453a',
     category: 'Princesas',
-    tag: 'Guerreira Graciosa',
+    tag: 'Guerreira Graciosa & Honra',
     emoji: '🌸',
   },
   {
@@ -149,7 +149,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/pocahontas.webp',
     color: '#ffd60a',
     category: 'Princesas',
-    tag: 'Cores do Vento',
+    tag: 'Cores do Vento & Harmonia',
     emoji: '🍃',
   },
   {
@@ -158,7 +158,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/sininho.webp',
     color: '#30d158',
     category: 'Princesas',
-    tag: 'Pó de Pirlimpimpim',
+    tag: 'Pó de Pirlimpimpim & Magia',
     emoji: '🧚‍♀️',
   },
   {
@@ -178,7 +178,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/mirabel.webp',
     color: '#30d158',
     category: 'Desenhos',
-    tag: 'Milagre da Família',
+    tag: 'Milagre da Família & Empatia',
     emoji: '🦋',
   },
   {
@@ -187,7 +187,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/isabela.webp',
     color: '#bf5af2',
     category: 'Desenhos',
-    tag: 'Flores Mágicas',
+    tag: 'Flores Mágicas & Beleza',
     emoji: '🌺',
   },
 
@@ -198,7 +198,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/minnie.webp',
     color: '#ff375f',
     category: 'Desenhos',
-    tag: 'Laço Vermelho com Bolinhas',
+    tag: 'Laço Vermelho & Carinho',
     emoji: '🎀',
   },
   {
@@ -225,7 +225,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/hello_kitty.webp',
     color: '#ff375f',
     category: 'Desenhos',
-    tag: 'Doçura e Amizade',
+    tag: 'Doçura e Amizade Pura',
     emoji: '🐱',
   },
   {
@@ -243,7 +243,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/skye.webp',
     color: '#ff6482',
     category: 'Desenhos',
-    tag: 'Vamos Voar!',
+    tag: 'Vamos Voar Pelos Céus!',
     emoji: '🐶',
   },
   {
@@ -252,7 +252,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/wednesday.webp',
     color: '#8e8e93',
     category: 'Desenhos',
-    tag: 'Dança das Sombras',
+    tag: 'Dança das Sombras & Mistério',
     emoji: '🕷️',
   },
   {
@@ -270,7 +270,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/catnoir.webp',
     color: '#30d158',
     category: 'Desenhos',
-    tag: 'Garra e Coragem',
+    tag: 'Garra e Coragem Noturna',
     emoji: '🐾',
   },
   {
@@ -279,27 +279,27 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/unicornio.webp',
     color: '#bf5af2',
     category: 'Desenhos',
-    tag: 'Sonho do Arco-Íris',
+    tag: 'Sonho do Arco-Íris & Luz',
     emoji: '🦄',
   },
 
-  // 5. Aventureiros & Aniversariante
+  // 5. Aventureiros & Aniversariante (Substituído com modelo 3D Pixar de alta resolução)
   {
     id: 'luccas_neto',
-    name: 'Luccas Neto (Aventureiro Azul)',
+    name: 'Aventureiro Azul 3D',
     url: '/characters/luccas_neto.webp',
     color: '#0071e3',
     category: 'Aventureiros',
-    tag: 'Mundo de Aventuras',
-    emoji: '🔵',
+    tag: 'Mundo de Imaginação & Coragem',
+    emoji: '🌟',
   },
   {
     id: 'gi_neto',
-    name: 'Gi Neto (Aventureira Vermelha)',
+    name: 'Aventureira Vermelha',
     url: '/characters/gi_neto.webp',
     color: '#ff453a',
     category: 'Aventureiros',
-    tag: 'Coragem e Alegria',
+    tag: 'Alegria e Superação',
     emoji: '🔴',
   },
   {
@@ -308,7 +308,7 @@ export const PRINCESS_CHARACTERS: PrincessCharacter[] = [
     url: '/characters/alycia.webp',
     color: '#ffd60a',
     category: 'Celebração',
-    tag: 'A Estrela Mais Brilhante',
+    tag: 'A Estrela Mais Brilhante do Reino',
     emoji: '👑',
   },
 ]
@@ -325,12 +325,26 @@ interface FlockItem {
   phase: number
 }
 
+interface Particle {
+  id: number
+  x: number
+  y: number
+  vx: number
+  vy: number
+  color: string
+  size: number
+  alpha: number
+  emoji?: string
+}
+
 export const ImageFlockPrincesses: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [selectedCategory, setSelectedCategory] = useState<string>('Todos')
   const [activeCharacter, setActiveCharacter] = useState<PrincessCharacter>(PRINCESS_CHARACTERS[0])
   const [imagesReady, setImagesReady] = useState(false)
+  const [isAnimatingSwitch, setIsAnimatingSwitch] = useState(false)
+  const [switchBurstParticles, setSwitchBurstParticles] = useState<Particle[]>([])
 
   // Map of loaded HTMLImageElement
   const imageMapRef = useRef<Map<string, HTMLImageElement>>(new Map())
@@ -366,6 +380,57 @@ export const ImageFlockPrincesses: React.FC = () => {
     })
   }, [])
 
+  // Trigger jaw-dropping magical switch animation with starlight particle burst
+  const triggerMagicSwitch = (char: PrincessCharacter) => {
+    setActiveCharacter(char)
+    setIsAnimatingSwitch(true)
+
+    // Acorde celestial arpejado
+    celestialAudio.playCelestialHarp([523.25, 659.25, 783.99, 1046.5, 1318.51])
+
+    // Gerar 30 partículas estelares de explosão
+    const emojis = ['✨', '⭐', '💖', '👑', '🌟', '💎', '🌸']
+    const newParticles: Particle[] = Array.from({ length: 28 }).map((_, i) => {
+      const angle = (i / 28) * Math.PI * 2 + (Math.random() - 0.5) * 0.3
+      const speed = 3 + Math.random() * 5
+      return {
+        id: Math.random() + Date.now(),
+        x: 0,
+        y: 0,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        color: char.color,
+        size: 14 + Math.random() * 12,
+        alpha: 1,
+        emoji: emojis[Math.floor(Math.random() * emojis.length)],
+      }
+    })
+
+    setSwitchBurstParticles(newParticles)
+
+    setTimeout(() => {
+      setIsAnimatingSwitch(false)
+      setSwitchBurstParticles([])
+    }, 900)
+  }
+
+  const handleNextCharacter = () => {
+    const currentIndex = filteredCharacters.findIndex((c) => c.id === activeCharacter.id)
+    const nextIndex = (currentIndex + 1) % filteredCharacters.length
+    triggerMagicSwitch(filteredCharacters[nextIndex])
+  }
+
+  const handlePrevCharacter = () => {
+    const currentIndex = filteredCharacters.findIndex((c) => c.id === activeCharacter.id)
+    const prevIndex = (currentIndex - 1 + filteredCharacters.length) % filteredCharacters.length
+    triggerMagicSwitch(filteredCharacters[prevIndex])
+  }
+
+  const handleRandomCharacter = () => {
+    const randomIndex = Math.floor(Math.random() * filteredCharacters.length)
+    triggerMagicSwitch(filteredCharacters[randomIndex])
+  }
+
   // Canvas engine with real visible character cards and responsive flock physics
   useEffect(() => {
     const container = containerRef.current
@@ -397,7 +462,7 @@ export const ImageFlockPrincesses: React.FC = () => {
     const rows = Math.ceil(filteredCharacters.length / cols)
     const cellW = viewW / cols
     const cellH = viewH / rows
-    const cardBaseSize = Math.max(56, Math.min(cellW * 0.72, cellH * 0.72, 88))
+    const cardBaseSize = Math.max(64, Math.min(cellW * 0.75, cellH * 0.75, 96))
 
     flockItemsRef.current = filteredCharacters.map((char, i) => {
       const col = i % cols
@@ -408,8 +473,8 @@ export const ImageFlockPrincesses: React.FC = () => {
         char,
         x: posX,
         y: posY,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.35,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.3,
         baseSize: cardBaseSize,
         currentScale: 1.0,
         targetScale: 1.0,
@@ -442,13 +507,38 @@ export const ImageFlockPrincesses: React.FC = () => {
       pointer.active = false
     }
 
+    // Clique no canvas para focar e acionar animação
+    const onCanvasClick = (e: MouseEvent) => {
+      const rect = container.getBoundingClientRect()
+      const clickX = e.clientX - rect.left
+      const clickY = e.clientY - rect.top
+
+      let hitItem: FlockItem | null = null
+      let minDist = Infinity
+
+      flockItemsRef.current.forEach((item) => {
+        const dx = item.x - clickX
+        const dy = item.y - clickY
+        const dist = Math.sqrt(dx * dx + dy * dy)
+        const hitRadius = (item.baseSize * item.currentScale) / 2
+        if (dist < hitRadius && dist < minDist) {
+          minDist = dist
+          hitItem = item
+        }
+      })
+
+      if (hitItem) {
+        triggerMagicSwitch((hitItem as FlockItem).char)
+      }
+    }
+
     container.addEventListener('mousemove', onMouseMove, { passive: true })
     container.addEventListener('touchmove', onTouchMove, { passive: true })
     container.addEventListener('mouseleave', onPointerLeave)
+    container.addEventListener('click', onCanvasClick)
 
     let animId: number
     let time = 0
-    let lastAudioTime = 0
 
     const render = () => {
       time += 0.02
@@ -460,12 +550,9 @@ export const ImageFlockPrincesses: React.FC = () => {
       focal.x += (targetX - focal.x) * 0.1
       focal.y += (targetY - focal.y) * 0.1
 
-      let closestItem: FlockItem | null = null
-      let minDistance = Infinity
-
       const cursorRadius = Math.min(viewW, viewH) * 0.42
 
-      // Draw each flock item
+      // Draw each flock item - PREENCHENDO O QUADRADO INTEIRO COM A FOTO
       flockItemsRef.current.forEach((item) => {
         // Floating gentle sinusoidal wave motion
         const floatY = Math.sin(time * 1.5 + item.phase) * 6
@@ -498,89 +585,77 @@ export const ImageFlockPrincesses: React.FC = () => {
         const dy = item.y - focal.y
         const dist = Math.sqrt(dx * dx + dy * dy)
 
-        if (dist < minDistance) {
-          minDistance = dist
-          closestItem = item
-        }
-
-        // Proximity scaling: items near cursor expand smoothly, others remain visibly floating
+        // Proximity scaling
         if (pointer.active && dist < cursorRadius) {
           const proximity = 1 - dist / cursorRadius
-          // Non-linear cubic ease for magnification
           const ease = Math.pow(proximity, 2)
-          item.targetScale = 1.0 + ease * 1.8 // expands up to 2.8x
+          item.targetScale = 1.0 + ease * 1.85
         } else {
-          // Subtle resting breathing wave
-          item.targetScale = 0.95 + Math.sin(time + item.phase) * 0.08
+          item.targetScale = 0.96 + Math.sin(time + item.phase) * 0.06
         }
 
-        // Smooth scale interpolation (Lerp)
         item.currentScale += (item.targetScale - item.currentScale) * 0.12
 
         const size = item.baseSize * item.currentScale
         const drawX = item.x - size / 2
         const drawY = item.y - size / 2 + floatY
+        const cornerRadius = Math.max(10, size * 0.2) // Squircle suave
+        const isFocal = activeCharacter.id === item.char.id
 
         const img = imageMapRef.current.get(item.char.id)
-        const isFocused = closestItem === item && pointer.active && dist < 120
 
         ctx.save()
 
-        // Magical Glow Aura
-        const glowAlpha = isFocused ? 0.9 : Math.max(0.2, (item.currentScale - 1.0) * 0.8)
-        ctx.shadowColor = item.char.color
-        ctx.shadowBlur = isFocused ? 28 : 12 * item.currentScale
+        // 1. Sombra e Glow Dourado/Temático
+        ctx.shadowColor = isFocal ? '#ffd60a' : item.char.color
+        ctx.shadowBlur = isFocal ? 30 : 12 * item.currentScale
 
-        // Rounded circular card clipping
+        // 2. QUADRADO INTEIRO COM BORDAS ARREDONDADAS
         ctx.beginPath()
-        ctx.arc(item.x, item.y + floatY, size / 2, 0, Math.PI * 2)
-        ctx.fillStyle = '#0f111a'
+        if (typeof ctx.roundRect === 'function') {
+          ctx.roundRect(drawX, drawY, size, size, cornerRadius)
+        } else {
+          ctx.rect(drawX, drawY, size, size)
+        }
+        ctx.fillStyle = '#0a0b12'
         ctx.fill()
         ctx.clip()
 
-        // Draw character artwork
+        // 3. FOTO PREENCHENDO O QUADRADO INTEIRO (OBJECT-COVER REAL)
         if (img && img.complete) {
           ctx.drawImage(img, drawX, drawY, size, size)
         } else {
-          // Fallback colored circle with emoji
           ctx.fillStyle = item.char.color
           ctx.fill()
         }
 
         ctx.restore()
 
-        // Outer Golden or Themed Halo Ring
+        // 4. Borda Chanfrada de Luz ao Redor do Quadrado Inteiro
         ctx.save()
         ctx.beginPath()
-        ctx.arc(item.x, item.y + floatY, size / 2, 0, Math.PI * 2)
-        ctx.strokeStyle = isFocused ? '#ffd60a' : item.char.color
-        ctx.lineWidth = isFocused ? 3.5 : 1.8
+        if (typeof ctx.roundRect === 'function') {
+          ctx.roundRect(drawX, drawY, size, size, cornerRadius)
+        } else {
+          ctx.rect(drawX, drawY, size, size)
+        }
+        ctx.strokeStyle = isFocal ? '#ffd60a' : item.char.color
+        ctx.lineWidth = isFocal ? 3.5 : 2
         ctx.stroke()
         ctx.restore()
 
-        // If zoomed in close, draw character mini-badge
-        if (isFocused || item.currentScale > 1.7) {
+        // 5. Nome em badge flutuante quando focado ou ampliado
+        if (isFocal || item.currentScale > 1.6) {
           ctx.save()
           ctx.font = 'bold 11px system-ui, sans-serif'
           ctx.fillStyle = '#ffffff'
           ctx.textAlign = 'center'
-          ctx.shadowColor = 'rgba(0,0,0,0.85)'
-          ctx.shadowBlur = 6
+          ctx.shadowColor = 'rgba(0,0,0,0.9)'
+          ctx.shadowBlur = 8
           ctx.fillText(item.char.name, item.x, drawY + size + 14)
           ctx.restore()
         }
       })
-
-      // Audio trigger and badge update on focal character change
-      if (closestItem && pointer.active && minDistance < 130) {
-        const char = (closestItem as FlockItem).char
-        setActiveCharacter(char)
-        const now = performance.now()
-        if (now - lastAudioTime > 550) {
-          celestialAudio.playChime(659.25, 0.1, 1.1)
-          lastAudioTime = now
-        }
-      }
 
       animId = requestAnimationFrame(render)
     }
@@ -593,44 +668,125 @@ export const ImageFlockPrincesses: React.FC = () => {
       container.removeEventListener('mousemove', onMouseMove)
       container.removeEventListener('touchmove', onTouchMove)
       container.removeEventListener('mouseleave', onPointerLeave)
+      container.removeEventListener('click', onCanvasClick)
     }
-  }, [filteredCharacters, imagesReady])
+  }, [filteredCharacters, imagesReady, activeCharacter])
 
   return (
-    <section className="bg-gradient-to-b from-[#000000] via-[#070611] to-[#000000] text-white py-24 px-4 sm:px-6 lg:px-8 border-b border-white/[0.08] relative overflow-hidden">
+    <section className="bg-gradient-to-b from-[#000000] via-[#080811] to-[#000000] text-white py-24 px-4 sm:px-6 lg:px-8 border-b border-white/[0.08] relative overflow-hidden">
       {/* Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[400px] bg-sky-500/10 blur-[160px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] bg-gradient-to-r from-amber-500/10 via-pink-500/10 to-sky-500/10 blur-[160px] pointer-events-none" />
 
       <div className="max-w-[1240px] mx-auto relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-8">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-amber-300 text-xs font-semibold tracking-wider uppercase mb-3 shadow-md shadow-amber-500/10">
-            <Crown className="w-3.5 h-3.5 text-amber-400" />
+        <div className="text-center max-w-2xl mx-auto mb-10">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-[#ffd60a] text-xs font-semibold tracking-wider uppercase mb-3 shadow-lg shadow-black/40">
+            <Crown className="w-3.5 h-3.5 text-[#ffd60a]" />
             <span>Revoada Encantada • 32 Personagens Reais</span>
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <Sparkles className="w-3.5 h-3.5 text-[#ffd60a]" />
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-3">
             Onde a Imaginação Voa Livre
           </h2>
           <p className="text-sm sm:text-base text-zinc-400 leading-relaxed">
-            Todas as personagens, heróis e desenhos favoritos da Alycia flutuando juntos no céu encantado.
-            Passe o mouse ou deslize o dedinho para ver cada um se aproximar e brilhar!
+            Cada personagem flutua em seu quadrado mágico preenchido de luz.
+            Toque em qualquer um para ver uma explosão mágica e colocá-lo no palco real!
           </p>
+        </div>
 
-          {/* Focal Character Badge */}
-          <div className="mt-5 inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-zinc-900/90 border border-white/20 backdrop-blur-xl shadow-xl transition-all duration-200">
-            <span className="text-2xl">{activeCharacter.emoji}</span>
-            <div className="text-left">
-              <span className="block text-xs font-bold text-white tracking-wide">
-                {activeCharacter.name}
-              </span>
-              <span
-                className="block text-[11px] font-medium"
-                style={{ color: activeCharacter.color }}
-              >
-                {activeCharacter.tag}
-              </span>
+        {/* 
+          PALCO MÁGICO DE DESTAQUE REAL COM ANIMAÇÃO INCRÍVEL DE TROCA
+          Foto preenchendo o quadrado inteiro com partículas e transição de estúdio
+        */}
+        <div className="mb-12 max-w-md mx-auto">
+          <div className="relative p-1 rounded-[36px] bg-gradient-to-b from-white/20 via-[#ffd60a]/30 to-white/5 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)]">
+            <div className="relative rounded-[32px] bg-[#121217] p-6 border border-white/10 backdrop-blur-2xl flex flex-col items-center text-center overflow-hidden">
+              {/* Efeito de Explosão de Partículas na Troca */}
+              {isAnimatingSwitch && (
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
+                  {switchBurstParticles.map((p, idx) => (
+                    <span
+                      key={p.id || idx}
+                      className="absolute text-lg animate-ping opacity-90"
+                      style={{
+                        transform: `translate(${p.vx * 24}px, ${p.vy * 24}px)`,
+                        transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+                      }}
+                    >
+                      {p.emoji || '✨'}
+                    </span>
+                  ))}
+                  <div className="absolute inset-0 bg-radial from-[#ffd60a]/30 via-transparent to-transparent animate-pulse" />
+                </div>
+              )}
+
+              {/* QUADRADO INTEIRO PREENCHIDO COM A FOTO DO PERSONAGEM */}
+              <div className="relative w-56 h-56 sm:w-64 sm:h-64 rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 group">
+                <img
+                  src={activeCharacter.url}
+                  alt={activeCharacter.name}
+                  className={`w-full h-full object-cover transition-all duration-700 ${
+                    isAnimatingSwitch ? 'scale-110 rotate-2 brightness-125' : 'scale-100 rotate-0 brightness-100'
+                  }`}
+                />
+                {/* Vinheta e Brilho Angular */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
+
+                {/* Badge de Categoria no Canto */}
+                <span className="absolute top-3 left-3 text-xs font-semibold px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white">
+                  {activeCharacter.emoji} {activeCharacter.category}
+                </span>
+
+                {/* Indicador de Foto Inteira 100% */}
+                <span className="absolute bottom-3 right-3 text-[10px] font-mono text-[#ffd60a] bg-black/75 px-2.5 py-0.5 rounded-full border border-white/10 backdrop-blur-sm">
+                  1:1 HD
+                </span>
+              </div>
+
+              {/* Informações Nobres do Personagem */}
+              <div className="mt-5 w-full">
+                <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight flex items-center justify-center gap-2">
+                  {activeCharacter.name}
+                </h3>
+                <p
+                  className="text-xs sm:text-sm font-semibold tracking-wide mt-1"
+                  style={{ color: activeCharacter.color }}
+                >
+                  {activeCharacter.tag}
+                </p>
+              </div>
+
+              {/* Controles Interativos de Troca (Anterior / Sorteio / Próximo) */}
+              <div className="mt-5 flex items-center gap-3 w-full justify-center">
+                <button
+                  type="button"
+                  onClick={handlePrevCharacter}
+                  className="p-3 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-white transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-md"
+                  title="Personagem Anterior"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleRandomCharacter}
+                  className="px-5 py-2.5 rounded-full bg-gradient-to-r from-[#ffd60a] via-[#ff9f0a] to-[#ff375f] text-black font-bold text-xs flex items-center gap-2 shadow-lg shadow-[#ffd60a]/20 hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                  title="Trocar para um Personagem Surpresa"
+                >
+                  <Shuffle className="w-4 h-4" />
+                  <span>Trocar Mágico</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleNextCharacter}
+                  className="p-3 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-white transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-md"
+                  title="Próximo Personagem"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -649,7 +805,7 @@ export const ImageFlockPrincesses: React.FC = () => {
                 }}
                 className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer ${
                   isSelected
-                    ? 'bg-gradient-to-r from-amber-400 to-pink-500 text-black shadow-lg shadow-pink-500/20 scale-105'
+                    ? 'bg-gradient-to-r from-[#ffd60a] to-[#ff375f] text-black shadow-lg shadow-[#ffd60a]/20 scale-105 font-bold'
                     : 'bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white border border-white/10'
                 }`}
               >
@@ -657,66 +813,78 @@ export const ImageFlockPrincesses: React.FC = () => {
                 {cat === 'Princesas' && '👑 Princesas'}
                 {cat === 'Frozen' && '❄️ Frozen'}
                 {cat === 'Desenhos' && '🎨 Desenhos Favoritos'}
-                {cat === 'Aventureiros' && '🎈 Aventureiros'}
+                {cat === 'Aventureiros' && '🎈 Aventureiros 3D'}
               </button>
             )
           })}
         </div>
 
         {/* 
-          ENCHANTED FLOCK CANVAS
-          All 32 characters are ALWAYS visibly floating, rotating, and scaling up on pointer proximity
+          ENCHANTED FLOCK CANVAS (TODOS OS QUADRADOS PREENCHIDOS COM A FOTO)
         */}
         <div
           ref={containerRef}
-          className="relative w-full h-[480px] sm:h-[580px] rounded-[32px] overflow-hidden bg-[#070814]/95 border border-white/15 backdrop-blur-2xl shadow-2xl cursor-crosshair select-none"
+          className="relative w-full h-[480px] sm:h-[580px] rounded-[32px] overflow-hidden bg-[#070814]/95 border border-white/15 backdrop-blur-2xl shadow-2xl cursor-pointer select-none"
         >
           <canvas ref={canvasRef} className="absolute inset-0 block w-full h-full" />
 
           {/* Floating Instructions */}
-          <div className="absolute bottom-4 left-6 pointer-events-none text-xs text-zinc-300 flex items-center gap-2 bg-black/75 px-4 py-2 rounded-full border border-white/15 backdrop-blur-md shadow-lg">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-            <span>Mova o mouse ou deslize o dedo para aproximar os personagens</span>
+          <div className="absolute bottom-4 left-6 pointer-events-none text-xs text-zinc-200 flex items-center gap-2 bg-black/80 px-4 py-2 rounded-full border border-white/15 backdrop-blur-md shadow-lg">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#ffd60a] animate-ping" />
+            <span>Toque em qualquer quadrado para fazer a mágica acontecer!</span>
           </div>
 
-          <div className="absolute top-4 right-6 pointer-events-none text-xs text-amber-300 font-mono flex items-center gap-1.5 bg-black/70 px-3 py-1.5 rounded-full border border-white/15 backdrop-blur-md">
-            <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-            <span>{filteredCharacters.length} personagens voando</span>
+          <div className="absolute top-4 right-6 pointer-events-none text-xs text-[#ffd60a] font-mono flex items-center gap-1.5 bg-black/75 px-3 py-1.5 rounded-full border border-white/15 backdrop-blur-md">
+            <Star className="w-3.5 h-3.5 text-[#ffd60a] fill-[#ffd60a]" />
+            <span>{filteredCharacters.length} fotos quadradas voando</span>
           </div>
         </div>
 
         {/* 
-          INTERACTIVE CHARACTER GALLERY
-          Clicking any character focuses them immediately with sound chime
+          INTERACTIVE CHARACTER GALLERY - QUADRADOS INTEIROS PREENCHIDOS
+          Grid responsivo onde cada card é um quadrado 100% preenchido pela foto
         */}
-        <div className="mt-8">
-          <div className="text-center text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-4">
-            Galeria Interativa dos 32 Personagens • Toque para focar
+        <div className="mt-12">
+          <div className="text-center text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-6 flex items-center justify-center gap-2">
+            <Sparkles className="w-4 h-4 text-[#ffd60a]" />
+            <span>Galeria de Quadrados Mágicos • Toque em Qualquer Foto Para Trocar</span>
+            <Sparkles className="w-4 h-4 text-[#ffd60a]" />
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-2 max-w-5xl mx-auto">
+
+          <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3 sm:gap-4 max-w-5xl mx-auto">
             {filteredCharacters.map((item) => {
               const isFocal = activeCharacter.id === item.id
               return (
                 <button
                   key={item.id}
                   type="button"
-                  onClick={() => {
-                    setActiveCharacter(item)
-                    celestialAudio.playChime(783.99, 0.16)
-                  }}
-                  className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all duration-200 cursor-pointer flex items-center gap-2 ${
+                  onClick={() => triggerMagicSwitch(item)}
+                  className={`group relative aspect-square rounded-2xl overflow-hidden border-2 transition-all duration-300 cursor-pointer p-0 shadow-lg ${
                     isFocal
-                      ? 'bg-amber-400 text-black border-amber-300 font-bold shadow-lg shadow-amber-400/25 scale-105'
-                      : 'bg-white/[0.04] hover:bg-white/10 text-zinc-300 border-white/10 hover:border-white/25'
+                      ? 'border-[#ffd60a] shadow-[#ffd60a]/30 scale-105 z-10 ring-4 ring-[#ffd60a]/20'
+                      : 'border-white/10 hover:border-white/40 hover:scale-105'
                   }`}
+                  title={item.name}
                 >
+                  {/* FOTO PREENCHENDO O QUADRADO INTEIRO */}
                   <img
                     src={item.url}
                     alt={item.name}
-                    className="w-5 h-5 rounded-full object-cover border border-white/30"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     loading="lazy"
                   />
-                  <span>{item.name}</span>
+
+                  {/* Gradiente sutil e nome */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent flex flex-col justify-end p-1.5 text-center">
+                    <span className="text-[10px] font-semibold text-white truncate w-full">
+                      {item.name.split(' ')[0]}
+                    </span>
+                  </div>
+
+                  {/* Halo Luminoso quando Selecionado */}
+                  {isFocal && (
+                    <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#ffd60a] shadow-[0_0_8px_#ffd60a]" />
+                  )}
                 </button>
               )
             })}
