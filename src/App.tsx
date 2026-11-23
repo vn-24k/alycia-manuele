@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { AppleGlobalNav } from './components/apple/AppleGlobalNav'
 import { AppleRibbon } from './components/apple/AppleRibbon'
 import { AppleHeroDark } from './components/apple/AppleHeroDark'
+import { CelestialGeometricFabric } from './components/arsenal/CelestialGeometricFabric'
 import { SweatyPortalIntro } from './components/arsenal/SweatyPortalIntro'
 import { ZoomPrincessTransition } from './components/arsenal/ZoomPrincessTransition'
 import { StickyPrincessCards } from './components/arsenal/StickyPrincessCards'
@@ -9,9 +10,10 @@ import { ImageFlockPrincesses } from './components/arsenal/ImageFlockPrincesses'
 import { KineticLetterPlayground } from './components/arsenal/KineticLetterPlayground'
 import { CodropsPaperShimmer } from './components/arsenal/CodropsPaperShimmer'
 import { AppleEditorialLetter } from './components/apple/AppleEditorialLetter'
+import { AppleFooter } from './components/apple/AppleFooter'
 import { PhotoUploadModal } from './components/PhotoUploadModal'
 import { MemoryCardData } from './components/MemoryVault3D'
-import FluidSimulationCursor from './components/cursors/FluidSimulationCursor'
+import SpringWaveCursor from './components/cursors/SpringWaveCursor'
 import { SmoothCursor } from './components/21st/smooth-cursor'
 import { CursorType } from './components/cursors/CursorSwitcher'
 
@@ -80,13 +82,13 @@ export default function App() {
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false)
   const [isMuted, setIsMuted] = useState(false)
 
-  // Cursor selector - Fluido Mágico é o principal por padrão
+  // Cursor selector - SpringWaveCursor ('ondas') é o principal por padrão
   const [currentCursor, setCurrentCursor] = useState<CursorType>(() => {
-    const saved = localStorage.getItem('alycia_active_cursor') as CursorType
-    if (saved === 'fluido' || saved === 'suave' || saved === 'padrao') {
+    const saved = localStorage.getItem('alycia_active_cursor_v2') as CursorType
+    if (saved === 'ondas' || saved === 'suave' || saved === 'padrao') {
       return saved
     }
-    return 'fluido'
+    return 'ondas'
   })
 
   // Hero image state
@@ -109,7 +111,7 @@ export default function App() {
 
   const handleSelectCursor = (cursor: CursorType) => {
     setCurrentCursor(cursor)
-    localStorage.setItem('alycia_active_cursor', cursor)
+    localStorage.setItem('alycia_active_cursor_v2', cursor)
   }
 
   const updateHeroImage = (url: string) => {
@@ -141,6 +143,11 @@ export default function App() {
     el?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  const scrollToManto3D = () => {
+    const el = document.getElementById('manto-3d')
+    el?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   const scrollToGalleries = () => {
     const el = document.getElementById('galeria-reinos')
     el?.scrollIntoView({ behavior: 'smooth' })
@@ -156,11 +163,11 @@ export default function App() {
 
       {/* 
         CURSORES INTERATIVOS
-        - Fluido Mágico (Principal - Simulação fluida de cores e fumaça)
+        - Ondas Mágicas / SpringWaveCursor (Principal - Fitas de aurora com física de molas)
         - Aura Estelar (Anel magnético de luz dourada)
         - Padrão do Sistema (Nativo do navegador)
       */}
-      {currentCursor === 'fluido' && <FluidSimulationCursor />}
+      {currentCursor === 'ondas' && <SpringWaveCursor />}
       {currentCursor === 'suave' && (
         <SmoothCursor color="#ffd60a" glowColor="rgba(255, 214, 10, 0.55)" />
       )}
@@ -182,13 +189,21 @@ export default function App() {
         {/* 1. Hero Principal Monumental de Aniversário */}
         <AppleHeroDark
           heroImage={heroImage}
-          onExploreClick={scrollToGalleries}
+          onExploreClick={scrollToManto3D}
           onMemoriesClick={scrollToLetter}
           onOpenPhotoModal={() => setIsPhotoModalOpen(true)}
         />
 
         {/* 
-          2. ZOOM TRANSITION (Código real do repositório zoom-transition)
+          2. MANTO CELESTIAL DAS ESTRELAS (Flagship 3D Geometric Interactive Canvas)
+          Simulação física 3D de nós estelares com molas de Verlet a 120 FPS,
+          morfismo de 4 geometrias sagradas (Coroa Real, Manto Estelar, Rosa de Ouro, Coração Eterno),
+          ondas sonoras com harpa celestial e rotação em perspectiva 3D.
+        */}
+        <CelestialGeometricFabric />
+
+        {/* 
+          3. ZOOM TRANSITION (Código real do repositório zoom-transition)
           Galeria de 6 Reinos Encantados (Frozen/Elsa, Branca de Neve, Rapunzel, Cinderela, Luccas Neto, Alycia)
           com expansão em tela cheia e revelação cinematográfica
         */}
@@ -197,32 +212,35 @@ export default function App() {
         </div>
 
         {/* 
-          3. STIKY CARDS (Código real do repositório stiky-cards)
+          4. STIKY CARDS (Código real do repositório stiky-cards)
           Livro de Histórias com cartas que voam de lados alternados e empilham em 3D
         */}
         <StickyPrincessCards />
 
         {/* 
-          4. IMAGE FLOCK (Código real do repositório Image-Flock)
+          5. IMAGE FLOCK (Código real do repositório Image-Flock)
           Revoada interativa de princesas que flutuam na tela e reagem ao cursor
         */}
         <ImageFlockPrincesses />
 
         {/* 
-          5. KINETIC LETTER PLAYGROUND (Inspirado no CodePen yyapzOP por donotfold)
+          6. KINETIC LETTER PLAYGROUND (Inspirado no CodePen yyapzOP por donotfold)
           Playground interativo de tipografia cinética com pesos variáveis, ondas e piano mágico para Alycia brincar
         */}
         <KineticLetterPlayground />
 
         {/* 
-          6. CODROPS PAPER (Código real do repositório codrops-paper)
+          7. CODROPS PAPER (Código real do repositório codrops-paper)
           Manto de seda e ondas de papel iridescente com física matemática
         */}
         <CodropsPaperShimmer />
 
-        {/* 7. Clímax Emocional: Carta do Papai para Alycia */}
+        {/* 8. Clímax Emocional: Carta do Papai para Alycia */}
         <AppleEditorialLetter />
       </main>
+
+      {/* 9. Apple Official Celebration Directory & Footnotes */}
+      <AppleFooter />
 
       {/* Modal para Troca Rápida de Fotos */}
       <PhotoUploadModal

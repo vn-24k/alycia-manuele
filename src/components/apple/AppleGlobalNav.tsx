@@ -23,9 +23,9 @@ export const AppleGlobalNav: React.FC<AppleGlobalNavProps> = ({
   // Nomes poéticos e encantados (ZERO menções a WebGL, 21st ou engenharia de software)
   const CURSOR_OPTIONS: { id: CursorType; name: string; tag: string; icon: React.ElementType }[] = [
     {
-      id: 'fluido',
-      name: 'Fluido Mágico',
-      tag: 'Fumaça & Cores (Principal)',
+      id: 'ondas',
+      name: 'Ondas Mágicas',
+      tag: 'Fitas de Luz (Principal)',
       icon: Droplets,
     },
     {
@@ -76,7 +76,7 @@ export const AppleGlobalNav: React.FC<AppleGlobalNavProps> = ({
         </button>
 
         {/* Links de Navegação Real */}
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-5">
           <button
             onClick={() => handleNavClick('alycia-pro')}
             className="text-white hover:text-[#ffd60a] transition-colors font-medium"
@@ -84,14 +84,33 @@ export const AppleGlobalNav: React.FC<AppleGlobalNavProps> = ({
             Início
           </button>
           <button
+            onClick={() => handleNavClick('manto-3d')}
+            className="text-[#ffd60a] hover:text-white transition-colors font-semibold flex items-center gap-1 bg-[#ffd60a]/10 px-2.5 py-0.5 rounded-full border border-[#ffd60a]/25 shadow-sm"
+          >
+            <Sparkles className="w-3 h-3 text-[#ffd60a]" />
+            Manto 3D
+          </button>
+          <button
             onClick={() => handleNavClick('galeria-reinos')}
             className="text-[#d2d2d7] hover:text-[#ffd60a] transition-colors font-medium"
           >
-            Reinos Encantados
+            Reinos
+          </button>
+          <button
+            onClick={() => handleNavClick('livro-historias')}
+            className="text-[#d2d2d7] hover:text-[#ffd60a] transition-colors font-medium"
+          >
+            Histórias
+          </button>
+          <button
+            onClick={() => handleNavClick('playground-magico')}
+            className="text-[#d2d2d7] hover:text-[#ffd60a] transition-colors font-medium"
+          >
+            Playground
           </button>
           <button
             onClick={() => handleNavClick('carta-pai')}
-            className="text-[#ffd60a] hover:text-white transition-colors font-semibold flex items-center gap-1"
+            className="text-[#ff375f] hover:text-white transition-colors font-semibold flex items-center gap-1"
           >
             <Feather className="w-3.5 h-3.5" />
             Carta do Papai

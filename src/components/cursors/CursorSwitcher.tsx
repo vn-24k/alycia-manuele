@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { MousePointer, Sparkles, Droplets, Zap, Check } from 'lucide-react'
 import { celestialAudio } from '../../audio/celestialSynth'
 
-export type CursorType = 'fluido' | 'suave' | 'padrao'
+export type CursorType = 'ondas' | 'suave' | 'padrao'
 
 interface CursorSwitcherProps {
   currentCursor: CursorType
@@ -17,9 +17,9 @@ export const CursorSwitcher: React.FC<CursorSwitcherProps> = ({
 
   const CURSOR_OPTIONS: { id: CursorType; name: string; desc: string; icon: React.ElementType }[] = [
     {
-      id: 'fluido',
-      name: 'Fluido Mágico',
-      desc: 'Simulação fluida de fumaça e cores vivas (Principal)',
+      id: 'ondas',
+      name: 'Ondas de Luz',
+      desc: 'Fitas elásticas de aurora com física de molas (Principal)',
       icon: Droplets,
     },
     {

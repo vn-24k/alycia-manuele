@@ -58,9 +58,10 @@ export const AppleHeroDark: React.FC<AppleHeroDarkProps> = ({
               celestialAudio.playSoftClick()
               onExploreClick()
             }}
-            className="apple-link-chevron group text-base md:text-[17px] text-[#ffd60a] hover:text-white"
+            className="apple-link-chevron group text-base md:text-[17px] text-[#ffd60a] hover:text-white flex items-center gap-1.5"
           >
-            Explorar os Reinos Encantados
+            <Sparkles className="w-4 h-4 text-[#ffd60a]" />
+            Explorar o Manto 3D
             <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>

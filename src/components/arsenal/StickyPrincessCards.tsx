@@ -74,7 +74,7 @@ export const StickyPrincessCards: React.FC = () => {
   }
 
   return (
-    <section className="bg-[#000000] text-white py-24 px-4 border-b border-white/[0.08] relative overflow-hidden">
+    <section id="livro-historias" className="bg-[#000000] text-white py-24 px-4 border-b border-white/[0.08] relative overflow-hidden">
       {/* Background Soft Glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#ffd60a]/10 blur-[140px] pointer-events-none" />
 

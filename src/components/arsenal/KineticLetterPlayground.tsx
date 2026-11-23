@@ -287,6 +287,7 @@ export function KineticLetterPlayground() {
 
   return (
     <section
+      id="playground-magico"
       ref={containerRef}
       className="relative w-full py-28 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#000000] via-[#05060b] to-[#000000] border-t border-white/10 overflow-hidden"
     >

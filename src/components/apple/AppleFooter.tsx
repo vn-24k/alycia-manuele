@@ -25,12 +25,12 @@ export const AppleFooter: React.FC = () => {
               Descobrir & Celebrar
             </h4>
             <ul className="space-y-2 text-[#a1a1a6]">
-              <li><a href="#alycia-pro" className="hover:text-white transition-colors">Alycia Pro</a></li>
-              <li><a href="#sete-anos" className="hover:text-white transition-colors">Sete Anos</a></li>
-              <li><a href="#superpoderes" className="hover:text-white transition-colors">Superpoderes</a></li>
-              <li><a href="#promo-grid" className="hover:text-white transition-colors">Destaques</a></li>
-              <li><a href="#galeria-3d" className="hover:text-white transition-colors">Cubo 3D</a></li>
-              <li><a href="#streamer-memorias" className="hover:text-white transition-colors">Memórias</a></li>
+              <li><a href="#alycia-pro" className="hover:text-white transition-colors">Início Oficial</a></li>
+              <li><a href="#manto-3d" className="hover:text-[#ffd60a] transition-colors font-medium">Manto 3D</a></li>
+              <li><a href="#galeria-reinos" className="hover:text-white transition-colors">Reinos Encantados</a></li>
+              <li><a href="#livro-historias" className="hover:text-white transition-colors">Histórias em 3D</a></li>
+              <li><a href="#playground-magico" className="hover:text-white transition-colors">Playground Mágico</a></li>
+              <li><a href="#carta-pai" className="hover:text-[#ffd60a] transition-colors">Carta do Papai</a></li>
             </ul>
           </div>
 
@@ -99,7 +99,7 @@ export const AppleFooter: React.FC = () => {
         {/* Legal & Copyright Row */}
         <div className="pt-4 border-t border-white/[0.08] flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-[#6e6e73]">
           <div>
-            Copyright © 2024 Alycia Manuele. Todos os direitos reservados. Feito com amor infinito por seu pai.
+            Copyright © 2026 Alycia Manuele. Todos os direitos de amor e proteção reservados. Obra autoral e proprietária dedicada à minha amada filha por Vinicius Caetano.
           </div>
 
           <div className="flex flex-wrap items-center gap-4 text-[#a1a1a6]">
