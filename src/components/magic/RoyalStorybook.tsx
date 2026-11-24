@@ -58,8 +58,7 @@ const STORY_PAGES: StoryPage[] = [
     prose:
       'Aos dois anos, sua vozinha doce começou a pronunciar as palavras que até hoje ecoam no fundo da minha alma. Cada vez que você apontava para mim e soltava aquele "papai!", todo o peso do dia se desfazia num instante. Nós tínhamos um mundinho só nosso: brincávamos de esconde-esconde, inventávamos histórias e você já mostrava aquele sorriso cativante que desarma qualquer tristeza.',
     lesson: 'Ouvir sua voz é o abrigo mais seguro que existe no universo.',
-    image:
-      'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?q=80&w=900&auto=format&fit=crop',
+    image: '/photos/alycia_foto_recente_2.webp',
   },
   {
     age: 3,
@@ -82,32 +81,29 @@ const STORY_PAGES: StoryPage[] = [
     prose:
       'Aos quatro anos, você já era a minha companheirinha inseparável. Aquele abraço apertado no pescoço antes de dormir tinha o poder milagroso de curar qualquer ferida. Foi aí que você começou a me ensinar o que é o amor com a alma: aquele amor que não pede nada em troca, que não se abala com o tempo e que vence qualquer distância física que possa existir.',
     lesson: 'A nossa sintonia é sagrada: nada no céu ou na terra é capaz de enfraquecê-la.',
-    image:
-      'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=900&auto=format&fit=crop',
+    image: '/photos/alycia_foto_recente_1.webp',
   },
   {
     age: 5,
     chapterTitle: 'Capítulo V',
-    title: 'A Pequena Filósofa e as Perguntas sobre as Estrelas',
+    title: 'A Pequena Artista, Música e Guitarra no Quarto dos Sonhos',
     badge: '5 Aninhos',
-    summary: 'A mente brilhante que desejava decifrar o mistério de cada estrela.',
+    summary: 'Com a guitarra nas mãos, inventando os acordes da própria alegria.',
     prose:
-      'Com cinco anos, suas perguntas começaram a deixar o papai sem palavras. Você olhava para o céu da noite e perguntava de onde vinha a lua, por que o vento soprava e como as flores sabiam a hora certa de abrir. Sua inteligência viva e sua sensibilidade já mostravam que você não seria apenas uma princesa comum, mas uma líder bondosa e consciente.',
-    lesson: 'A sabedoria habita nos corações que nunca deixam de se encantar com a vida.',
-    image:
-      'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=900&auto=format&fit=crop',
+      'Com cinco anos, a sua personalidade vibrante e cheia de atitude artística começou a florescer. No seu quarto, com a sua guitarra, você já mostrava que a música e a coragem correm nas suas veias. Cada nota inventada e cada pose de rockstar traziam aquele sorriso iluminado de quem carrega uma força única e autêntica.',
+    lesson: 'A sua autenticidade e amor pela arte são uma inspiração para o papai.',
+    image: '/photos/alycia_foto_4.webp',
   },
   {
     age: 6,
     chapterTitle: 'Capítulo VI',
     title: 'A Princesa Estudiosa e a Mochila dos Sonhos',
     badge: '6 Aninhos',
-    summary: 'Letras, números e a dedicação exemplar nos primeiros passos escolares.',
+    summary: 'Letras, cadernos e a dedicação exemplar nos primeiros passos escolares.',
     prose:
-      'Aos seis anos, com sua mochilinha nas costas e o uniforme arrumado, você deu início a um dos capítulos mais lindos da sua história: os estudos. Ver sua dedicação com os cadernos, a concentração ouvindo a professora e o orgulho ao aprender a juntar as primeiras letras me encheu o peito de certeza: você nasceu para ser gigante e construir um destino grandioso.',
+      'Aos seis anos, com seus cadernos abertos e o lápis na mão, você deu início a um dos capítulos mais lindos da sua história: os estudos. Ver sua dedicação debruçada sobre as lições, a concentração genuína e o orgulho ao aprender me encheu o peito de certeza: você nasceu para ser gigante e construir um destino grandioso.',
     lesson: 'O conhecimento é a maior coroa que uma princesa pode carregar na cabeça.',
-    image:
-      'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=900&auto=format&fit=crop',
+    image: '/photos/alycia_foto_3.webp',
   },
   {
     age: 7,
@@ -118,8 +114,7 @@ const STORY_PAGES: StoryPage[] = [
     prose:
       'E hoje, Alycia... você completa sete anos! Sete é o número da perfeição, da bênção espiritual e da realização completa. Mesmo nos momentos em que a distância nos cerca, o meu coração bate dentro do seu peito. O Tatá Caveira e a espiritualidade de luz caminham ao seu redor, blindando seus passos dia e noite. Você é a obra-prima da minha vida. Continue sendo essa menina doce, justa e iluminada.',
     lesson: 'O papai te ama além das fronteiras do tempo. Feliz 7 anos, minha eterna princesa!',
-    image:
-      'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=900&auto=format&fit=crop',
+    image: '/photos/alycia_foto_recente_1.webp',
   },
 ]
 
@@ -262,7 +257,7 @@ export const RoyalStorybook: React.FC = () => {
                     <img
                       src={currentPage.image}
                       alt={currentPage.title}
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 filter brightness-95 pointer-events-none"
+                      className="w-full h-full object-cover object-top transform group-hover:scale-105 transition-transform duration-700 filter brightness-95 pointer-events-none"
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />

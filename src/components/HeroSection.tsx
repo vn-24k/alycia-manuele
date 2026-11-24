@@ -81,7 +81,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ heroImage, onOpenPhoto
             <img
               src={heroImage}
               alt="Alycia Manuele"
-              className="w-full h-full object-cover object-center transform transition-transform duration-700 group-hover:scale-105"
+              className="w-full h-full object-cover object-top transform transition-transform duration-700 group-hover:scale-105"
             />
             {/* Subtle Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />

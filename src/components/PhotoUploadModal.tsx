@@ -93,6 +93,43 @@ export const PhotoUploadModal: React.FC<PhotoUploadModalProps> = ({
             </label>
           </div>
 
+          {/* Quick Select Real Photos */}
+          <div className="space-y-2">
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
+              <ImageIcon className="h-3.5 w-3.5" />
+              <span>Fotos Oficiais de Alycia (Toque para definir no Hero)</span>
+            </h4>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              {[
+                { url: '/photos/alycia_foto_recente_1.webp', label: 'Papai & Alycia' },
+                { url: '/photos/alycia_foto_recente_2.webp', label: 'Sorriso Doce' },
+                { url: '/photos/alycia_foto_3.webp', label: 'Estudando' },
+                { url: '/photos/alycia_foto_4.webp', label: 'Com a Guitarra' },
+              ].map((item) => (
+                <button
+                  key={item.url}
+                  type="button"
+                  onClick={() => onUpdateHeroImage(item.url)}
+                  className={`group relative rounded-xl overflow-hidden aspect-[4/5] border transition-all text-left ${
+                    heroImage === item.url
+                      ? 'border-[#ffd60a] ring-2 ring-[#ffd60a]/50 scale-[1.02]'
+                      : 'border-white/10 hover:border-white/30 opacity-75 hover:opacity-100'
+                  }`}
+                >
+                  <img src={item.url} alt={item.label} className="w-full h-full object-cover object-top" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent flex items-end p-2">
+                    <span className="text-[10px] font-semibold text-white truncate">{item.label}</span>
+                  </div>
+                  {heroImage === item.url && (
+                    <div className="absolute top-1.5 right-1.5 bg-[#ffd60a] text-black rounded-full p-0.5">
+                      <Check className="w-2.5 h-2.5 stroke-[3]" />
+                    </div>
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Cards Photos */}
           <div className="space-y-3">
             <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-400">

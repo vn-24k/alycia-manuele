@@ -38,45 +38,42 @@ const DEFAULT_MEMORY_CARDS: MemoryCardData[] = [
   },
   {
     id: 'card-2',
-    title: 'Pintando o Próprio Arco-Íris',
-    date: 'Tarde de Criatividade',
-    location: 'Estúdio de Pintura',
-    image:
-      'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?q=80&w=900&auto=format&fit=crop',
+    title: 'A Princesa Estudiosa & Nobre',
+    date: 'Dedicação & Conhecimento',
+    location: 'Cadernos & Descobertas',
+    image: '/photos/alycia_foto_3.webp',
     caption:
-      'Dedinhos cheios de tinta e um coração livre para inventar as cores mais mágicas da imaginação.',
-    tag: 'Artes & Sonhos',
+      'O brilho nos olhos de quem descobre o mundo a cada página, construindo um futuro brilhante e cheio de orgulho para o papai.',
+    tag: 'Estudos & Futuro',
   },
   {
     id: 'card-3',
-    title: 'Aventuras na Natureza',
-    date: 'Dia de Parque & Sol',
-    location: 'Sob a Luz da Tarde',
-    image:
-      'https://images.unsplash.com/photo-1543332164-6e82f355badc?q=80&w=900&auto=format&fit=crop',
+    title: 'Rockstar do Papai & A Guitarra',
+    date: 'Música, Atitude & Alegria',
+    location: 'O Quarto dos Sonhos',
+    image: '/photos/alycia_foto_4.webp',
     caption:
-      'Correndo na grama com o vento no rosto e aquela sensação de que o mundo inteiro é um parquinho.',
-    tag: 'Liberdade',
+      'Com a guitarra em mãos e aquela atitude autêntica que faz o coração do pai transbordar de admiração por cada acorde de alegria.',
+    tag: 'Rock & Magia',
   },
   {
     id: 'card-4',
     title: 'O Abraço Que Cura Tudo',
-    date: 'Antes de Dormir',
+    date: 'Aliança Que Vence Distâncias',
     location: 'Refúgio de Amor',
-    image:
-      'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=900&auto=format&fit=crop',
+    image: '/photos/alycia_foto_recente_1.webp',
     caption:
-      'Não existe lugar mais seguro ou acolhedor do que o abraço apertado entre pai e filha.',
+      'Não existe lugar mais seguro ou acolhedor do que o abraço apertado entre pai e filha. Nosso elo é eterno.',
     tag: 'Amor Infinito',
   },
   {
     id: 'card-5',
     title: 'Sete Anos de Pura Magia',
-    date: 'O Grande Marco',
+    date: 'O Grande Marco Sagrado',
     location: 'Hoje & Para Sempre',
-    image: '/photos/alycia_foto_recente_1.webp',
+    image: '/photos/alycia_foto_recente_2.webp',
     caption:
-      'Celebrando a existência da garotinha mais iluminada, alegre e extraordinária do universo.',
+      'Celebrando a existência da garotinha mais iluminada, alegre e extraordinária do universo. Feliz aniversário, Alycia!',
     tag: '7 Anos',
   },
 ]
@@ -87,7 +84,7 @@ export default function App() {
 
   // Cursor selector - Padrão do sistema é o default oficial (limpo, natural e sem distrações)
   const [currentCursor, setCurrentCursor] = useState<CursorType>(() => {
-    const saved = localStorage.getItem('alycia_active_cursor_v4') as CursorType
+    const saved = localStorage.getItem('alycia_active_cursor_v5') as CursorType
     if (saved === 'varinha' || saved === 'ondas' || saved === 'suave' || saved === 'padrao') {
       return saved
     }
@@ -96,12 +93,12 @@ export default function App() {
 
   // Hero image state - fotos reais salvas no celular
   const [heroImage, setHeroImage] = useState<string>(() => {
-    return localStorage.getItem('alycia_hero_image_v3') || DEFAULT_HERO_IMAGE
+    return localStorage.getItem('alycia_hero_image_v5') || DEFAULT_HERO_IMAGE
   })
 
   // Memory cards state - fotos reais salvas no celular
   const [memoryCards, setMemoryCards] = useState<MemoryCardData[]>(() => {
-    const saved = localStorage.getItem('alycia_memory_cards_v3')
+    const saved = localStorage.getItem('alycia_memory_cards_v5')
     if (saved) {
       try {
         return JSON.parse(saved)

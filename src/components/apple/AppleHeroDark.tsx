@@ -67,33 +67,45 @@ export const AppleHeroDark: React.FC<AppleHeroDarkProps> = ({
         </div>
       </div>
 
-      {/* Hero Product Frame */}
-      <div className="relative z-10 w-full max-w-[1020px] mx-auto mt-10 mb-4 flex justify-center">
+      {/* Hero Product Frame com Enquadramento Perfeito (Sem cortar o rosto do Pai) */}
+      <div className="relative z-10 w-full max-w-[720px] mx-auto mt-8 mb-6 flex justify-center px-3">
         <div
-          className="relative group rounded-[36px] p-2 bg-gradient-to-b from-[#ffd60a]/30 via-white/5 to-transparent shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] transition-all duration-700 hover:scale-[1.01]"
+          className="relative group w-full max-w-[520px] sm:max-w-[560px] rounded-[36px] p-2 bg-gradient-to-b from-[#ffd60a]/40 via-white/10 to-transparent shadow-[0_25px_70px_-15px_rgba(255,214,10,0.25)] transition-all duration-700 hover:scale-[1.01]"
         >
-          {/* Bezel & Glass Reflection */}
-          <div className="relative rounded-[30px] overflow-hidden bg-[#161617] border border-white/10 aspect-[16/10] sm:aspect-[21/11] max-w-[880px] max-h-[500px] flex items-center justify-center">
+          {/* Ambient Glow com a imagem real */}
+          <div
+            className="absolute inset-0 -z-10 rounded-[40px] opacity-40 blur-2xl transition-opacity duration-700 group-hover:opacity-60 pointer-events-none"
+            style={{
+              backgroundImage: `url(${heroImage})`,
+              backgroundPosition: 'center top',
+              backgroundSize: 'cover',
+            }}
+          />
+
+          {/* Bezel & Glass Reflection - Proporção 4:5 exata da foto vertical de Pai e Filha */}
+          <div className="relative rounded-[30px] overflow-hidden bg-[#0d0d11] border border-white/15 aspect-[4/5] w-full flex items-center justify-center shadow-2xl">
             <img
               src={heroImage}
-              alt="Alycia Manuele"
-              className="w-full h-full object-cover object-center filter brightness-[0.95] contrast-[1.05] transition-transform duration-1000 group-hover:scale-105"
+              alt="Alycia Manuele com o Papai Vinícius"
+              className="w-full h-full object-cover object-[center_top] filter brightness-[0.98] contrast-[1.03] transition-transform duration-1000 group-hover:scale-105"
             />
 
-            {/* Subtle Gradient Vignette */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/80 via-transparent to-black/30 pointer-events-none" />
+            {/* Subtle Gradient Vignette suave */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/20 pointer-events-none" />
 
             {/* Bottom In-Frame Badge */}
-            <div className="absolute bottom-5 left-6 right-6 flex items-center justify-between text-xs text-white/90">
-              <div className="flex items-center gap-2 bg-black/70 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/15">
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-white/95">
+              <div className="flex items-center gap-2 bg-black/80 backdrop-blur-md px-3.5 py-2 rounded-full border border-white/20 shadow-lg">
                 <Heart className="w-3.5 h-3.5 text-[#ff375f] fill-[#ff375f]" />
-                <span className="font-medium tracking-tight">Sete Anos • Amor Que Ultrapassa Qualquer Distância</span>
+                <span className="font-medium tracking-tight text-[11px] sm:text-xs">
+                  Papai Vinícius & Princesa Alycia • Amor Infinito
+                </span>
               </div>
               <button
                 onClick={onOpenPhotoModal}
-                className="hidden sm:inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/20 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/15 transition-colors text-[11px] text-white"
+                className="inline-flex items-center gap-1.5 bg-white/15 hover:bg-white/25 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 transition-colors text-[11px] text-white shadow-md"
               >
-                Trocar Foto Principal
+                Trocar Foto
               </button>
             </div>
           </div>
