@@ -334,6 +334,35 @@ export const AppleEditorialLetter: React.FC = () => {
             <Feather className="w-5 h-5 text-[#ffd60a]" />
           </div>
 
+          {/* Foto Especial da Princesa Alycia */}
+          <div className="flex flex-col sm:flex-row items-center gap-6 p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-white/[0.04] to-transparent border border-white/10">
+            <div className="relative group w-40 h-48 sm:w-44 sm:h-52 rounded-2xl overflow-hidden shrink-0 shadow-2xl border-2 border-[#ffd60a]/40">
+              <img
+                src="/photos/alycia_foto_recente_2.webp"
+                alt="Princesa Alycia Manuele"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute bottom-2 left-2 right-2 text-center">
+                <span className="text-[10px] font-black uppercase tracking-wider text-[#ffd60a] bg-black/80 px-2 py-0.5 rounded-full border border-white/15">
+                  Alycia • 7 Anos
+                </span>
+              </div>
+            </div>
+            <div className="space-y-2 text-center sm:text-left">
+              <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#ffd60a] uppercase tracking-wider">
+                <Heart className="w-3.5 h-3.5 fill-[#ff375f] text-[#ff375f]" />
+                <span>O Maior Amor do Papai</span>
+              </div>
+              <p className="text-xs sm:text-sm text-[#d2d2d7] leading-relaxed">
+                "Não importa a distância ou os quilômetros. Meu coração bate junto com o seu em cada segundo da sua vida. Você é a minha maior vitória."
+              </p>
+              <div className="text-[11px] text-[#ffd60a] font-semibold">
+                — Do seu papai, Vinícius
+              </div>
+            </div>
+          </div>
+
           {/* Renderização dos 5 Blocos com Destaque Dinâmico */}
           {LETTER_BLOCKS.map((block, index) => {
             const isActive = isPlaying && activeBlockId === block.id

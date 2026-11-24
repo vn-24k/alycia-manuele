@@ -23,17 +23,15 @@ import FloatingCursorControl from './components/cursors/FloatingCursorControl'
 import { SmoothCursor } from './components/21st/smooth-cursor'
 import { CursorType } from './components/cursors/CursorSwitcher'
 
-const DEFAULT_HERO_IMAGE =
-  'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1200&auto=format&fit=crop'
+const DEFAULT_HERO_IMAGE = '/photos/alycia_foto_recente_1.webp'
 
 const DEFAULT_MEMORY_CARDS: MemoryCardData[] = [
   {
     id: 'card-1',
-    title: 'O Primeiro Sorriso Espontâneo',
+    title: 'O Sorriso Mais Encantado do Mundo',
     date: 'Capítulo Inesquecível',
-    location: 'No Aconchego de Casa',
-    image:
-      'https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?q=80&w=900&auto=format&fit=crop',
+    location: 'No Aconchego do Coração',
+    image: '/photos/alycia_foto_recente_2.webp',
     caption:
       'Aquele momento em que o mundo parou e uma gargalhada pura iluminou cada canto da nossa história.',
     tag: 'Afeto Eterno',
@@ -76,8 +74,7 @@ const DEFAULT_MEMORY_CARDS: MemoryCardData[] = [
     title: 'Sete Anos de Pura Magia',
     date: 'O Grande Marco',
     location: 'Hoje & Para Sempre',
-    image:
-      'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=900&auto=format&fit=crop',
+    image: '/photos/alycia_foto_recente_1.webp',
     caption:
       'Celebrando a existência da garotinha mais iluminada, alegre e extraordinária do universo.',
     tag: '7 Anos',
@@ -97,14 +94,14 @@ export default function App() {
     return 'padrao'
   })
 
-  // Hero image state
+  // Hero image state - fotos reais salvas no celular
   const [heroImage, setHeroImage] = useState<string>(() => {
-    return localStorage.getItem('alycia_hero_image') || DEFAULT_HERO_IMAGE
+    return localStorage.getItem('alycia_hero_image_v3') || DEFAULT_HERO_IMAGE
   })
 
-  // Memory cards state
+  // Memory cards state - fotos reais salvas no celular
   const [memoryCards, setMemoryCards] = useState<MemoryCardData[]>(() => {
-    const saved = localStorage.getItem('alycia_memory_cards')
+    const saved = localStorage.getItem('alycia_memory_cards_v3')
     if (saved) {
       try {
         return JSON.parse(saved)
