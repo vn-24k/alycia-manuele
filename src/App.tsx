@@ -76,13 +76,13 @@ export default function App() {
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false)
   const [isMuted, setIsMuted] = useState(false)
 
-  // Cursor selector - Padrão do sistema é o default oficial (limpo, natural e sem distrações)
+  // Cursor selector - Varinha de Condão como cursor principal e oficial
   const [currentCursor, setCurrentCursor] = useState<CursorType>(() => {
-    const saved = localStorage.getItem('alycia_active_cursor_v5') as CursorType
+    const saved = localStorage.getItem('alycia_active_cursor_v6') as CursorType
     if (saved === 'varinha' || saved === 'ondas' || saved === 'suave' || saved === 'padrao') {
       return saved
     }
-    return 'padrao'
+    return 'varinha'
   })
 
   // Hero image state - fotos reais salvas no celular
@@ -105,7 +105,7 @@ export default function App() {
 
   const handleSelectCursor = (cursor: CursorType) => {
     setCurrentCursor(cursor)
-    localStorage.setItem('alycia_active_cursor_v4', cursor)
+    localStorage.setItem('alycia_active_cursor_v6', cursor)
   }
 
   const updateHeroImage = (url: string) => {
