@@ -98,7 +98,7 @@ export const ApplePromoGrid: React.FC<ApplePromoGridProps> = ({
 
           <div className="relative z-0 mt-6 mx-auto w-full max-w-[440px] aspect-[4/5] rounded-2xl overflow-hidden bg-neutral-200 border border-black/10 group-hover:scale-105 transition-transform duration-700 shadow-xl">
             <img
-              src="/photos/alycia_princesa_1.webp"
+              src="/photos/alycia_nova_2_princesa_radiante.webp"
               alt="Sorriso Encantado de Princesa da Alycia"
               className="w-full h-full object-cover object-top"
             />
@@ -137,7 +137,7 @@ export const ApplePromoGrid: React.FC<ApplePromoGridProps> = ({
 
           <div className="relative z-0 mt-6 mx-auto w-full max-w-[440px] aspect-[4/5] rounded-2xl overflow-hidden bg-neutral-200 border border-black/10 group-hover:scale-105 transition-transform duration-700 shadow-xl">
             <img
-              src="/photos/alycia_guitarra.webp"
+              src="/photos/alycia_nova_1_guitarra.webp"
               alt="Alycia com a Guitarra"
               className="w-full h-full object-cover object-top"
             />
@@ -310,7 +310,7 @@ export const ApplePromoGrid: React.FC<ApplePromoGridProps> = ({
 
           <div className="relative z-0 mt-6 mx-auto w-full max-w-[440px] aspect-[4/5] rounded-2xl overflow-hidden bg-neutral-100 border border-black/10 group-hover:scale-105 transition-transform duration-700 shadow-xl">
             <img
-              src="/photos/alycia_princesa_4.webp"
+              src="/photos/alycia_nova_5_princesa_sonhadora.webp"
               alt="Carta do Papai para Alycia"
               className="w-full h-full object-cover object-top"
             />

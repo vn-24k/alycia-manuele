@@ -22,53 +22,53 @@ const DEFAULT_HERO_IMAGE = '/photos/alycia_foto_recente_1.webp'
 const DEFAULT_MEMORY_CARDS: MemoryCardData[] = [
   {
     id: 'card-1',
-    title: 'A Princesa dos Meus Olhos',
-    date: 'Ensaio Real • 7 Anos',
-    location: 'Sari Rosa & Flor no Cabelo',
-    image: '/photos/alycia_princesa_1.webp',
+    title: 'A Pequena Rockstar & A Guitarra',
+    date: 'Fase Mais Nova',
+    location: 'No Quarto dos Sonhos',
+    image: '/photos/alycia_nova_1_guitarra.webp',
     caption:
-      'Aquele momento em que o mundo parou e o sorriso mais puro do universo iluminou cada canto da nossa história.',
-    tag: 'Ensaio Real',
+      'Desde pequenininha, com a guitarra em mãos e aquela atitude autêntica de quem nasceu para brilhar. A sua alegria viva e o seu amor pela música encantam tudo ao redor.',
+    tag: 'Fase Mais Nova',
   },
   {
     id: 'card-2',
-    title: 'A Princesa Estudiosa & Nobre',
-    date: 'Dedicação & Conhecimento',
-    location: 'Cadernos & Descobertas',
-    image: '/photos/alycia_estudando.webp',
+    title: 'A Princesa dos Meus Olhos',
+    date: 'Ensaio Real • 7 Anos',
+    location: 'Sari Rosa & Flor no Cabelo',
+    image: '/photos/alycia_nova_2_princesa_radiante.webp',
     caption:
-      'O brilho nos olhos de quem descobre o mundo a cada página, construindo um futuro brilhante e cheio de orgulho para o papai.',
-    tag: 'Estudos & Futuro',
+      'Aquele momento em que o mundo parou e o sorriso mais puro do universo iluminou cada canto da nossa história.',
+    tag: 'Sete Anos • Radiante',
   },
   {
     id: 'card-3',
-    title: 'Rockstar do Papai & A Guitarra',
-    date: 'Música, Atitude & Alegria',
-    location: 'O Quarto dos Sonhos',
-    image: '/photos/alycia_guitarra.webp',
+    title: 'Ternura e Delicadeza Real',
+    date: 'Ensaio Real • 7 Anos',
+    location: 'Pulseiras de Cristal & Meiguice',
+    image: '/photos/alycia_nova_3_princesa_ternura.webp',
     caption:
-      'Com a guitarra em mãos e aquela atitude autêntica que faz o coração do pai transbordar de admiração por cada acorde de alegria.',
-    tag: 'Rock & Magia',
+      'Aquele sorriso tímido e carinhoso que derrete o coração do pai. A sua delicadeza e afeto são o maior orgulho que um homem pode carregar.',
+    tag: 'Sete Anos • Doçura',
   },
   {
     id: 'card-4',
-    title: 'O Gatinho Dorminhoco & Aconchego',
-    date: 'Primeiras Memórias',
-    location: 'No Cobertorzinho Quentinho',
-    image: '/photos/alycia_gatinho_dorminhoco.webp',
+    title: 'A Flor Mais Nobre do Reino',
+    date: 'Ensaio Real • 7 Anos',
+    location: 'Perfil Angelical',
+    image: '/photos/alycia_nova_4_princesa_flor.webp',
     caption:
-      'Desde pequenininha demonstrando toda a sua bondade e carinho com os bichinhos, abraçando a vida com pureza e amor.',
-    tag: 'Amor & Cuidado',
+      'Ajustando a flor no cabelo com a serenidade e nobreza de uma princesa que carrega bondade e justiça no coração.',
+    tag: 'Sete Anos • Pureza',
   },
   {
     id: 'card-5',
-    title: 'O Abraço Mais Seguro do Mundo',
-    date: 'Aliança Que Vence Distâncias',
-    location: 'Refúgio Sagrado',
-    image: '/photos/alycia_foto_recente_1.webp',
+    title: 'Doce Sonho de Menina',
+    date: 'Ensaio Real • 7 Anos',
+    location: 'Queixo na Mãozinha & Sonhos',
+    image: '/photos/alycia_nova_5_princesa_sonhadora.webp',
     caption:
-      'Não existe lugar mais acolhedor do que o abraço entre pai e filha. Meu coração bate no seu peito a cada segundo da sua vida.',
-    tag: 'Elo Sagrado',
+      'Sonhe alto, minha filha. Não existe limite para onde a sua sabedoria e a sua luz podem te levar.',
+    tag: 'Sete Anos • Sonhadora',
   },
 ]
 
@@ -87,12 +87,12 @@ export default function App() {
 
   // Hero image state - fotos reais salvas no celular
   const [heroImage, setHeroImage] = useState<string>(() => {
-    return localStorage.getItem('alycia_hero_image_v6') || DEFAULT_HERO_IMAGE
+    return localStorage.getItem('alycia_hero_image_v7') || DEFAULT_HERO_IMAGE
   })
 
   // Memory cards state - fotos reais salvas no celular
   const [memoryCards, setMemoryCards] = useState<MemoryCardData[]>(() => {
-    const saved = localStorage.getItem('alycia_memory_cards_v6')
+    const saved = localStorage.getItem('alycia_memory_cards_v7')
     if (saved) {
       try {
         return JSON.parse(saved)
