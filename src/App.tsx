@@ -13,10 +13,13 @@ import { AppleEditorialLetter } from './components/apple/AppleEditorialLetter'
 import { AppleFooter } from './components/apple/AppleFooter'
 import { MagicBirthdayCake } from './components/magic/MagicBirthdayCake'
 import { RoyalStorybook } from './components/magic/RoyalStorybook'
+import { RoyalGuestbook } from './components/magic/RoyalGuestbook'
 import { EnchantedMusicBox } from './components/music/EnchantedMusicBox'
 import { PhotoUploadModal } from './components/PhotoUploadModal'
 import { MemoryCardData } from './components/MemoryVault3D'
 import SpringWaveCursor from './components/cursors/SpringWaveCursor'
+import FairySparkleCursor from './components/cursors/FairySparkleCursor'
+import FloatingCursorControl from './components/cursors/FloatingCursorControl'
 import { SmoothCursor } from './components/21st/smooth-cursor'
 import { CursorType } from './components/cursors/CursorSwitcher'
 
@@ -85,13 +88,13 @@ export default function App() {
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false)
   const [isMuted, setIsMuted] = useState(false)
 
-  // Cursor selector - SpringWaveCursor ('ondas') é o principal por padrão
+  // Cursor selector - Padrão do sistema é o default oficial (limpo, natural e sem distrações)
   const [currentCursor, setCurrentCursor] = useState<CursorType>(() => {
-    const saved = localStorage.getItem('alycia_active_cursor_v2') as CursorType
-    if (saved === 'ondas' || saved === 'suave' || saved === 'padrao') {
+    const saved = localStorage.getItem('alycia_active_cursor_v4') as CursorType
+    if (saved === 'varinha' || saved === 'ondas' || saved === 'suave' || saved === 'padrao') {
       return saved
     }
-    return 'ondas'
+    return 'padrao'
   })
 
   // Hero image state
@@ -114,7 +117,7 @@ export default function App() {
 
   const handleSelectCursor = (cursor: CursorType) => {
     setCurrentCursor(cursor)
-    localStorage.setItem('alycia_active_cursor_v2', cursor)
+    localStorage.setItem('alycia_active_cursor_v4', cursor)
   }
 
   const updateHeroImage = (url: string) => {
@@ -165,11 +168,12 @@ export default function App() {
       <SweatyPortalIntro />
 
       {/* 
-        CURSORES INTERATIVOS
-        - Ondas Mágicas / SpringWaveCursor (Principal - Fitas de aurora com física de molas)
+        CURSORES INTERATIVOS OPCIONAIS (Padrão do sistema é o default limpo, zero poluição)
+        - Varinha de Condão / FairySparkleCursor (Pó de estrelas cintilantes ao mover e clicar)
+        - Ondas Mágicas / SpringWaveCursor (Fitas de aurora com física de molas)
         - Aura Estelar (Anel magnético de luz dourada)
-        - Padrão do Sistema (Nativo do navegador)
       */}
+      {currentCursor === 'varinha' && <FairySparkleCursor />}
       {currentCursor === 'ondas' && <SpringWaveCursor />}
       {currentCursor === 'suave' && (
         <SmoothCursor color="#ffd60a" glowColor="rgba(255, 214, 10, 0.55)" />
@@ -253,13 +257,22 @@ export default function App() {
 
         {/* 10. Clímax Emocional: Carta do Papai para Alycia */}
         <AppleEditorialLetter />
+
+        {/* 11. O Livro dos Desejos & Mural de Recados para Alycia */}
+        <RoyalGuestbook />
       </main>
 
-      {/* 11. Apple Official Celebration Directory & Footnotes */}
+      {/* 12. Apple Official Celebration Directory & Footnotes */}
       <AppleFooter />
 
-      {/* 12. Caixinha de Música Encantada (Music Box Player Flutuante) */}
+      {/* 13. Caixinha de Música Encantada (Music Box Player Flutuante) */}
       <EnchantedMusicBox onScrollToLetter={scrollToLetter} />
+
+      {/* 14. Botão Bonito e Interativo para Selecionar o Cursor */}
+      <FloatingCursorControl
+        currentCursor={currentCursor}
+        onSelectCursor={handleSelectCursor}
+      />
 
       {/* Modal para Troca Rápida de Fotos */}
       <PhotoUploadModal

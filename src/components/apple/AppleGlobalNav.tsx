@@ -15,6 +15,7 @@ import {
   X,
   BookOpen,
   Image as ImageIcon,
+  Wand2,
 } from 'lucide-react'
 import { CursorType } from '../cursors/CursorSwitcher'
 import { celestialAudio } from '../../audio/celestialSynth'
@@ -40,10 +41,16 @@ export const AppleGlobalNav: React.FC<AppleGlobalNavProps> = ({
   // Nomes poéticos e encantados (ZERO menções a WebGL, 21st ou engenharia de software)
   const CURSOR_OPTIONS: { id: CursorType; name: string; tag: string; icon: React.ElementType }[] = [
     {
-      id: 'ondas',
-      name: 'Ondas Mágicas',
-      tag: 'Fitas de Luz (Principal)',
-      icon: Droplets,
+      id: 'padrao',
+      name: 'Cursor Padrão',
+      tag: 'Seta Clássica (Oficial)',
+      icon: MousePointer,
+    },
+    {
+      id: 'varinha',
+      name: 'Varinha de Condão',
+      tag: 'Pó de Estrelas Cintilante',
+      icon: Wand2,
     },
     {
       id: 'suave',
@@ -52,10 +59,10 @@ export const AppleGlobalNav: React.FC<AppleGlobalNavProps> = ({
       icon: Sparkles,
     },
     {
-      id: 'padrao',
-      name: 'Cursor Padrão',
-      tag: 'Seta Clássica do Sistema',
-      icon: MousePointer,
+      id: 'ondas',
+      name: 'Ondas de Luz',
+      tag: 'Fitas de Aurora',
+      icon: Droplets,
     },
   ]
 
@@ -138,6 +145,13 @@ export const AppleGlobalNav: React.FC<AppleGlobalNavProps> = ({
           >
             <Feather className="w-3.5 h-3.5" />
             Carta do Papai
+          </button>
+          <button
+            onClick={() => handleNavClick('livro-recados')}
+            className="text-[#d2d2d7] hover:text-[#ffd60a] transition-colors font-medium flex items-center gap-1"
+          >
+            <Heart className="w-3 h-3 text-[#ff375f]" />
+            Desejos
           </button>
           <button
             onClick={onOpenPhotoModal}
@@ -322,6 +336,17 @@ export const AppleGlobalNav: React.FC<AppleGlobalNavProps> = ({
                 Carta do Papai (Voz Oficial)
               </span>
               <Heart className="w-3.5 h-3.5 fill-[#ff375f]" />
+            </button>
+
+            <button
+              onClick={() => {
+                handleNavClick('livro-recados')
+                setIsMobileMenuOpen(false)
+              }}
+              className="w-full text-left py-2.5 px-3 rounded-xl hover:bg-white/[0.06] text-[#ffd60a] text-[14px] font-medium transition-colors flex items-center gap-2"
+            >
+              <Heart className="w-4 h-4 text-[#ff375f]" />
+              <span>Livro de Desejos & Recados</span>
             </button>
 
             <button
