@@ -7,7 +7,7 @@ import { AppleEditorialLetter } from './components/apple/AppleEditorialLetter'
 import { AppleFooter } from './components/apple/AppleFooter'
 import { MagicBirthdayCake } from './components/magic/MagicBirthdayCake'
 import { RoyalPhotoAlbum } from './components/magic/RoyalPhotoAlbum'
-import { RoyalGuestbook } from './components/magic/RoyalGuestbook'
+import { RoyalSevenPromises } from './components/magic/RoyalSevenPromises'
 import { EnchantedMusicBox } from './components/music/EnchantedMusicBox'
 import { PhotoUploadModal } from './components/PhotoUploadModal'
 import { MemoryCardData } from './components/MemoryVault3D'
@@ -199,11 +199,11 @@ export default function App() {
         */}
         <RoyalPhotoAlbum onOpenPhotoModal={() => setIsPhotoModalOpen(true)} />
 
-        {/* 4. Clímax Emocional: Carta do Papai Vinícius para Alycia */}
-        <AppleEditorialLetter />
+        {/* 4. As 7 Promessas Sagradas do Papai Vinícius (Interativas com Harpa) */}
+        <RoyalSevenPromises />
 
-        {/* 5. O Livro dos Desejos & Mural de Recados para Alycia */}
-        <RoyalGuestbook />
+        {/* 5. Clímax Emocional: Carta do Papai Vinícius para Alycia */}
+        <AppleEditorialLetter />
       </main>
 
       {/* 12. Apple Official Celebration Directory & Footnotes */}

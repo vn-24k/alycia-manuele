@@ -26,11 +26,10 @@ export const AppleFooter: React.FC = () => {
             </h4>
             <ul className="space-y-2 text-[#a1a1a6]">
               <li><a href="#alycia-pro" className="hover:text-white transition-colors">Início Oficial</a></li>
-              <li><a href="#manto-3d" className="hover:text-[#ffd60a] transition-colors font-medium">Manto 3D</a></li>
-              <li><a href="#galeria-reinos" className="hover:text-white transition-colors">Reinos Encantados</a></li>
-              <li><a href="#livro-historias" className="hover:text-white transition-colors">Histórias em 3D</a></li>
-              <li><a href="#playground-magico" className="hover:text-white transition-colors">Playground Mágico</a></li>
-              <li><a href="#carta-pai" className="hover:text-[#ffd60a] transition-colors">Carta do Papai</a></li>
+              <li><a href="#bolo-magico" className="hover:text-[#ffd60a] transition-colors font-medium">Bolo dos 7 Anos</a></li>
+              <li><a href="#album-real" className="hover:text-white transition-colors">Álbum de Fotos</a></li>
+              <li><a href="#promessas-reais" className="hover:text-[#ffd60a] transition-colors">As 7 Promessas</a></li>
+              <li><a href="#carta-pai" className="hover:text-[#ff375f] transition-colors font-semibold">Carta do Papai</a></li>
             </ul>
           </div>
 

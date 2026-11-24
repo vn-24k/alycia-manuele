@@ -129,11 +129,11 @@ export const AppleGlobalNav: React.FC<AppleGlobalNavProps> = ({
             Carta do Papai
           </button>
           <button
-            onClick={() => handleNavClick('livro-recados')}
+            onClick={() => handleNavClick('promessas-reais')}
             className="text-[#d2d2d7] hover:text-[#ffd60a] transition-colors font-medium flex items-center gap-1"
           >
-            <Heart className="w-3 h-3 text-[#ff375f]" />
-            Mural de Recados
+            <Sparkles className="w-3 h-3 text-[#ffd60a]" />
+            7 Promessas
           </button>
           <button
             onClick={onOpenPhotoModal}
@@ -296,13 +296,18 @@ export const AppleGlobalNav: React.FC<AppleGlobalNavProps> = ({
 
             <button
               onClick={() => {
-                handleNavClick('livro-recados')
+                handleNavClick('promessas-reais')
                 setIsMobileMenuOpen(false)
               }}
-              className="w-full text-left py-2.5 px-3 rounded-xl hover:bg-white/[0.06] text-[#d2d2d7] text-[14px] font-medium transition-colors flex items-center gap-2"
+              className="w-full text-left py-2.5 px-3 rounded-xl hover:bg-white/[0.06] text-[#ffd60a] text-[14px] font-medium transition-colors flex items-center justify-between"
             >
-              <Heart className="w-4 h-4 text-[#ff375f]" />
-              <span>Mural de Recados & Desejos</span>
+              <span className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-[#ffd60a]" />
+                As 7 Promessas do Papai
+              </span>
+              <span className="text-[11px] font-mono bg-[#ffd60a]/20 px-2 py-0.5 rounded-full text-[#ffd60a]">
+                Aliança Real
+              </span>
             </button>
 
             <button
