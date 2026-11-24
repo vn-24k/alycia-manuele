@@ -115,35 +115,17 @@ export const AppleGlobalNav: React.FC<AppleGlobalNavProps> = ({
             Bolo 7 Anos
           </button>
           <button
-            onClick={() => handleNavClick('livro-historias')}
-            className="text-[#d2d2d7] hover:text-[#ffd60a] transition-colors font-medium"
-          >
-            Histórias
-          </button>
-          <button
-            onClick={() => handleNavClick('manto-3d')}
+            onClick={() => handleNavClick('album-real')}
             className="text-[#d2d2d7] hover:text-[#ffd60a] transition-colors font-medium flex items-center gap-1"
           >
-            <Sparkles className="w-3 h-3 text-[#ffd60a]" />
-            Manto 3D
-          </button>
-          <button
-            onClick={() => handleNavClick('galeria-reinos')}
-            className="text-[#d2d2d7] hover:text-[#ffd60a] transition-colors font-medium"
-          >
-            Reinos
-          </button>
-          <button
-            onClick={() => handleNavClick('playground-magico')}
-            className="text-[#d2d2d7] hover:text-[#ffd60a] transition-colors font-medium"
-          >
-            Playground
+            <ImageIcon className="w-3.5 h-3.5 text-[#ffd60a]" />
+            Álbum de Fotos
           </button>
           <button
             onClick={() => handleNavClick('carta-pai')}
             className="text-[#ff375f] hover:text-white transition-colors font-semibold flex items-center gap-1"
           >
-            <Feather className="w-3.5 h-3.5" />
+            <Feather className="w-3 h-3 text-[#ff375f]" />
             Carta do Papai
           </button>
           <button
@@ -151,7 +133,7 @@ export const AppleGlobalNav: React.FC<AppleGlobalNavProps> = ({
             className="text-[#d2d2d7] hover:text-[#ffd60a] transition-colors font-medium flex items-center gap-1"
           >
             <Heart className="w-3 h-3 text-[#ff375f]" />
-            Desejos
+            Mural de Recados
           </button>
           <button
             onClick={onOpenPhotoModal}
@@ -284,44 +266,18 @@ export const AppleGlobalNav: React.FC<AppleGlobalNavProps> = ({
 
             <button
               onClick={() => {
-                handleNavClick('livro-historias')
+                handleNavClick('album-real')
                 setIsMobileMenuOpen(false)
               }}
-              className="w-full text-left py-2.5 px-3 rounded-xl hover:bg-white/[0.06] text-[#f5f5f7] text-[14px] font-medium transition-colors flex items-center gap-2"
+              className="w-full text-left py-2.5 px-3 rounded-xl hover:bg-white/[0.06] text-[#f5f5f7] text-[14px] font-medium transition-colors flex items-center justify-between"
             >
-              <BookOpen className="w-4 h-4 text-[#bf5af2]" />
-              <span>O Livro de Histórias (0 a 7 Anos)</span>
-            </button>
-
-            <button
-              onClick={() => {
-                handleNavClick('manto-3d')
-                setIsMobileMenuOpen(false)
-              }}
-              className="w-full text-left py-2.5 px-3 rounded-xl hover:bg-white/[0.06] text-[#d2d2d7] text-[14px] font-medium transition-colors flex items-center gap-2"
-            >
-              <Sparkles className="w-4 h-4 text-[#ffd60a]" />
-              <span>Manto Celestial 3D</span>
-            </button>
-
-            <button
-              onClick={() => {
-                handleNavClick('galeria-reinos')
-                setIsMobileMenuOpen(false)
-              }}
-              className="w-full text-left py-2.5 px-3 rounded-xl hover:bg-white/[0.06] text-[#d2d2d7] text-[14px] font-medium transition-colors"
-            >
-              Galeria dos Reinos Encantados
-            </button>
-
-            <button
-              onClick={() => {
-                handleNavClick('playground-magico')
-                setIsMobileMenuOpen(false)
-              }}
-              className="w-full text-left py-2.5 px-3 rounded-xl hover:bg-white/[0.06] text-[#d2d2d7] text-[14px] font-medium transition-colors"
-            >
-              Playground Cinético das Letras
+              <span className="flex items-center gap-2">
+                <ImageIcon className="w-4 h-4 text-[#ffd60a]" />
+                Álbum de Fotos Sagrado
+              </span>
+              <span className="text-[11px] font-mono bg-white/10 px-2 py-0.5 rounded-full text-white/80">
+                4 Momentos
+              </span>
             </button>
 
             <button
@@ -343,10 +299,10 @@ export const AppleGlobalNav: React.FC<AppleGlobalNavProps> = ({
                 handleNavClick('livro-recados')
                 setIsMobileMenuOpen(false)
               }}
-              className="w-full text-left py-2.5 px-3 rounded-xl hover:bg-white/[0.06] text-[#ffd60a] text-[14px] font-medium transition-colors flex items-center gap-2"
+              className="w-full text-left py-2.5 px-3 rounded-xl hover:bg-white/[0.06] text-[#d2d2d7] text-[14px] font-medium transition-colors flex items-center gap-2"
             >
               <Heart className="w-4 h-4 text-[#ff375f]" />
-              <span>Livro de Desejos & Recados</span>
+              <span>Mural de Recados & Desejos</span>
             </button>
 
             <button

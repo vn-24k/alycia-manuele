@@ -61,7 +61,7 @@ export const AppleHeroDark: React.FC<AppleHeroDarkProps> = ({
             className="apple-link-chevron group text-base md:text-[17px] text-[#ffd60a] hover:text-white flex items-center gap-1.5"
           >
             <Sparkles className="w-4 h-4 text-[#ffd60a]" />
-            Explorar o Manto 3D
+            Ver Álbum de Fotos
             <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>

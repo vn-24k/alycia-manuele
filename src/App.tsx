@@ -2,17 +2,11 @@ import React, { useState } from 'react'
 import { AppleGlobalNav } from './components/apple/AppleGlobalNav'
 import { AppleRibbon } from './components/apple/AppleRibbon'
 import { AppleHeroDark } from './components/apple/AppleHeroDark'
-import { CelestialGeometricFabric } from './components/arsenal/CelestialGeometricFabric'
 import { SweatyPortalIntro } from './components/arsenal/SweatyPortalIntro'
-import { ZoomPrincessTransition } from './components/arsenal/ZoomPrincessTransition'
-import { StickyPrincessCards } from './components/arsenal/StickyPrincessCards'
-import { ImageFlockPrincesses } from './components/arsenal/ImageFlockPrincesses'
-import { KineticLetterPlayground } from './components/arsenal/KineticLetterPlayground'
-import { CodropsPaperShimmer } from './components/arsenal/CodropsPaperShimmer'
 import { AppleEditorialLetter } from './components/apple/AppleEditorialLetter'
 import { AppleFooter } from './components/apple/AppleFooter'
 import { MagicBirthdayCake } from './components/magic/MagicBirthdayCake'
-import { RoyalStorybook } from './components/magic/RoyalStorybook'
+import { RoyalPhotoAlbum } from './components/magic/RoyalPhotoAlbum'
 import { RoyalGuestbook } from './components/magic/RoyalGuestbook'
 import { EnchantedMusicBox } from './components/music/EnchantedMusicBox'
 import { PhotoUploadModal } from './components/PhotoUploadModal'
@@ -143,13 +137,8 @@ export default function App() {
     el?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  const scrollToManto3D = () => {
-    const el = document.getElementById('manto-3d')
-    el?.scrollIntoView({ behavior: 'smooth' })
-  }
-
-  const scrollToGalleries = () => {
-    const el = document.getElementById('galeria-reinos')
+  const scrollToAlbum = () => {
+    const el = document.getElementById('album-real')
     el?.scrollIntoView({ behavior: 'smooth' })
   }
 
@@ -157,7 +146,7 @@ export default function App() {
     <div className="relative min-h-screen bg-[#000000] text-[#f5f5f7] overflow-x-hidden font-sf antialiased selection:bg-[#0071e3]/30 selection:text-white pb-16">
       {/* 
         1. INTRO EXPANSIVA CIRCULAR DO SWEATY-SHOP-LOADING
-        Portal místico que explode com coroas, flocos de neve e estrelas para revelar o reino
+        Portal místico com coroa de luz revelando a celebração
       */}
       <SweatyPortalIntro />
 
@@ -187,10 +176,10 @@ export default function App() {
         {/* Faixa Oficial da Celebração */}
         <AppleRibbon />
 
-        {/* 1. Hero Principal Monumental de Aniversário */}
+        {/* 1. Hero Principal Monumental de Aniversário (Enquadramento 4:5 sem corte) */}
         <AppleHeroDark
           heroImage={heroImage}
-          onExploreClick={scrollToManto3D}
+          onExploreClick={scrollToAlbum}
           onMemoriesClick={scrollToLetter}
           onOpenPhotoModal={() => setIsPhotoModalOpen(true)}
         />
@@ -203,56 +192,17 @@ export default function App() {
         <MagicBirthdayCake />
 
         {/* 
-          3. O LIVRO MÁGICO DE HISTÓRIAS (The Royal Storybook da Princesa Alycia)
-          Crônicas ilustradas de conto de fadas contando a jornada inesquecível dos 0 aos 7 anos.
+          3. ÁLBUM NOBRE DE MEMÓRIAS REAIS DA PRINCESA ALYCIA
+          Focado 100% nas fotos reais da Alycia (Pai & Alycia, Sorriso, Estudando, Guitarra).
+          Botões de setas integrados diretamente sobre a imagem e suporte a swipe móvel no celular,
+          sem saltos de tela e sem exigir fotos fictícias de anos anteriores.
         */}
-        <RoyalStorybook />
+        <RoyalPhotoAlbum onOpenPhotoModal={() => setIsPhotoModalOpen(true)} />
 
-        {/* 
-          4. MANTO CELESTIAL DAS ESTRELAS (Flagship 3D Geometric Interactive Canvas)
-          Simulação física 3D de nós estelares com molas de Verlet a 120 FPS,
-          morfismo de 4 geometrias sagradas (Coroa Real, Manto Estelar, Rosa de Ouro, Coração Eterno),
-          ondas sonoras com harpa celestial e rotação em perspectiva 3D.
-        */}
-        <CelestialGeometricFabric />
-
-        {/* 
-          5. ZOOM TRANSITION (Código real do repositório zoom-transition)
-          Galeria de 6 Reinos Encantados (Frozen/Elsa, Branca de Neve, Rapunzel, Cinderela, Luccas Neto, Alycia)
-          com expansão em tela cheia e revelação cinematográfica
-        */}
-        <div id="galeria-reinos">
-          <ZoomPrincessTransition />
-        </div>
-
-        {/* 
-          6. STIKY CARDS (Código real do repositório stiky-cards)
-          Livro de Histórias com cartas que voam de lados alternados e empilham em 3D
-        */}
-        <StickyPrincessCards />
-
-        {/* 
-          7. IMAGE FLOCK (Código real do repositório Image-Flock)
-          Revoada interativa de princesas que flutuam na tela e reagem ao cursor
-        */}
-        <ImageFlockPrincesses />
-
-        {/* 
-          8. KINETIC LETTER PLAYGROUND (Inspirado no CodePen yyapzOP por donotfold)
-          Playground interativo de tipografia cinética com pesos variáveis, ondas e piano mágico para Alycia brincar
-        */}
-        <KineticLetterPlayground />
-
-        {/* 
-          9. CODROPS PAPER (Código real do repositório codrops-paper)
-          Manto de seda e ondas de papel iridescente com física matemática
-        */}
-        <CodropsPaperShimmer />
-
-        {/* 10. Clímax Emocional: Carta do Papai para Alycia */}
+        {/* 4. Clímax Emocional: Carta do Papai Vinícius para Alycia */}
         <AppleEditorialLetter />
 
-        {/* 11. O Livro dos Desejos & Mural de Recados para Alycia */}
+        {/* 5. O Livro dos Desejos & Mural de Recados para Alycia */}
         <RoyalGuestbook />
       </main>
 
