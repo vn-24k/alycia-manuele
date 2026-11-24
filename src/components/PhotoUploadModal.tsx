@@ -99,12 +99,17 @@ export const PhotoUploadModal: React.FC<PhotoUploadModalProps> = ({
               <ImageIcon className="h-3.5 w-3.5" />
               <span>Fotos Oficiais de Alycia (Toque para definir no Hero)</span>
             </h4>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
               {[
                 { url: '/photos/alycia_foto_recente_1.webp', label: 'Papai & Alycia' },
-                { url: '/photos/alycia_foto_recente_2.webp', label: 'Sorriso Doce' },
-                { url: '/photos/alycia_foto_3.webp', label: 'Estudando' },
-                { url: '/photos/alycia_foto_4.webp', label: 'Com a Guitarra' },
+                { url: '/photos/alycia_princesa_1.webp', label: 'Princesa Rosa' },
+                { url: '/photos/alycia_princesa_2.webp', label: 'Ternura e Jóias' },
+                { url: '/photos/alycia_princesa_3.webp', label: 'Flor no Cabelo' },
+                { url: '/photos/alycia_princesa_4.webp', label: 'Olhar Sonhador' },
+                { url: '/photos/alycia_gatinho_dorminhoco.webp', label: 'Gatinho Dormindo' },
+                { url: '/photos/alycia_gatinho_careta.webp', label: 'Careta de Amor' },
+                { url: '/photos/alycia_estudando.webp', label: 'Estudando' },
+                { url: '/photos/alycia_guitarra.webp', label: 'Com a Guitarra' },
               ].map((item) => (
                 <button
                   key={item.url}

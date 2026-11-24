@@ -56,7 +56,7 @@ export const ApplePromoGrid: React.FC<ApplePromoGridProps> = ({
 
           <div className="relative z-0 mt-6 mx-auto w-full max-w-[440px] aspect-[4/5] rounded-2xl overflow-hidden bg-neutral-900 border border-white/10 group-hover:scale-105 transition-transform duration-700 shadow-2xl">
             <img
-              src="/photos/alycia_foto_3.webp"
+              src="/photos/alycia_estudando.webp"
               alt="Alycia Estudando"
               className="w-full h-full object-cover object-top filter brightness-[0.98]"
             />
@@ -98,8 +98,8 @@ export const ApplePromoGrid: React.FC<ApplePromoGridProps> = ({
 
           <div className="relative z-0 mt-6 mx-auto w-full max-w-[440px] aspect-[4/5] rounded-2xl overflow-hidden bg-neutral-200 border border-black/10 group-hover:scale-105 transition-transform duration-700 shadow-xl">
             <img
-              src="/photos/alycia_foto_recente_2.webp"
-              alt="Sorriso de Alycia"
+              src="/photos/alycia_princesa_1.webp"
+              alt="Sorriso Encantado de Princesa da Alycia"
               className="w-full h-full object-cover object-top"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
@@ -137,7 +137,7 @@ export const ApplePromoGrid: React.FC<ApplePromoGridProps> = ({
 
           <div className="relative z-0 mt-6 mx-auto w-full max-w-[440px] aspect-[4/5] rounded-2xl overflow-hidden bg-neutral-200 border border-black/10 group-hover:scale-105 transition-transform duration-700 shadow-xl">
             <img
-              src="/photos/alycia_foto_4.webp"
+              src="/photos/alycia_guitarra.webp"
               alt="Alycia com a Guitarra"
               className="w-full h-full object-cover object-top"
             />
@@ -310,7 +310,7 @@ export const ApplePromoGrid: React.FC<ApplePromoGridProps> = ({
 
           <div className="relative z-0 mt-6 mx-auto w-full max-w-[440px] aspect-[4/5] rounded-2xl overflow-hidden bg-neutral-100 border border-black/10 group-hover:scale-105 transition-transform duration-700 shadow-xl">
             <img
-              src="/photos/alycia_foto_recente_2.webp"
+              src="/photos/alycia_princesa_4.webp"
               alt="Carta do Papai para Alycia"
               className="w-full h-full object-cover object-top"
             />

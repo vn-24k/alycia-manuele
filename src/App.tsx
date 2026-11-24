@@ -22,20 +22,20 @@ const DEFAULT_HERO_IMAGE = '/photos/alycia_foto_recente_1.webp'
 const DEFAULT_MEMORY_CARDS: MemoryCardData[] = [
   {
     id: 'card-1',
-    title: 'O Sorriso Mais Encantado do Mundo',
-    date: 'Capítulo Inesquecível',
-    location: 'No Aconchego do Coração',
-    image: '/photos/alycia_foto_recente_2.webp',
+    title: 'A Princesa dos Meus Olhos',
+    date: 'Ensaio Real • 7 Anos',
+    location: 'Sari Rosa & Flor no Cabelo',
+    image: '/photos/alycia_princesa_1.webp',
     caption:
-      'Aquele momento em que o mundo parou e uma gargalhada pura iluminou cada canto da nossa história.',
-    tag: 'Afeto Eterno',
+      'Aquele momento em que o mundo parou e o sorriso mais puro do universo iluminou cada canto da nossa história.',
+    tag: 'Ensaio Real',
   },
   {
     id: 'card-2',
     title: 'A Princesa Estudiosa & Nobre',
     date: 'Dedicação & Conhecimento',
     location: 'Cadernos & Descobertas',
-    image: '/photos/alycia_foto_3.webp',
+    image: '/photos/alycia_estudando.webp',
     caption:
       'O brilho nos olhos de quem descobre o mundo a cada página, construindo um futuro brilhante e cheio de orgulho para o papai.',
     tag: 'Estudos & Futuro',
@@ -45,30 +45,30 @@ const DEFAULT_MEMORY_CARDS: MemoryCardData[] = [
     title: 'Rockstar do Papai & A Guitarra',
     date: 'Música, Atitude & Alegria',
     location: 'O Quarto dos Sonhos',
-    image: '/photos/alycia_foto_4.webp',
+    image: '/photos/alycia_guitarra.webp',
     caption:
       'Com a guitarra em mãos e aquela atitude autêntica que faz o coração do pai transbordar de admiração por cada acorde de alegria.',
     tag: 'Rock & Magia',
   },
   {
     id: 'card-4',
-    title: 'O Abraço Que Cura Tudo',
-    date: 'Aliança Que Vence Distâncias',
-    location: 'Refúgio de Amor',
-    image: '/photos/alycia_foto_recente_1.webp',
+    title: 'O Gatinho Dorminhoco & Aconchego',
+    date: 'Primeiras Memórias',
+    location: 'No Cobertorzinho Quentinho',
+    image: '/photos/alycia_gatinho_dorminhoco.webp',
     caption:
-      'Não existe lugar mais seguro ou acolhedor do que o abraço apertado entre pai e filha. Nosso elo é eterno.',
-    tag: 'Amor Infinito',
+      'Desde pequenininha demonstrando toda a sua bondade e carinho com os bichinhos, abraçando a vida com pureza e amor.',
+    tag: 'Amor & Cuidado',
   },
   {
     id: 'card-5',
-    title: 'Sete Anos de Pura Magia',
-    date: 'O Grande Marco Sagrado',
-    location: 'Hoje & Para Sempre',
-    image: '/photos/alycia_foto_recente_2.webp',
+    title: 'O Abraço Mais Seguro do Mundo',
+    date: 'Aliança Que Vence Distâncias',
+    location: 'Refúgio Sagrado',
+    image: '/photos/alycia_foto_recente_1.webp',
     caption:
-      'Celebrando a existência da garotinha mais iluminada, alegre e extraordinária do universo. Feliz aniversário, Alycia!',
-    tag: '7 Anos',
+      'Não existe lugar mais acolhedor do que o abraço entre pai e filha. Meu coração bate no seu peito a cada segundo da sua vida.',
+    tag: 'Elo Sagrado',
   },
 ]
 
@@ -87,12 +87,12 @@ export default function App() {
 
   // Hero image state - fotos reais salvas no celular
   const [heroImage, setHeroImage] = useState<string>(() => {
-    return localStorage.getItem('alycia_hero_image_v5') || DEFAULT_HERO_IMAGE
+    return localStorage.getItem('alycia_hero_image_v6') || DEFAULT_HERO_IMAGE
   })
 
   // Memory cards state - fotos reais salvas no celular
   const [memoryCards, setMemoryCards] = useState<MemoryCardData[]>(() => {
-    const saved = localStorage.getItem('alycia_memory_cards_v5')
+    const saved = localStorage.getItem('alycia_memory_cards_v6')
     if (saved) {
       try {
         return JSON.parse(saved)

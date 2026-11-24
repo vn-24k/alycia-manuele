@@ -92,7 +92,7 @@ const STORY_PAGES: StoryPage[] = [
     prose:
       'Com cinco anos, a sua personalidade vibrante e cheia de atitude artística começou a florescer. No seu quarto, com a sua guitarra, você já mostrava que a música e a coragem correm nas suas veias. Cada nota inventada e cada pose de rockstar traziam aquele sorriso iluminado de quem carrega uma força única e autêntica.',
     lesson: 'A sua autenticidade e amor pela arte são uma inspiração para o papai.',
-    image: '/photos/alycia_foto_4.webp',
+    image: '/photos/alycia_guitarra.webp',
   },
   {
     age: 6,
@@ -103,7 +103,7 @@ const STORY_PAGES: StoryPage[] = [
     prose:
       'Aos seis anos, com seus cadernos abertos e o lápis na mão, você deu início a um dos capítulos mais lindos da sua história: os estudos. Ver sua dedicação debruçada sobre as lições, a concentração genuína e o orgulho ao aprender me encheu o peito de certeza: você nasceu para ser gigante e construir um destino grandioso.',
     lesson: 'O conhecimento é a maior coroa que uma princesa pode carregar na cabeça.',
-    image: '/photos/alycia_foto_3.webp',
+    image: '/photos/alycia_estudando.webp',
   },
   {
     age: 7,
