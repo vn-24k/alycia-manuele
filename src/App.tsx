@@ -11,6 +11,9 @@ import { KineticLetterPlayground } from './components/arsenal/KineticLetterPlayg
 import { CodropsPaperShimmer } from './components/arsenal/CodropsPaperShimmer'
 import { AppleEditorialLetter } from './components/apple/AppleEditorialLetter'
 import { AppleFooter } from './components/apple/AppleFooter'
+import { MagicBirthdayCake } from './components/magic/MagicBirthdayCake'
+import { RoyalStorybook } from './components/magic/RoyalStorybook'
+import { EnchantedMusicBox } from './components/music/EnchantedMusicBox'
 import { PhotoUploadModal } from './components/PhotoUploadModal'
 import { MemoryCardData } from './components/MemoryVault3D'
 import SpringWaveCursor from './components/cursors/SpringWaveCursor'
@@ -195,7 +198,20 @@ export default function App() {
         />
 
         {/* 
-          2. MANTO CELESTIAL DAS ESTRELAS (Flagship 3D Geometric Interactive Canvas)
+          2. O BOLO MÁGICO DE 7 ANOS COM VELINHAS SOPRÁVEIS
+          Alycia pode tocar em cada vela para fazer um pedido sagrado ou soprar todas de uma vez,
+          desencadeando chuva de confetes, estrelas e canção celestial dos 7 anos.
+        */}
+        <MagicBirthdayCake />
+
+        {/* 
+          3. O LIVRO MÁGICO DE HISTÓRIAS (The Royal Storybook da Princesa Alycia)
+          Crônicas ilustradas de conto de fadas contando a jornada inesquecível dos 0 aos 7 anos.
+        */}
+        <RoyalStorybook />
+
+        {/* 
+          4. MANTO CELESTIAL DAS ESTRELAS (Flagship 3D Geometric Interactive Canvas)
           Simulação física 3D de nós estelares com molas de Verlet a 120 FPS,
           morfismo de 4 geometrias sagradas (Coroa Real, Manto Estelar, Rosa de Ouro, Coração Eterno),
           ondas sonoras com harpa celestial e rotação em perspectiva 3D.
@@ -203,7 +219,7 @@ export default function App() {
         <CelestialGeometricFabric />
 
         {/* 
-          3. ZOOM TRANSITION (Código real do repositório zoom-transition)
+          5. ZOOM TRANSITION (Código real do repositório zoom-transition)
           Galeria de 6 Reinos Encantados (Frozen/Elsa, Branca de Neve, Rapunzel, Cinderela, Luccas Neto, Alycia)
           com expansão em tela cheia e revelação cinematográfica
         */}
@@ -212,35 +228,38 @@ export default function App() {
         </div>
 
         {/* 
-          4. STIKY CARDS (Código real do repositório stiky-cards)
+          6. STIKY CARDS (Código real do repositório stiky-cards)
           Livro de Histórias com cartas que voam de lados alternados e empilham em 3D
         */}
         <StickyPrincessCards />
 
         {/* 
-          5. IMAGE FLOCK (Código real do repositório Image-Flock)
+          7. IMAGE FLOCK (Código real do repositório Image-Flock)
           Revoada interativa de princesas que flutuam na tela e reagem ao cursor
         */}
         <ImageFlockPrincesses />
 
         {/* 
-          6. KINETIC LETTER PLAYGROUND (Inspirado no CodePen yyapzOP por donotfold)
+          8. KINETIC LETTER PLAYGROUND (Inspirado no CodePen yyapzOP por donotfold)
           Playground interativo de tipografia cinética com pesos variáveis, ondas e piano mágico para Alycia brincar
         */}
         <KineticLetterPlayground />
 
         {/* 
-          7. CODROPS PAPER (Código real do repositório codrops-paper)
+          9. CODROPS PAPER (Código real do repositório codrops-paper)
           Manto de seda e ondas de papel iridescente com física matemática
         */}
         <CodropsPaperShimmer />
 
-        {/* 8. Clímax Emocional: Carta do Papai para Alycia */}
+        {/* 10. Clímax Emocional: Carta do Papai para Alycia */}
         <AppleEditorialLetter />
       </main>
 
-      {/* 9. Apple Official Celebration Directory & Footnotes */}
+      {/* 11. Apple Official Celebration Directory & Footnotes */}
       <AppleFooter />
+
+      {/* 12. Caixinha de Música Encantada (Music Box Player Flutuante) */}
+      <EnchantedMusicBox onScrollToLetter={scrollToLetter} />
 
       {/* Modal para Troca Rápida de Fotos */}
       <PhotoUploadModal

@@ -76,7 +76,7 @@ export const AppleGlobalNav: React.FC<AppleGlobalNavProps> = ({
         </button>
 
         {/* Links de Navegação Real */}
-        <nav className="hidden md:flex items-center gap-5">
+        <nav className="hidden md:flex items-center gap-4 lg:gap-5">
           <button
             onClick={() => handleNavClick('alycia-pro')}
             className="text-white hover:text-[#ffd60a] transition-colors font-medium"
@@ -84,8 +84,21 @@ export const AppleGlobalNav: React.FC<AppleGlobalNavProps> = ({
             Início
           </button>
           <button
+            onClick={() => handleNavClick('bolo-magico')}
+            className="text-[#ffd60a] hover:text-white transition-colors font-semibold flex items-center gap-1 bg-[#ffd60a]/15 px-2.5 py-0.5 rounded-full border border-[#ffd60a]/30 shadow-sm"
+          >
+            <Crown className="w-3 h-3 text-[#ffd60a]" />
+            Bolo 7 Anos
+          </button>
+          <button
+            onClick={() => handleNavClick('livro-historias')}
+            className="text-[#d2d2d7] hover:text-[#ffd60a] transition-colors font-medium"
+          >
+            Histórias
+          </button>
+          <button
             onClick={() => handleNavClick('manto-3d')}
-            className="text-[#ffd60a] hover:text-white transition-colors font-semibold flex items-center gap-1 bg-[#ffd60a]/10 px-2.5 py-0.5 rounded-full border border-[#ffd60a]/25 shadow-sm"
+            className="text-[#d2d2d7] hover:text-[#ffd60a] transition-colors font-medium flex items-center gap-1"
           >
             <Sparkles className="w-3 h-3 text-[#ffd60a]" />
             Manto 3D
@@ -95,12 +108,6 @@ export const AppleGlobalNav: React.FC<AppleGlobalNavProps> = ({
             className="text-[#d2d2d7] hover:text-[#ffd60a] transition-colors font-medium"
           >
             Reinos
-          </button>
-          <button
-            onClick={() => handleNavClick('livro-historias')}
-            className="text-[#d2d2d7] hover:text-[#ffd60a] transition-colors font-medium"
-          >
-            Histórias
           </button>
           <button
             onClick={() => handleNavClick('playground-magico')}
