@@ -4,10 +4,9 @@ import {
   ChevronLeft,
   ChevronRight,
   Heart,
-  Sparkles,
-  Camera,
   Crown,
-  Stars,
+  Maximize2,
+  X,
 } from 'lucide-react'
 import { celestialAudio } from '../../audio/celestialSynth'
 
@@ -68,9 +67,10 @@ interface RoyalPhotoAlbumProps {
   onOpenPhotoModal?: () => void
 }
 
-export const RoyalPhotoAlbum: React.FC<RoyalPhotoAlbumProps> = ({ onOpenPhotoModal }) => {
+export const RoyalPhotoAlbum: React.FC<RoyalPhotoAlbumProps> = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [direction, setDirection] = useState(0)
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false)
 
   const currentPhoto = DEFAULT_ALBUM_PHOTOS[currentIndex]
 
@@ -130,7 +130,7 @@ export const RoyalPhotoAlbum: React.FC<RoyalPhotoAlbumProps> = ({ onOpenPhotoMod
             O Álbum Encantado de Alycia
           </h2>
           <p className="text-sm sm:text-base text-[#a1a1a6] max-w-[560px] mx-auto">
-            Deslize com o dedo ou use as setas para contemplar os momentos mais preciosos que guardamos no coração.
+            Deslize com o dedo ou use as setas para contemplar os momentos mais preciosos que guardamos no coração. Toque na foto para ampliar em tela cheia.
           </p>
         </div>
 
@@ -140,7 +140,7 @@ export const RoyalPhotoAlbum: React.FC<RoyalPhotoAlbumProps> = ({ onOpenPhotoMod
           <div className="relative rounded-[32px] p-2 bg-gradient-to-b from-[#ffd60a]/35 via-white/10 to-transparent shadow-[0_25px_70px_-15px_rgba(255,214,10,0.2)]">
             
             {/* Imagem com Proporção Perfeita 4:5 e Navegação Direta */}
-            <div className="relative rounded-[26px] overflow-hidden aspect-[4/5] bg-[#0c0c10] border border-white/15 select-none touch-pan-y">
+            <div className="relative rounded-[26px] overflow-hidden aspect-[4/5] bg-[#0c0c10] border border-white/15 select-none touch-pan-y group">
               <AnimatePresence mode="wait" custom={direction}>
                 <motion.div
                   key={currentPhoto.id}
@@ -160,12 +160,14 @@ export const RoyalPhotoAlbum: React.FC<RoyalPhotoAlbumProps> = ({ onOpenPhotoMod
                       handlePrev()
                     }
                   }}
-                  className="w-full h-full cursor-grab active:cursor-grabbing relative"
+                  onClick={() => setIsLightboxOpen(true)}
+                  className="w-full h-full cursor-pointer relative"
+                  title="Toque para ver em tela cheia"
                 >
                   <img
                     src={currentPhoto.url}
                     alt={currentPhoto.title}
-                    className="w-full h-full object-cover object-[center_top] filter brightness-[0.98] contrast-[1.03] pointer-events-none"
+                    className="w-full h-full object-cover object-[center_top] filter brightness-[0.98] contrast-[1.03] pointer-events-none transition-transform duration-700 group-hover:scale-[1.02]"
                   />
 
                   {/* Vinheta suave de gradiente */}
@@ -185,6 +187,16 @@ export const RoyalPhotoAlbum: React.FC<RoyalPhotoAlbumProps> = ({ onOpenPhotoMod
                   </div>
                 </motion.div>
               </AnimatePresence>
+
+              {/* Botão de Expandir em Tela Cheia (Topo Esquerdo) */}
+              <button
+                type="button"
+                onClick={() => setIsLightboxOpen(true)}
+                className="absolute top-3 left-3 z-20 w-8 h-8 rounded-full bg-black/60 hover:bg-black/85 text-white/80 hover:text-white flex items-center justify-center backdrop-blur-md border border-white/20 transition-all cursor-pointer shadow-md"
+                title="Ampliar Foto"
+              >
+                <Maximize2 className="w-4 h-4" />
+              </button>
 
               {/* SETA ESQUERDA (SOBRE A FOTO) */}
               <button
@@ -253,21 +265,73 @@ export const RoyalPhotoAlbum: React.FC<RoyalPhotoAlbumProps> = ({ onOpenPhotoMod
                 </div>
               </button>
             ))}
-
-            {onOpenPhotoModal && (
-              <button
-                type="button"
-                onClick={onOpenPhotoModal}
-                className="rounded-xl border border-dashed border-white/25 hover:border-[#ffd60a] aspect-[4/5] w-14 sm:w-16 flex flex-col items-center justify-center text-white/60 hover:text-[#ffd60a] transition-all bg-white/[0.02] hover:bg-white/[0.06] cursor-pointer"
-                title="Personalizar Fotos"
-              >
-                <Camera className="w-4 h-4 mb-0.5" />
-                <span className="text-[9px] font-medium">+ Fotos</span>
-              </button>
-            )}
           </div>
         </div>
       </div>
+
+      {/* MODAL LIGHTBOX EM TELA CHEIA (ZOOM IMERSIVO) */}
+      <AnimatePresence>
+        {isLightboxOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsLightboxOpen(false)}
+            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-2xl flex items-center justify-center p-3 sm:p-6"
+          >
+            {/* Botão Fechar */}
+            <button
+              onClick={() => setIsLightboxOpen(false)}
+              className="absolute top-4 right-4 z-50 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center border border-white/20 transition-all cursor-pointer"
+              title="Fechar"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Container da Foto Ampliada */}
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-[90vw] max-h-[90vh] flex flex-col items-center select-none"
+            >
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/15 max-h-[80vh]">
+                <img
+                  src={currentPhoto.url}
+                  alt={currentPhoto.title}
+                  className="max-w-full max-h-[80vh] object-contain rounded-2xl"
+                />
+
+                {/* Seta Esquerda Lightbox */}
+                <button
+                  type="button"
+                  onClick={handlePrev}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/70 hover:bg-black/90 text-white flex items-center justify-center border border-white/30 backdrop-blur-md transition-all cursor-pointer"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+
+                {/* Seta Direita Lightbox */}
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/70 hover:bg-black/90 text-white flex items-center justify-center border border-white/30 backdrop-blur-md transition-all cursor-pointer"
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+              </div>
+
+              {/* Legenda no Lightbox */}
+              <div className="mt-3 text-center">
+                <span className="text-xs font-bold text-[#ffd60a] uppercase tracking-wider block">
+                  {currentPhoto.title}
+                </span>
+                <p className="text-xs text-white/70 mt-0.5 max-w-md">
+                  {currentPhoto.subtitle} • Foto {currentIndex + 1} de {DEFAULT_ALBUM_PHOTOS.length}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }

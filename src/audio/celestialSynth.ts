@@ -92,18 +92,20 @@ class CelestialAudioEngine {
       const osc = this.ctx.createOscillator()
       const gain = this.ctx.createGain()
 
+      // Clique háptico aveludado estilo iOS: frequência baixa e rápida, zero estalo
       osc.type = 'sine'
-      osc.frequency.setValueAtTime(800, now)
-      osc.frequency.exponentialRampToValueAtTime(400, now + 0.05)
+      osc.frequency.setValueAtTime(220, now)
+      osc.frequency.exponentialRampToValueAtTime(90, now + 0.035)
 
-      gain.gain.setValueAtTime(0.04, now)
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05)
+      gain.gain.setValueAtTime(0.0001, now)
+      gain.gain.linearRampToValueAtTime(0.025, now + 0.006)
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.035)
 
       osc.connect(gain)
       gain.connect(this.ctx.destination)
 
       osc.start(now)
-      osc.stop(now + 0.05)
+      osc.stop(now + 0.04)
     } catch {
       // AudioContext fallback
     }
@@ -146,7 +148,7 @@ class CelestialAudioEngine {
     }
   }
 
-  public playBlowCandle() {
+  public playBlowCandle(candleIndex = 1) {
     if (this.isMuted) return
     this.initContext()
     if (!this.ctx) return
@@ -154,12 +156,17 @@ class CelestialAudioEngine {
     try {
       const now = this.ctx.currentTime
 
-      // Sopro de velinha: ruído filtrado + sino agudo delicado
-      const bufferSize = this.ctx.sampleRate * 0.25
+      // 1. SOPRO SUAVE E REALISTA DE VELA (Pink/Brown noise aveludado, zero estalo metálico)
+      const bufferSize = Math.floor(this.ctx.sampleRate * 0.32)
       const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate)
       const data = buffer.getChannelData(0)
+      let b0 = 0, b1 = 0, b2 = 0
       for (let i = 0; i < bufferSize; i++) {
-        data[i] = Math.random() * 2 - 1
+        const white = Math.random() * 2 - 1
+        b0 = 0.99 * b0 + white * 0.05
+        b1 = 0.97 * b1 + white * 0.07
+        b2 = 0.95 * b2 + white * 0.1
+        data[i] = (b0 + b1 + b2) * 1.8
       }
 
       const noise = this.ctx.createBufferSource()
@@ -167,24 +174,70 @@ class CelestialAudioEngine {
 
       const filter = this.ctx.createBiquadFilter()
       filter.type = 'lowpass'
-      filter.frequency.setValueAtTime(600, now)
-      filter.frequency.linearRampToValueAtTime(200, now + 0.25)
+      filter.frequency.setValueAtTime(420, now)
+      filter.frequency.exponentialRampToValueAtTime(130, now + 0.3)
 
       const gain = this.ctx.createGain()
-      gain.gain.setValueAtTime(0.05, now)
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25)
+      gain.gain.setValueAtTime(0.0001, now)
+      gain.gain.linearRampToValueAtTime(0.04, now + 0.035) // ataque macio de sopro humano
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.32)
 
       noise.connect(filter)
       filter.connect(gain)
       gain.connect(this.ctx.destination)
 
       noise.start(now)
-      noise.stop(now + 0.25)
+      noise.stop(now + 0.33)
 
-      // Sino estelar que surge com a fumaça mágica
+      // 2. ESCALA CRISTALINA CRESCENTE PARA CADA UMA DAS 7 VELAS (G-Major)
+      const candleNotes = [
+        392.00,  // 1. Sol 4 (Amor Infinito)
+        440.00,  // 2. Lá 4 (Saúde & Alegria)
+        493.88,  // 3. Si 4 (Inteligência)
+        523.25,  // 4. Dó 5 (Proteção)
+        587.33,  // 5. Ré 5 (Sonhos Dourados)
+        659.25,  // 6. Mi 5 (Abraços de Aconchego)
+        783.99,  // 7. Sol 5 (Sete Anos de Glória)
+      ]
+      const noteFreq = candleNotes[(candleIndex - 1) % candleNotes.length] || 523.25
+
       setTimeout(() => {
-        this.playMusicBoxNote(880, 0.08, 0.9) // A5
-      }, 50)
+        this.playWarmCrystalChime(noteFreq, 0.065, 1.3)
+      }, 70)
+    } catch {
+      // Graceful fallback
+    }
+  }
+
+  public playWarmCrystalChime(freq = 523.25, volume = 0.06, duration = 1.3) {
+    if (this.isMuted) return
+    this.initContext()
+    if (!this.ctx) return
+
+    try {
+      const now = this.ctx.currentTime
+      const osc1 = this.ctx.createOscillator()
+      const osc2 = this.ctx.createOscillator()
+      const gainNode = this.ctx.createGain()
+
+      osc1.type = 'sine'
+      osc1.frequency.setValueAtTime(freq, now)
+
+      osc2.type = 'sine'
+      osc2.frequency.setValueAtTime(freq * 2, now) // Harmônico doce de oitava
+
+      gainNode.gain.setValueAtTime(0.0001, now)
+      gainNode.gain.linearRampToValueAtTime(volume, now + 0.015)
+      gainNode.gain.exponentialRampToValueAtTime(0.0001, now + duration)
+
+      osc1.connect(gainNode)
+      osc2.connect(gainNode)
+      gainNode.connect(this.ctx.destination)
+
+      osc1.start(now)
+      osc2.start(now)
+      osc1.stop(now + duration + 0.05)
+      osc2.stop(now + duration + 0.05)
     } catch {
       // Graceful fallback
     }

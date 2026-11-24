@@ -87,7 +87,7 @@ export const MagicBirthdayCake: React.FC = () => {
     if (!target || !target.isLit) return
 
     celestialAudio.enableAudio()
-    celestialAudio.playBlowCandle()
+    celestialAudio.playBlowCandle(target.id)
     setActiveWish(target.wish)
 
     setCandles((prev) =>
@@ -109,18 +109,18 @@ export const MagicBirthdayCake: React.FC = () => {
     setIsBlowingAll(true)
     celestialAudio.enableAudio() // Desbloqueio síncrono imediato para WebKit iOS / Safari
 
-    // Apaga em cascata harmônica com intervalo de 200ms
+    // Apaga em cascata harmônica com intervalo de 220ms tocando a escala melódica
     const litCandles = candles.filter((c) => c.isLit)
     litCandles.forEach((candle, index) => {
       setTimeout(() => {
-        celestialAudio.playBlowCandle()
+        celestialAudio.playBlowCandle(candle.id)
         setCandles((prev) =>
           prev.map((c) => (c.id === candle.id ? { ...c, isLit: false } : c))
         )
         if (index === litCandles.length - 1) {
           setIsBlowingAll(false)
         }
-      }, index * 200)
+      }, index * 220)
     })
   }
 
@@ -217,11 +217,9 @@ export const MagicBirthdayCake: React.FC = () => {
                         </div>
                       ) : (
                         <div className="relative flex flex-col items-center">
-                          {/* Fumaça estelar residual */}
-                          <span className="text-[10px] text-white/40 animate-bounce">
-                            ~
-                          </span>
-                          <div className="w-0.5 h-2 bg-neutral-600 rounded-t" />
+                          {/* Fumacinha mágica translúcida subindo */}
+                          <div className="w-1.5 h-4 bg-gradient-to-t from-white/40 via-amber-200/20 to-transparent rounded-full blur-[1px] animate-pulse -translate-y-1" />
+                          <div className="w-0.5 h-2 bg-neutral-600 rounded-t -mt-1" />
                         </div>
                       )}
                     </div>

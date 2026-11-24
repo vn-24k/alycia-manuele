@@ -94,19 +94,13 @@ export const AppleHeroDark: React.FC<AppleHeroDarkProps> = ({
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/20 pointer-events-none" />
 
             {/* Bottom In-Frame Badge */}
-            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-white/95">
-              <div className="flex items-center gap-2 bg-black/80 backdrop-blur-md px-3.5 py-2 rounded-full border border-white/20 shadow-lg">
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-center text-xs text-white/95">
+              <div className="flex items-center gap-2 bg-black/80 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 shadow-lg">
                 <Heart className="w-3.5 h-3.5 text-[#ff375f] fill-[#ff375f]" />
                 <span className="font-medium tracking-tight text-[11px] sm:text-xs">
                   Papai Vinícius & Princesa Alycia • Amor Infinito
                 </span>
               </div>
-              <button
-                onClick={onOpenPhotoModal}
-                className="inline-flex items-center gap-1.5 bg-white/15 hover:bg-white/25 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 transition-colors text-[11px] text-white shadow-md"
-              >
-                Trocar Foto
-              </button>
             </div>
           </div>
         </div>
