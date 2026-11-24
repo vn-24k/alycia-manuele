@@ -25,13 +25,46 @@ export const EnchantedMusicBox: React.FC<EnchantedMusicBoxProps> = ({ onScrollTo
   const [isPlayingMelody, setIsPlayingMelody] = useState(false)
   const [currentTrackName, setCurrentTrackName] = useState<string>('Melodia Celestial das Estrelas')
 
+  useEffect(() => {
+    const onMelodyStarted = (e: Event) => {
+      const custom = e as CustomEvent<{ track?: string }>
+      setIsPlayingMelody(true)
+      setIsPlayingAmbient(false)
+      setCurrentTrackName(custom.detail?.track || 'Parabéns Pra Você (Caixinha de Cristal)')
+    }
+
+    const onMelodyEnded = () => {
+      setIsPlayingMelody(false)
+      setCurrentTrackName('Pronto para Tocar')
+    }
+
+    const onAudioStopped = () => {
+      setIsPlayingAmbient(false)
+      setIsPlayingMelody(false)
+      setCurrentTrackName('Pausado')
+    }
+
+    window.addEventListener('celestial-melody-started', onMelodyStarted)
+    window.addEventListener('celestial-melody-ended', onMelodyEnded)
+    window.addEventListener('celestial-audio-stopped', onAudioStopped)
+
+    return () => {
+      window.removeEventListener('celestial-melody-started', onMelodyStarted)
+      window.removeEventListener('celestial-melody-ended', onMelodyEnded)
+      window.removeEventListener('celestial-audio-stopped', onAudioStopped)
+    }
+  }, [])
+
   const toggleAmbient = () => {
     celestialAudio.playSoftClick()
     if (isPlayingAmbient) {
       celestialAudio.stopAmbientArpeggio()
       setIsPlayingAmbient(false)
+      setCurrentTrackName('Pausado')
     } else {
       celestialAudio.enableAudio()
+      celestialAudio.stopMelody()
+      setIsPlayingMelody(false)
       celestialAudio.startAmbientArpeggio()
       setIsPlayingAmbient(true)
       setCurrentTrackName('Harpa & Sinos Celestiais')
@@ -40,26 +73,32 @@ export const EnchantedMusicBox: React.FC<EnchantedMusicBoxProps> = ({ onScrollTo
 
   const playBirthdaySong = () => {
     celestialAudio.enableAudio()
+    celestialAudio.stopAmbientArpeggio()
+    setIsPlayingAmbient(false)
     celestialAudio.playHappyBirthdayMelody()
     setIsPlayingMelody(true)
     setCurrentTrackName('Parabéns Pra Você (Caixinha de Cristal)')
-
-    setTimeout(() => {
-      setIsPlayingMelody(false)
-    }, 16000)
   }
 
   const stopAllAudio = () => {
-    celestialAudio.stopAmbientArpeggio()
-    celestialAudio.stopMelody()
+    celestialAudio.stopAll()
     setIsPlayingAmbient(false)
     setIsPlayingMelody(false)
     setCurrentTrackName('Pausado')
   }
 
   const handleOpenLetter = () => {
+    celestialAudio.stopAll()
+    setIsPlayingAmbient(false)
+    setIsPlayingMelody(false)
+    setCurrentTrackName('Voz do Papai (Carta Sagrada)')
     setIsOpen(false)
     onScrollToLetter()
+
+    // Dispara a reprodução sincronizada da voz do papai logo após a rolagem suave
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('play-father-letter'))
+    }, 450)
   }
 
   return (

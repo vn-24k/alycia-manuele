@@ -86,6 +86,7 @@ export const MagicBirthdayCake: React.FC = () => {
     const target = candles.find((c) => c.id === id)
     if (!target || !target.isLit) return
 
+    celestialAudio.enableAudio()
     celestialAudio.playBlowCandle()
     setActiveWish(target.wish)
 
@@ -106,8 +107,9 @@ export const MagicBirthdayCake: React.FC = () => {
   const handleBlowAll = () => {
     if (isBlowingAll || litCount === 0) return
     setIsBlowingAll(true)
+    celestialAudio.enableAudio() // Desbloqueio síncrono imediato para WebKit iOS / Safari
 
-    // Apaga em cascata harmônica com intervalo de 180ms
+    // Apaga em cascata harmônica com intervalo de 200ms
     const litCandles = candles.filter((c) => c.isLit)
     litCandles.forEach((candle, index) => {
       setTimeout(() => {
@@ -123,6 +125,8 @@ export const MagicBirthdayCake: React.FC = () => {
   }
 
   const handleRelight = () => {
+    celestialAudio.enableAudio()
+    celestialAudio.stopMelody()
     celestialAudio.playStarBurst()
     setCandles(INITIAL_CANDLES)
     setAllExtinguished(false)
@@ -186,7 +190,7 @@ export const MagicBirthdayCake: React.FC = () => {
           <div className="relative w-full flex flex-col items-center">
             
             {/* VELINHAS NO TOPO */}
-            <div className="flex items-end justify-center gap-2.5 sm:gap-4 mb-2 z-20">
+            <div className="flex items-end justify-center gap-1.5 sm:gap-3 md:gap-4 mb-2 z-20">
               {candles.map((candle) => {
                 return (
                   <button
@@ -202,14 +206,14 @@ export const MagicBirthdayCake: React.FC = () => {
                     </div>
 
                     {/* Chama da vela */}
-                    <div className="h-10 flex items-end justify-center mb-1">
+                    <div className="h-9 sm:h-10 flex items-end justify-center mb-1">
                       {candle.isLit ? (
                         <div className="relative flex flex-col items-center animate-pulse">
                           {/* Halo de luz */}
                           <div className="absolute -inset-2 bg-gradient-to-t from-[#ff9f0a]/60 to-[#ffd60a]/30 rounded-full blur-[6px] animate-ping opacity-40" />
                           {/* Núcleo da chama */}
-                          <div className="w-3.5 h-6 bg-gradient-to-t from-[#ff375f] via-[#ff9f0a] to-[#ffd60a] rounded-[50%_50%_35%_35%] shadow-[0_0_14px_#ffd60a] transition-all transform group-hover:scale-125" />
-                          <div className="w-1.5 h-3 bg-white/90 rounded-full -mt-4 blur-[0.5px]" />
+                          <div className="w-3 sm:w-3.5 h-5 sm:h-6 bg-gradient-to-t from-[#ff375f] via-[#ff9f0a] to-[#ffd60a] rounded-[50%_50%_35%_35%] shadow-[0_0_14px_#ffd60a] transition-all transform group-hover:scale-125" />
+                          <div className="w-1 sm:w-1.5 h-2.5 sm:h-3 bg-white/90 rounded-full -mt-3.5 sm:-mt-4 blur-[0.5px]" />
                         </div>
                       ) : (
                         <div className="relative flex flex-col items-center">
@@ -227,16 +231,16 @@ export const MagicBirthdayCake: React.FC = () => {
 
                     {/* Corpo da Vela */}
                     <div
-                      className={`w-4 sm:w-5 h-16 sm:h-20 rounded-t-sm shadow-md transition-all flex flex-col justify-between items-center py-1.5 ${
+                      className={`w-3.5 sm:w-5 h-14 sm:h-20 rounded-t-sm shadow-md transition-all flex flex-col justify-between items-center py-1 sm:py-1.5 ${
                         candle.isLit
                           ? 'bg-gradient-to-b from-[#ffd60a] via-[#ff9f0a] to-[#e58300] border-t border-[#ffe57f] shadow-[0_4px_12px_rgba(255,159,10,0.3)]'
                           : 'bg-gradient-to-b from-[#3a3a3c] to-[#2c2c2e] opacity-60'
                       }`}
                     >
-                      <span className="text-[9px] sm:text-[10px] font-black text-[#000000]/70 select-none">
+                      <span className="text-[8px] sm:text-[10px] font-black text-[#000000]/70 select-none">
                         {candle.id}
                       </span>
-                      <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
+                      <div className="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-white/40" />
                     </div>
                   </button>
                 )
@@ -244,68 +248,68 @@ export const MagicBirthdayCake: React.FC = () => {
             </div>
 
             {/* ANDAR SUPERIOR DO BOLO (Andar 3) */}
-            <div className="w-[240px] sm:w-[280px] h-[50px] sm:h-[60px] bg-gradient-to-b from-[#fff2f5] via-[#ffdbe3] to-[#f4b8c7] rounded-t-2xl relative shadow-[0_10px_25px_rgba(0,0,0,0.4)] border-t-2 border-white/60 flex items-center justify-center">
+            <div className="w-[min(240px,65vw)] sm:w-[280px] h-[50px] sm:h-[60px] bg-gradient-to-b from-[#fff2f5] via-[#ffdbe3] to-[#f4b8c7] rounded-t-2xl relative shadow-[0_10px_25px_rgba(0,0,0,0.4)] border-t-2 border-white/60 flex items-center justify-center">
               {/* Gotas de Glacê */}
               <div className="absolute -bottom-1 left-0 right-0 flex justify-between px-2 overflow-hidden">
                 {[...Array(12)].map((_, i) => (
                   <div
                     key={i}
-                    className="w-4 h-4 bg-[#ffdbe3] rounded-full -mb-2 shadow-sm"
+                    className="w-3.5 sm:w-4 h-3.5 sm:h-4 bg-[#ffdbe3] rounded-full -mb-2 shadow-sm"
                   />
                 ))}
               </div>
-              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/30 backdrop-blur-sm border border-white/50 text-[#8a2444] text-[11px] sm:text-[12px] font-bold">
+              <div className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full bg-white/30 backdrop-blur-sm border border-white/50 text-[#8a2444] text-[10px] sm:text-[12px] font-bold">
                 <Crown className="w-3 h-3 text-[#ff375f]" />
                 Princesa Alycia • 7 Anos
               </div>
             </div>
 
             {/* ANDAR DO MEIO DO BOLO (Andar 2) */}
-            <div className="w-[320px] sm:w-[380px] h-[65px] sm:h-[75px] bg-gradient-to-b from-[#fce4ec] via-[#f8bbd0] to-[#f06292] rounded-t-2xl relative shadow-[0_12px_30px_rgba(0,0,0,0.4)] border-t-2 border-white/60 flex items-center justify-center">
+            <div className="w-[min(300px,78vw)] sm:w-[380px] h-[65px] sm:h-[75px] bg-gradient-to-b from-[#fce4ec] via-[#f8bbd0] to-[#f06292] rounded-t-2xl relative shadow-[0_12px_30px_rgba(0,0,0,0.4)] border-t-2 border-white/60 flex items-center justify-center">
               {/* Fitas de Pérolas de Açúcar */}
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 sm:gap-3 overflow-hidden px-2">
                 {[...Array(9)].map((_, i) => (
                   <div
                     key={i}
-                    className="w-2.5 h-2.5 rounded-full bg-gradient-to-tr from-[#ffd60a] to-white shadow-[0_0_6px_rgba(255,214,10,0.8)]"
+                    className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-gradient-to-tr from-[#ffd60a] to-white shadow-[0_0_6px_rgba(255,214,10,0.8)] flex-shrink-0"
                   />
                 ))}
               </div>
-              <div className="absolute -bottom-1 left-0 right-0 flex justify-between px-3 overflow-hidden">
+              <div className="absolute -bottom-1 left-0 right-0 flex justify-between px-2 sm:px-3 overflow-hidden">
                 {[...Array(16)].map((_, i) => (
                   <div
                     key={i}
-                    className="w-5 h-4 bg-[#f8bbd0] rounded-full -mb-2 shadow-sm"
+                    className="w-4 sm:w-5 h-3.5 sm:h-4 bg-[#f8bbd0] rounded-full -mb-2 shadow-sm"
                   />
                 ))}
               </div>
             </div>
 
             {/* ANDAR BASE DO BOLO (Andar 1) */}
-            <div className="w-[400px] sm:w-[480px] h-[80px] sm:h-[95px] bg-gradient-to-b from-[#f3e5f5] via-[#e1bee7] to-[#ba68c8] rounded-t-3xl relative shadow-[0_15px_35px_rgba(0,0,0,0.5)] border-t-2 border-white/70 flex items-center justify-center">
-              <div className="text-center px-4">
-                <span className="text-[12px] sm:text-[14px] font-black tracking-widest text-[#4a148c] uppercase drop-shadow-sm">
+            <div className="w-[min(350px,90vw)] sm:w-[480px] h-[80px] sm:h-[95px] bg-gradient-to-b from-[#f3e5f5] via-[#e1bee7] to-[#ba68c8] rounded-t-3xl relative shadow-[0_15px_35px_rgba(0,0,0,0.5)] border-t-2 border-white/70 flex items-center justify-center">
+              <div className="text-center px-3 sm:px-4">
+                <span className="text-[11px] sm:text-[14px] font-black tracking-wider sm:tracking-widest text-[#4a148c] uppercase drop-shadow-sm block">
                   ★ O Maior Amor do Papai ★
                 </span>
-                <p className="text-[10px] sm:text-[11px] text-[#4a148c]/80 font-medium">
+                <p className="text-[9px] sm:text-[11px] text-[#4a148c]/80 font-medium mt-0.5">
                   Sete Anos Transformando Nossa Vida em Magia
                 </p>
               </div>
             </div>
 
             {/* PRATO REAL DE OURO & CRISTAL */}
-            <div className="w-[440px] sm:w-[530px] h-[18px] sm:h-[22px] bg-gradient-to-r from-[#cf9a22] via-[#ffd60a] to-[#b3821a] rounded-full shadow-[0_15px_40px_rgba(255,214,10,0.35)] border-t border-white/80" />
-            <div className="w-[380px] sm:w-[460px] h-[8px] bg-[#664b0f] rounded-b-full shadow-inner" />
+            <div className="w-[min(370px,95vw)] sm:w-[530px] h-[18px] sm:h-[22px] bg-gradient-to-r from-[#cf9a22] via-[#ffd60a] to-[#b3821a] rounded-full shadow-[0_15px_40px_rgba(255,214,10,0.35)] border-t border-white/80" />
+            <div className="w-[min(320px,82vw)] sm:w-[460px] h-[8px] bg-[#664b0f] rounded-b-full shadow-inner" />
           </div>
 
           {/* PAINEL DE CONTROLE MÁGICO / BOTÕES DE AÇÃO */}
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3 w-full">
+          <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 w-full max-w-md mx-auto">
             {litCount > 0 ? (
               <button
                 onClick={handleBlowAll}
                 disabled={isBlowingAll}
                 type="button"
-                className="group relative inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-gradient-to-r from-[#ffd60a] via-[#ff9f0a] to-[#ff375f] text-black font-bold text-[14px] md:text-[15px] shadow-[0_0_30px_rgba(255,214,10,0.45)] hover:shadow-[0_0_45px_rgba(255,214,10,0.7)] transition-all hover:scale-105 active:scale-95 disabled:opacity-60 cursor-pointer"
+                className="group relative inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full bg-gradient-to-r from-[#ffd60a] via-[#ff9f0a] to-[#ff375f] text-black font-bold text-[14px] md:text-[15px] shadow-[0_0_30px_rgba(255,214,10,0.45)] hover:shadow-[0_0_45px_rgba(255,214,10,0.7)] transition-all hover:scale-105 active:scale-95 disabled:opacity-60 cursor-pointer w-full sm:w-auto"
               >
                 <Wind className="w-4 h-4 text-black group-hover:rotate-12 transition-transform" />
                 <span>{isBlowingAll ? 'Soprando com Amor...' : 'Soprar Todas as Velinhas!'}</span>
@@ -315,7 +319,7 @@ export const MagicBirthdayCake: React.FC = () => {
               <button
                 onClick={handleRelight}
                 type="button"
-                className="group inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-gradient-to-r from-[#bf5af2] via-[#af52de] to-[#5856d6] text-white font-bold text-[14px] md:text-[15px] shadow-[0_0_30px_rgba(191,90,242,0.45)] hover:shadow-[0_0_45px_rgba(191,90,242,0.7)] transition-all hover:scale-105 active:scale-95 cursor-pointer"
+                className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-gradient-to-r from-[#bf5af2] via-[#af52de] to-[#5856d6] text-white font-bold text-[14px] md:text-[15px] shadow-[0_0_30px_rgba(191,90,242,0.45)] hover:shadow-[0_0_45px_rgba(191,90,242,0.7)] transition-all hover:scale-105 active:scale-95 cursor-pointer w-full sm:w-auto"
               >
                 <RotateCcw className="w-4 h-4 text-white group-hover:-rotate-90 transition-transform" />
                 <span>Reacender as Velinhas com Magia</span>
@@ -325,11 +329,12 @@ export const MagicBirthdayCake: React.FC = () => {
 
             <button
               onClick={() => {
+                celestialAudio.enableAudio()
                 triggerRoyalConfetti()
                 celestialAudio.playHappyBirthdayMelody()
               }}
               type="button"
-              className="inline-flex items-center gap-2 px-5 py-3.5 rounded-full bg-white/[0.08] hover:bg-white/[0.14] border border-white/[0.12] text-white font-semibold text-[13px] md:text-[14px] transition-all hover:scale-105 cursor-pointer backdrop-blur-md"
+              className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full bg-white/[0.08] hover:bg-white/[0.14] border border-white/[0.12] text-white font-semibold text-[13px] md:text-[14px] transition-all hover:scale-105 cursor-pointer backdrop-blur-md w-full sm:w-auto"
             >
               <Gift className="w-4 h-4 text-[#ffd60a]" />
               <span>Chuva de Confetes & Parabéns</span>

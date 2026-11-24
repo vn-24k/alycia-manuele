@@ -89,14 +89,40 @@ export const AppleEditorialLetter: React.FC = () => {
       setActiveBlockId('bloco-1')
     }
 
+    const onPlayStarted = () => {
+      setIsPlaying(true)
+      celestialAudio.stopAll() // Garante silêncio absoluto para a voz do papai
+    }
+
+    const onPauseOccurred = () => {
+      setIsPlaying(false)
+    }
+
+    const handleRemotePlay = () => {
+      celestialAudio.stopAll()
+      if (audioRef.current) {
+        audioRef.current.play().then(() => {
+          setIsPlaying(true)
+        }).catch((err) => {
+          console.warn('Playback error:', err)
+        })
+      }
+    }
+
     audio.addEventListener('timeupdate', updateTime)
     audio.addEventListener('loadedmetadata', onLoadedMetadata)
     audio.addEventListener('ended', onEnded)
+    audio.addEventListener('play', onPlayStarted)
+    audio.addEventListener('pause', onPauseOccurred)
+    window.addEventListener('play-father-letter', handleRemotePlay)
 
     return () => {
       audio.removeEventListener('timeupdate', updateTime)
       audio.removeEventListener('loadedmetadata', onLoadedMetadata)
       audio.removeEventListener('ended', onEnded)
+      audio.removeEventListener('play', onPlayStarted)
+      audio.removeEventListener('pause', onPauseOccurred)
+      window.removeEventListener('play-father-letter', handleRemotePlay)
     }
   }, [])
 
@@ -109,6 +135,7 @@ export const AppleEditorialLetter: React.FC = () => {
       setIsPlaying(false)
     } else {
       celestialAudio.playSoftClick()
+      celestialAudio.stopAll()
       audio.play().then(() => {
         setIsPlaying(true)
       }).catch((err) => {

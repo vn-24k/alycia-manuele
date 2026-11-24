@@ -234,7 +234,7 @@ export const RoyalStorybook: React.FC = () => {
             <div className="absolute bottom-3 left-3 w-6 h-6 border-b-2 border-l-2 border-[#ffd60a]/60 rounded-bl pointer-events-none" />
             <div className="absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-[#ffd60a]/60 rounded-br pointer-events-none" />
 
-            {/* CONTEÚDO DA PÁGINA COM TRANSIÇÃO ANIMADA */}
+            {/* CONTEÚDO DA PÁGINA COM TRANSIÇÃO ANIMADA & SUPORTE A SWIPE TÁTIL */}
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
                 key={currentPageIndex}
@@ -243,7 +243,18 @@ export const RoyalStorybook: React.FC = () => {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.25}
+                onDragEnd={(_e, { offset, velocity }) => {
+                  const swipe = offset.x
+                  if (swipe < -50 || velocity.x < -300) {
+                    handleNextPage()
+                  } else if (swipe > 50 || velocity.x > 300) {
+                    handlePrevPage()
+                  }
+                }}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center cursor-grab active:cursor-grabbing select-none"
               >
                 {/* LADO ESQUERDO: ILUSTRAÇÃO REAL DA ÉPOCA */}
                 <div className="lg:col-span-5 relative group">
@@ -251,18 +262,18 @@ export const RoyalStorybook: React.FC = () => {
                     <img
                       src={currentPage.image}
                       alt={currentPage.title}
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 filter brightness-95"
+                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 filter brightness-95 pointer-events-none"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
 
                     {/* Selo na Foto */}
-                    <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-[#ffd60a]/40 text-[#ffd60a] text-[11px] font-bold flex items-center gap-1.5">
+                    <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-[#ffd60a]/40 text-[#ffd60a] text-[11px] font-bold flex items-center gap-1.5 pointer-events-none">
                       <Crown className="w-3 h-3 text-[#ffd60a]" />
                       {currentPage.badge}
                     </div>
 
-                    <div className="absolute bottom-4 left-4 right-4">
+                    <div className="absolute bottom-4 left-4 right-4 pointer-events-none">
                       <p className="text-[12px] text-[#ffd60a] font-medium italic">
                         "{currentPage.lesson}"
                       </p>
@@ -282,17 +293,17 @@ export const RoyalStorybook: React.FC = () => {
                     </div>
 
                     {/* Título do Capítulo */}
-                    <h3 className="text-[22px] sm:text-[28px] md:text-[32px] font-bold text-white tracking-tight leading-tight mb-3">
+                    <h3 className="text-[20px] sm:text-[28px] md:text-[32px] font-bold text-white tracking-tight leading-tight mb-3">
                       {currentPage.title}
                     </h3>
 
                     {/* Subtítulo poético */}
-                    <p className="text-[14px] text-[#ffd60a]/90 font-medium italic mb-5 leading-relaxed">
+                    <p className="text-[13px] sm:text-[14px] text-[#ffd60a]/90 font-medium italic mb-4 sm:mb-5 leading-relaxed">
                       {currentPage.summary}
                     </p>
 
                     {/* Prosa da História */}
-                    <div className="relative pl-4 border-l-2 border-[#ffd60a]/30 my-4">
+                    <div className="relative pl-3.5 sm:pl-4 border-l-2 border-[#ffd60a]/30 my-3 sm:my-4">
                       <p className="text-[14px] sm:text-[15px] md:text-[16px] text-[#d2d2d7] leading-relaxed font-normal">
                         {currentPage.prose}
                       </p>
@@ -300,12 +311,12 @@ export const RoyalStorybook: React.FC = () => {
                   </div>
 
                   {/* Rodapé da Página & Lição do Papai */}
-                  <div className="mt-6 pt-5 border-t border-white/[0.08] flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-[#ff375f] text-[12px] font-semibold">
-                      <Heart className="w-4 h-4 fill-[#ff375f]" />
+                  <div className="mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-white/[0.08] flex items-center justify-between">
+                    <div className="flex items-center gap-1.5 sm:gap-2 text-[#ff375f] text-[11px] sm:text-[12px] font-semibold">
+                      <Heart className="w-3.5 sm:w-4 h-3.5 sm:h-4 fill-[#ff375f]" />
                       <span>Amor eterno & inquebrável</span>
                     </div>
-                    <span className="text-[12px] text-white/40 font-mono">
+                    <span className="text-[11px] sm:text-[12px] text-white/40 font-mono">
                       Capítulo {currentPageIndex + 1} de {STORY_PAGES.length}
                     </span>
                   </div>
@@ -314,15 +325,15 @@ export const RoyalStorybook: React.FC = () => {
             </AnimatePresence>
 
             {/* BOTÕES DE NAVEGAÇÃO ENTRE PÁGINAS */}
-            <div className="mt-8 pt-4 border-t border-white/[0.08] flex items-center justify-between">
+            <div className="mt-6 sm:mt-8 pt-4 border-t border-white/[0.08] flex items-center justify-between gap-2">
               <button
                 onClick={handlePrevPage}
                 disabled={currentPageIndex === 0}
                 type="button"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] disabled:opacity-30 disabled:pointer-events-none text-white text-[13px] font-semibold transition-all cursor-pointer border border-white/[0.08]"
+                className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] disabled:opacity-30 disabled:pointer-events-none text-white text-[12px] sm:text-[13px] font-semibold transition-all cursor-pointer border border-white/[0.08]"
               >
                 <ChevronLeft className="w-4 h-4" />
-                <span>Página Anterior</span>
+                <span className="hidden xs:inline">Página</span> Anterior
               </button>
 
               <div className="hidden sm:flex items-center gap-2 text-[12px] text-[#ffd60a] font-medium">
@@ -334,9 +345,9 @@ export const RoyalStorybook: React.FC = () => {
                 onClick={handleNextPage}
                 disabled={currentPageIndex === STORY_PAGES.length - 1}
                 type="button"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#ffd60a] to-[#ff9f0a] disabled:opacity-30 disabled:pointer-events-none text-black text-[13px] font-bold transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-[0_0_15px_rgba(255,214,10,0.3)]"
+                className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-[#ffd60a] to-[#ff9f0a] disabled:opacity-30 disabled:pointer-events-none text-black text-[12px] sm:text-[13px] font-bold transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-[0_0_15px_rgba(255,214,10,0.3)]"
               >
-                <span>Próximo Capítulo</span>
+                Próximo <span className="hidden xs:inline">Capítulo</span>
                 <ChevronRight className="w-4 h-4 text-black" />
               </button>
             </div>

@@ -10,16 +10,40 @@ class CelestialAudioEngine {
   private isMuted: boolean = false // Iniciado ativo para que os cliques e ações mágicas soem ao toque
   private ambientInterval: number | null = null
   private melodyTimeoutIds: number[] = []
+  private isMelodyActive: boolean = false
 
-  private initContext() {
-    if (!this.ctx) {
-      const AudioCtx =
-        window.AudioContext ||
-        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
-      this.ctx = new AudioCtx()
+  constructor() {
+    // Desbloqueio seguro e síncrono para Safari iOS e Chrome Mobile no primeiro gesto
+    if (typeof window !== 'undefined') {
+      const unlockAudio = () => {
+        this.initContext()
+        window.removeEventListener('touchstart', unlockAudio)
+        window.removeEventListener('touchend', unlockAudio)
+        window.removeEventListener('mousedown', unlockAudio)
+        window.removeEventListener('keydown', unlockAudio)
+      }
+      window.addEventListener('touchstart', unlockAudio, { passive: true })
+      window.addEventListener('touchend', unlockAudio, { passive: true })
+      window.addEventListener('mousedown', unlockAudio, { passive: true })
+      window.addEventListener('keydown', unlockAudio, { passive: true })
     }
-    if (this.ctx.state === 'suspended') {
-      this.ctx.resume()
+  }
+
+  public initContext() {
+    try {
+      if (!this.ctx) {
+        const AudioCtx =
+          window.AudioContext ||
+          (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+        if (AudioCtx) {
+          this.ctx = new AudioCtx()
+        }
+      }
+      if (this.ctx && this.ctx.state === 'suspended') {
+        this.ctx.resume()
+      }
+    } catch {
+      // AudioContext fallback
     }
   }
 
@@ -260,6 +284,15 @@ class CelestialAudioEngine {
     this.initContext()
     this.stopMelody()
 
+    this.isMelodyActive = true
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(
+        new CustomEvent('celestial-melody-started', {
+          detail: { track: 'Parabéns Pra Você (Caixinha de Cristal)' },
+        })
+      )
+    }
+
     // Frequências das notas de "Parabéns Pra Você"
     const C4 = 261.63
     const D4 = 293.66
@@ -312,11 +345,33 @@ class CelestialAudioEngine {
       }, item.delay)
       this.melodyTimeoutIds.push(tid)
     })
+
+    const endTid = window.setTimeout(() => {
+      this.isMelodyActive = false
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('celestial-melody-ended'))
+      }
+    }, 16300)
+    this.melodyTimeoutIds.push(endTid)
   }
 
   public stopMelody() {
     this.melodyTimeoutIds.forEach((id) => clearTimeout(id))
     this.melodyTimeoutIds = []
+    if (this.isMelodyActive) {
+      this.isMelodyActive = false
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('celestial-melody-ended'))
+      }
+    }
+  }
+
+  public isMelodyPlaying(): boolean {
+    return this.isMelodyActive
+  }
+
+  public isAmbientPlaying(): boolean {
+    return this.ambientInterval !== null
   }
 
   public startAmbientArpeggio() {
@@ -336,6 +391,14 @@ class CelestialAudioEngine {
     if (this.ambientInterval) {
       clearInterval(this.ambientInterval)
       this.ambientInterval = null
+    }
+  }
+
+  public stopAll() {
+    this.stopAmbientArpeggio()
+    this.stopMelody()
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('celestial-audio-stopped'))
     }
   }
 }

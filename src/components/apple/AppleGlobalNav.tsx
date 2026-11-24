@@ -1,5 +1,21 @@
 import React, { useState } from 'react'
-import { Heart, Volume2, VolumeX, Sparkles, Droplets, MousePointer, Check, ChevronDown, Crown, Feather, Play } from 'lucide-react'
+import {
+  Heart,
+  Volume2,
+  VolumeX,
+  Sparkles,
+  Droplets,
+  MousePointer,
+  Check,
+  ChevronDown,
+  Crown,
+  Feather,
+  Play,
+  Menu,
+  X,
+  BookOpen,
+  Image as ImageIcon,
+} from 'lucide-react'
 import { CursorType } from '../cursors/CursorSwitcher'
 import { celestialAudio } from '../../audio/celestialSynth'
 
@@ -19,6 +35,7 @@ export const AppleGlobalNav: React.FC<AppleGlobalNavProps> = ({
   onToggleMute,
 }) => {
   const [isCursorMenuOpen, setIsCursorMenuOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   // Nomes poéticos e encantados (ZERO menções a WebGL, 21st ou engenharia de software)
   const CURSOR_OPTIONS: { id: CursorType; name: string; tag: string; icon: React.ElementType }[] = [
@@ -205,8 +222,121 @@ export const AppleGlobalNav: React.FC<AppleGlobalNavProps> = ({
             <Heart className="w-3.5 h-3.5 fill-current" />
             <span className="hidden sm:inline">Papai</span>
           </button>
+
+          {/* Botão de Menu Mobile (Hambúrguer Apple Glass) */}
+          <button
+            onClick={() => {
+              celestialAudio.playSoftClick()
+              setIsMobileMenuOpen(!isMobileMenuOpen)
+            }}
+            className="md:hidden text-[#d2d2d7] hover:text-white p-1.5 rounded-full hover:bg-white/[0.08] transition-colors"
+            title={isMobileMenuOpen ? 'Fechar Menu' : 'Abrir Menu de Navegação'}
+          >
+            {isMobileMenuOpen ? <X className="w-5 h-5 text-[#ffd60a]" /> : <Menu className="w-5 h-5" />}
+          </button>
         </div>
       </div>
+
+      {/* GAVETA / DROPDOWN DE NAVEGAÇÃO MOBILE */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden absolute top-[48px] left-0 right-0 bg-[#0a0a0d]/98 border-b border-white/[0.12] backdrop-blur-3xl shadow-2xl px-5 py-4 animate-fadeIn transition-all z-50">
+          <div className="flex flex-col gap-1.5">
+            <button
+              onClick={() => {
+                handleNavClick('alycia-pro')
+                setIsMobileMenuOpen(false)
+              }}
+              className="w-full text-left py-2.5 px-3 rounded-xl hover:bg-white/[0.06] text-white text-[14px] font-medium transition-colors flex items-center justify-between"
+            >
+              <span>Início da Celebração</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#ffd60a]" />
+            </button>
+
+            <button
+              onClick={() => {
+                handleNavClick('bolo-magico')
+                setIsMobileMenuOpen(false)
+              }}
+              className="w-full text-left py-2.5 px-3 rounded-xl bg-[#ffd60a]/10 border border-[#ffd60a]/25 text-[#ffd60a] text-[14px] font-semibold transition-colors flex items-center justify-between shadow-sm"
+            >
+              <span className="flex items-center gap-2">
+                <Crown className="w-4 h-4 text-[#ffd60a]" />
+                Bolo Mágico dos 7 Anos
+              </span>
+              <span className="text-[11px] font-mono bg-[#ffd60a]/20 px-2 py-0.5 rounded-full text-[#ffd60a]">
+                7 Velinhas
+              </span>
+            </button>
+
+            <button
+              onClick={() => {
+                handleNavClick('livro-historias')
+                setIsMobileMenuOpen(false)
+              }}
+              className="w-full text-left py-2.5 px-3 rounded-xl hover:bg-white/[0.06] text-[#f5f5f7] text-[14px] font-medium transition-colors flex items-center gap-2"
+            >
+              <BookOpen className="w-4 h-4 text-[#bf5af2]" />
+              <span>O Livro de Histórias (0 a 7 Anos)</span>
+            </button>
+
+            <button
+              onClick={() => {
+                handleNavClick('manto-3d')
+                setIsMobileMenuOpen(false)
+              }}
+              className="w-full text-left py-2.5 px-3 rounded-xl hover:bg-white/[0.06] text-[#d2d2d7] text-[14px] font-medium transition-colors flex items-center gap-2"
+            >
+              <Sparkles className="w-4 h-4 text-[#ffd60a]" />
+              <span>Manto Celestial 3D</span>
+            </button>
+
+            <button
+              onClick={() => {
+                handleNavClick('galeria-reinos')
+                setIsMobileMenuOpen(false)
+              }}
+              className="w-full text-left py-2.5 px-3 rounded-xl hover:bg-white/[0.06] text-[#d2d2d7] text-[14px] font-medium transition-colors"
+            >
+              Galeria dos Reinos Encantados
+            </button>
+
+            <button
+              onClick={() => {
+                handleNavClick('playground-magico')
+                setIsMobileMenuOpen(false)
+              }}
+              className="w-full text-left py-2.5 px-3 rounded-xl hover:bg-white/[0.06] text-[#d2d2d7] text-[14px] font-medium transition-colors"
+            >
+              Playground Cinético das Letras
+            </button>
+
+            <button
+              onClick={() => {
+                handleNavClick('carta-pai')
+                setIsMobileMenuOpen(false)
+              }}
+              className="w-full text-left py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#ff375f]/15 to-[#ffd60a]/15 border border-[#ff375f]/30 text-[#ff375f] text-[14px] font-semibold transition-colors flex items-center justify-between"
+            >
+              <span className="flex items-center gap-2">
+                <Feather className="w-4 h-4 text-[#ff375f]" />
+                Carta do Papai (Voz Oficial)
+              </span>
+              <Heart className="w-3.5 h-3.5 fill-[#ff375f]" />
+            </button>
+
+            <button
+              onClick={() => {
+                setIsMobileMenuOpen(false)
+                onOpenPhotoModal()
+              }}
+              className="w-full text-left py-2.5 px-3 rounded-xl hover:bg-white/[0.06] text-[#a1a1a6] text-[13px] font-normal transition-colors flex items-center gap-2 border-t border-white/[0.08] mt-1 pt-2"
+            >
+              <ImageIcon className="w-3.5 h-3.5" />
+              <span>Personalizar Fotos da Princesa</span>
+            </button>
+          </div>
+        </div>
+      )}
     </header>
   )
 }
